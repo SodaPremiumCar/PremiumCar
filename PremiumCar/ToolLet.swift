@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 let SCREEN_WIDTH    = UIScreen.main.bounds.width
 let SCREEN_HEIGHT   = UIScreen.main.bounds.height
@@ -27,6 +28,10 @@ func setButton(button: UIButton, with type: Int){
         button.setTitleColor(UIColor.white, for: UIControlState.normal)
         button.isEnabled = true
     }
+}
+// 隐藏sv
+func hideSV() {
+    SVProgressHUD.dismiss()
 }
 
 func PostNotification(_ name: String, object: AnyObject?, userInfo: [AnyHashable: Any]?) {

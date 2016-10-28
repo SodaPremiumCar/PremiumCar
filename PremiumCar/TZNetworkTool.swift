@@ -40,6 +40,7 @@ class TZNetworkTool: NSObject {
                         finished(false)
                         return
                     }
+                    
                     UserData.share.mobileNo = mobileNo
                     UserData.share.save()
                     SVProgressHUD.showSuccess(withStatus: "登录成功")
@@ -74,6 +75,7 @@ class TZNetworkTool: NSObject {
                     }
                     SVProgressHUD.showSuccess(withStatus: "验证码已发送")
                     finished(true)
+                    
                 }
         }
     }
@@ -104,6 +106,7 @@ class TZNetworkTool: NSObject {
                         finished(false)
                         return
                     }
+                    
                     UserData.share.mobileNo = mobileNo
                     UserData.share.save()
                     SVProgressHUD.showSuccess(withStatus: "注册成功")
@@ -115,7 +118,7 @@ class TZNetworkTool: NSObject {
     // 个人信息
     func personalInfo(telephone: String, name: String, addr: String, finished:@escaping (_ results: Bool) -> ()) {
         UserData.share.load()
-        print("11111", UserData.share.mobileNo)
+
         let params: Parameters = ["mobileNo" : UserData.share.mobileNo! as String,
                                   "telephone": telephone,
                                   "name" : name,

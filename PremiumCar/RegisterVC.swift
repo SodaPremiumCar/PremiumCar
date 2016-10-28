@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class RegisterVC: UIViewController {
     
@@ -127,12 +128,14 @@ class RegisterVC: UIViewController {
     
     func register() {
         
-        print("注册")
         TZNetworkTool.shareNetworkTool.register(mobileNo: mobileNo!.text!, dynamicPws: verificationText!.text!, pwd: password!.text!) { (isSuccess) in
+            
             if isSuccess {
+                
                 let personalVC = PersonalInfoVC()
                 self.navigationController?.pushViewController(personalVC, animated: true)
             }
+//            SVProgressHUD.dismiss(withDelay: 100)
         }
     }
     
@@ -142,7 +145,6 @@ class RegisterVC: UIViewController {
     
     func backToLogin() {
         
-        print("退回登录页")
         self.navigationController?.popViewController(animated: true)
     }
     
