@@ -22,12 +22,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         mock()
         setupUI()
+        self.navigationItem.title = "我的车队"
+        self.navigationItem.hidesBackButton = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = false
+        
+//        UserData.share.load()
+        let mob: String? = UserData.share.mobileNo
+        if mob == nil || mob!.isEmpty {
+            let loginVC = LoginViewController()
+            self.navigationController?.pushViewController(loginVC, animated: false)
+        }
     }
     
     //MARK: Data
@@ -62,23 +71,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let personalInfo = UIButton(frame: CGRect(x: (SCREEN_WIDTH - 70) / 2, y: 64, width: 70, height: 70))
         personalInfo.setImage(UIImage(named: "person"), for: UIControlState.normal)
         personalInfo.backgroundColor = UIColor.clear
-        personalInfo.addTarget(self, action: #selector(buttonClick), for: UIControlEvents.touchUpInside)
+//        personalInfo.addTarget(self, action: #selector(buttonClick), for: UIControlEvents.touchUpInside)
         
-        carListTableView = UITableView(frame: self.view.bounds, style: .plain)
-        carListTableView.backgroundColor = COLOR_BLACK
+        carListTableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64 - 44), style: .plain)
+        carListTableView.backgroundColor = UIColor.white
         carListTableView.delegate = self
         carListTableView.dataSource = self
         carListTableView.register(CarListCell.self, forCellReuseIdentifier: "CarListCellIdentifier")
         self.view.addSubview(carListTableView)
-        carListTableView.tableFooterView = UIView(frame: CGRect.zero)
+//        carListTableView.tableFooterView = UIView(frame: CGRect.zero)
         
-        let header = UIView()
-        header.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 150)
-        header.addSubview(personalInfo)
-        carListTableView.tableHeaderView = header
+//        let header = UIView()
+//        header.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 150)
+//        header.addSubview(personalInfo)
+//        carListTableView.tableHeaderView = header
         
         let addBtn = UIButton(type: UIButtonType.custom)
-        addBtn.frame = CGRect(x: 0, y: SCREEN_HEIGHT - 44, width: SCREEN_WIDTH, height: 44)
+        addBtn.frame = CGRect(x: 0, y: SCREEN_HEIGHT - 44 - 64, width: SCREEN_WIDTH, height: 44)
         addBtn.backgroundColor = FUZZY_BACK
         addBtn.setImage(UIImage(named: "addOther"), for: UIControlState.normal)
         addBtn.setTitle("增加车辆。", for: UIControlState.normal)
@@ -87,12 +96,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let line = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 0.5))
         line.backgroundColor = FUZZY_BACK
         addBtn.addSubview(line)
-        carListTableView.tableFooterView = addBtn
+        self.view.addSubview(addBtn)
 //        view.addSubview(addBtn)
     }
     
     func addMoreCar() {
-        
+        let carBrandsVC = CarBrandsVC()
+        self.navigationController?.pushViewController(carBrandsVC, animated: true)
     }
     
     func buttonClick() {

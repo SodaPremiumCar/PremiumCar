@@ -20,12 +20,15 @@ class PersonalInfoVC: UIViewController {
         super.viewDidLoad()
         
         setupUI()
+        self.navigationItem.title = "填写联系方式"
+        self.navigationItem.hidesBackButton = true
     }
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        
-//        self.navigationController?.isNavigationBarHidden = true
-//    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.isNavigationBarHidden = false
+    }
     
     fileprivate func setupUI() {
     

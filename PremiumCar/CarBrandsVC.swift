@@ -36,14 +36,15 @@ class CarBrandsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = true
+        self.navigationItem.title = "添加车辆"
+//        self.navigationController?.isNavigationBarHidden = true
         self.setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        
+        self.navigationController?.isNavigationBarHidden = false
     }
 
     private func setupUI() {
@@ -79,7 +80,7 @@ class CarBrandsVC: UIViewController {
         typesTableView.tableFooterView = UIView(frame: CGRect.zero)
         view.addSubview(typesTableView)
         
-        submitView = UIView(frame: CGRect(x: 0, y: SCREEN_HEIGHT - 50, width: SCREEN_WIDTH, height: 50))
+        submitView = UIView(frame: CGRect(x: 0, y: SCREEN_HEIGHT - 50 - 64, width: SCREEN_WIDTH, height: 50))
         submitView?.backgroundColor = FUZZY_BACK
         
         // UI线

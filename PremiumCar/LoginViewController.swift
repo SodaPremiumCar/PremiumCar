@@ -20,11 +20,18 @@ class LoginViewController: UIViewController {
         
         setupUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.isNavigationBarHidden = true
+    }
     // 隐藏状态栏
 //    override func
     
     private func setupUI() {
-        self.navigationController?.isNavigationBarHidden = true
+//        self.navigationController?.isNavigationBarHidden = true
+        self.navigationItem.title = "登录"
         self.view.backgroundColor = COLOR_BLACK
         
         let carImage = UIImageView(frame: CGRect(x: (SCREEN_WIDTH - 100) * 0.5, y: 150, width: 100, height: 100))

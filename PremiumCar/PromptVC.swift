@@ -23,16 +23,7 @@ override func viewDidLoad() {
         
         super.viewWillAppear(animated)
         
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarPosition.any, barMetrics: UIBarMetrics.default)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        
-        super.viewWillDisappear(animated)
-        
-        navigationController?.navigationBar.setBackgroundImage(imageWithColor(COLOR_BLACK), for: UIBarPosition.any, barMetrics: UIBarMetrics.default)
-        self.navigationController?.navigationBar.tintColor = UIColor.white
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     //MARK: UI

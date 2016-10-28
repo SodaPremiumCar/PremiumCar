@@ -44,6 +44,8 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
     
     //MARK: UI
     func initNavigation() {
+        
+        self.navigationItem.title = "填写订单详情"
     }
     
     func initUI() {
