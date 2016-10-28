@@ -1,0 +1,28 @@
+PODS:
+  - Alamofire (4.0.1)
+  - EGOTableViewPullRefresh (0.1.0)
+  - JDStatusBarNotification (1.5.4)
+  - Kingfisher (3.1.4)
+  - SnapKit (3.0.2)
+  - SVProgressHUD (2.0.3)
+  - SwiftyJSON (3.1.1)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.0.1)
+  - EGOTableViewPullRefresh
+  - JDStatusBarNotification
+  - Kingfisher (~> 3.1.4)
+  - SnapKit (~> 3.0.0)
+  - SVProgressHUD
+  - SwiftyJSON (~> 3.1.1)
+
+SPEC CHECKSUMS:
+  Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
+  EGOTableViewPullRefresh: d4c15be51914f4168d6fd7529b6ad3a4ab01e5f4
+  JDStatusBarNotification: d47dded0594a50a39c84a2cc5aa356fcf6750d0e
+  Kingfisher: 6c67e3e57f2d81a9cfdfa25052cd86f33ceac9bb
+  SnapKit: 2e456761aa92d4d4067a7a5594c18769d451a8ad
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
+  SwiftyJSON: f0be2e604f83e8405a624e9f891898bf6ed4e019
+
+COCOAPODS: 0.39.0

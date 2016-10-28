@@ -1,0 +1,6 @@
+framework module EGOTableViewPullRefresh {
+  umbrella header "EGOTableViewPullRefresh-umbrella.h"
+
+  export *
+  module * { export * }
+}
