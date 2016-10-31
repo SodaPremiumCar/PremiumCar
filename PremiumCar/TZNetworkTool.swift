@@ -35,7 +35,7 @@ class TZNetworkTool: NSObject {
                     let authToken = dict["authToken"].stringValue
                     let code = dict["result"].intValue
                     let message = dict["errMsg"].stringValue
-                    print(dict)
+
                     guard code == 10000 else {
                         SVProgressHUD.showInfo(withStatus: message)
                         finished(false)
@@ -117,14 +117,14 @@ class TZNetworkTool: NSObject {
     
     // 个人信息
     func personalInfo(telephone: String, name: String, addr: String, finished:@escaping (_ results: Bool) -> ()) {
+       
         UserData.share.load()
-        
-        let params: Parameters = ["authToken": UserData.share.authToken,
+        let params: Parameters = ["authToken": UserData.share.authToken! as String,
                                   "mobileNo" : UserData.share.mobileNo! as String,
                                   "telephone": telephone,
                                   "name" : name,
                                   "addr" : addr]
-        print("1111111111",params)
+
         Alamofire
             .request(KURL(kUrlPersonalInfo), method: .post, parameters: params, encoding: JSONEncoding.default)
             .responseJSON { (response) in
@@ -144,7 +144,39 @@ class TZNetworkTool: NSObject {
                         finished(false)
                         return
                     }
+                    // 存储个人信息
+                    UserData.share.name = name
+                    UserData.share.address = addr
+                    UserData.share.save()
                     SVProgressHUD.showSuccess(withStatus: "提交成功")
+                    finished(true)
+                }
+        }
+    }
+    
+    // 车型信息
+    func carBrandsList(finished:@escaping (_ results: Bool) -> ()) {
+        
+        Alamofire
+            .request(KURL(kUrlCarBrands), method: .post, parameters: nil, encoding: JSONEncoding.default)
+            .responseJSON { (response) in
+                
+                guard response.result.isSuccess else {
+                    SVProgressHUD.showError(withStatus: "网络异常")
+                    return
+                }
+                if let value = response.result.value {
+                    
+                    let dict = JSON(value)
+                    let code = dict["result"].intValue
+                    let message = dict["errMsg"].stringValue
+                    print("qqqqqqqq", dict)
+                    guard code == 10000 else {
+                        SVProgressHUD.showInfo(withStatus: message)
+                        finished(false)
+                        return
+                    }
+
                     finished(true)
                 }
         }

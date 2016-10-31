@@ -12,6 +12,8 @@ class UserData: NSObject {
     
     var mobileNo: String?
     var authToken: String?
+    var name: String?
+    var address: String?
     // 单例
     static let share = UserData()
     
@@ -19,11 +21,15 @@ class UserData: NSObject {
         
         UserDefaults.standard.set(mobileNo, forKey: "mobileNo")
         UserDefaults.standard.set(authToken, forKey: "authToken")
+        UserDefaults.standard.set(name, forKey: "name")
+        UserDefaults.standard.set(address, forKey: "address")
         UserDefaults.standard.synchronize()
     }
     
     func load() {
         mobileNo = UserDefaults.standard.string(forKey: "mobileNo")
-        mobileNo = UserDefaults.standard.string(forKey: "authToken")
+        authToken = UserDefaults.standard.string(forKey: "authToken")
+        name = UserDefaults.standard.string(forKey: "name")
+        address = UserDefaults.standard.string(forKey: "address")
     }
 }

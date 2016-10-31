@@ -17,7 +17,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         mock()
@@ -34,7 +33,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        UserData.share.load()
         let mob: String? = UserData.share.mobileNo
         if mob == nil || mob!.isEmpty {
-            let loginVC = LoginViewController()
+            let loginVC = CarBrandsVC()
             self.navigationController?.pushViewController(loginVC, animated: false)
         }
     }
