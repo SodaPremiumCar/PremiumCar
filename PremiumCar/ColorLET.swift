@@ -24,7 +24,8 @@ private func kURLTest(_ URL: String) -> String{
 let kUrlLogin        = "openapi/login.c"              //登录
 let kUrlDynamicPws   = "openapi/getDynamicPws.c"      //验证码
 let kUrlRegister     = "openapi/register.c"           //注册
-let kUrlPersonalInfo = "api/updateUserInfo.c"     //个人信息
+let kUrlPersonalInfo = "api/updateUserInfo.c"         //个人信息
+let kUrlCarBrands    = "openapi/getCarTypeList.c"     //车型列表
 
 
 

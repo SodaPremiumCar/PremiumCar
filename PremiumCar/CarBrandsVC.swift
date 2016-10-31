@@ -36,15 +36,20 @@ class CarBrandsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationItem.title = "添加车辆"
-//        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationItem.hidesBackButton = true
+        
         self.setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.isNavigationBarHidden = false
+        TZNetworkTool.shareNetworkTool.carBrandsList { (Bool) in
+            
+        }
     }
 
     private func setupUI() {
