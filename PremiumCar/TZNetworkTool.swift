@@ -171,13 +171,12 @@ class TZNetworkTool: NSObject {
                     let code = dict["result"].intValue
                     let message = dict["errMsg"].stringValue
                     
-                    print("qqqqqqqq", dict)
                     guard code == 10000 else {
                         SVProgressHUD.showInfo(withStatus: message)
                         return
                     }
                     //  字典转成模型
-                    let brandArray = dict["carTypes"]["brands"].arrayObject                    
+                    let brandArray = dict["carTypes"]["brands"].arrayObject
                     
                     var carBigArray = [[CarTModel]]()
                     for key in brandArray! {
@@ -231,19 +230,7 @@ class TZNetworkTool: NSObject {
                 }
         }
     }
-<<<<<<< HEAD
     
-    // 服务项目
-    func serviceList(finished:@escaping (_ results: Bool, _ data: [String : AnyObject]?, _ types: [String]?) -> ()) {
-        
-        Alamofire
-            .request(KURL(kUrlServiceList), method: .post, parameters: [:], encoding: JSONEncoding.default)
-            .responseJSON { (response) in
-                
-                guard response.result.isSuccess else {
-                    SVProgressHUD.showError(withStatus: "网络异常")
-=======
-
     // 获取车辆列表
     func getCar(finished:@escaping (_ CarItems: [CarTModel]) -> ()) {
         
@@ -257,7 +244,6 @@ class TZNetworkTool: NSObject {
                 
                 guard response.result.isSuccess else {
                     SVProgressHUD.showError(withStatus: "获取失败")
->>>>>>> 7e5a7469cf82072495d873fbc055f66400dcdd1f
                     return
                 }
                 if let value = response.result.value {
@@ -265,21 +251,6 @@ class TZNetworkTool: NSObject {
                     let dict = JSON(value)
                     let code = dict["result"].intValue
                     let message = dict["errMsg"].stringValue
-<<<<<<< HEAD
-                    print("qqqqqqqq", dict)
-                    guard code == 10000 else {
-                        SVProgressHUD.showInfo(withStatus: message)
-                        finished(false, nil, nil)
-                        return
-                    }
-                    
-                    if var services = dict["services"].dictionaryObject {
-                        let data = services["typeServices"]
-                        let types = services["types"]
-                        print(data)
-                        finished(true, data as! [String : AnyObject]?, types as! [String]?)
-                    }
-=======
                     print(dict)
                     guard code == 10000 else {
                         SVProgressHUD.showInfo(withStatus: message)
@@ -297,20 +268,43 @@ class TZNetworkTool: NSObject {
                         finished(carItems)
                     }
                     
->>>>>>> 7e5a7469cf82072495d873fbc055f66400dcdd1f
                 }
         }
     }
-    
-    
-<<<<<<< HEAD
-=======
-    
-    
->>>>>>> 7e5a7469cf82072495d873fbc055f66400dcdd1f
+
+    // 服务项目
+    func serviceList(finished:@escaping (_ results: Bool, _ data: [String : AnyObject]?, _ types: [String]?) -> ()) {
+        
+        Alamofire
+            .request(KURL(kUrlServiceList), method: .post, parameters: [:], encoding: JSONEncoding.default)
+            .responseJSON { (response) in
+                
+                guard response.result.isSuccess else {
+                    SVProgressHUD.showError(withStatus: "网络异常")
+                    return
+                }
+                if let value = response.result.value {
+                    
+                    let dict = JSON(value)
+                    let code = dict["result"].intValue
+                    let message = dict["errMsg"].stringValue
+                    print("qqqqqqqq", dict)
+                    guard code == 10000 else {
+                        SVProgressHUD.showInfo(withStatus: message)
+                        finished(false, nil, nil)
+                        return
+                    }
+                    
+                    if var services = dict["services"].dictionaryObject {
+                        let data = services["typeServices"]
+                        let types = services["types"]
+                        print(data)
+                        finished(true, data as! [String : AnyObject]?, types as! [String]?)
+                    }
+                }
+        }
+    }
 }
-
-
 
 
 
