@@ -10,9 +10,11 @@ import UIKit
 
 class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    private var submitBtn: UIButton!
     fileprivate var tableView: UITableView!
     fileprivate var phoneTextField: UITextField!
     fileprivate var nameTextField: UITextField!
+    fileprivate var addressTextField: UITextField!
     fileprivate var dateTextField: UITextField!
     fileprivate var datePicker: UIDatePicker!
     fileprivate var datePickerButton: UIButton!
@@ -45,16 +47,16 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
     //MARK: UI
     func initNavigation() {
         
-        self.navigationItem.title = "填写订单详情"
+        self.navigationItem.title = "生成订单"
     }
     
     func initUI() {
         
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = UIColor.black
         
         self.tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 50 - 64), style: .plain)
-        self.tableView.backgroundColor = UIColor.white
-        //        self.tableView.separatorStyle = .None
+        self.tableView.backgroundColor = UIColor.black
+        self.tableView.separatorColor = UIColor.init(colorLiteralRed: 100, green: 100, blue: 100, alpha: 1)
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCellIdentifier")
@@ -62,24 +64,31 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         nameTextField = self.getTextField()
-        nameTextField.placeholder = "请填写您的姓名"
         phoneTextField = self.getTextField()
-        phoneTextField.placeholder = "您的联系方式"
         phoneTextField.keyboardType = .numberPad
+        addressTextField = self.getTextField()
         dateTextField = self.getTextField()
-        dateTextField.placeholder = "预约上门时间"
         
-        let btn0 = UIButton(type: .custom)
-        btn0.backgroundColor = COLOR_BLACK
-        btn0.setTitle("提交", for: UIControlState())
-        btn0.setTitleColor(UIColor.white, for: UIControlState())
-        btn0.titleLabel?.font = UIFont.systemFont(ofSize: 20)
-        btn0.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchUpInside)
-        self.view.addSubview(btn0)
-        btn0.snp_makeConstraints { (make) in
-            make.size.equalTo(CGSize(width: SCREEN_WIDTH, height: 50))
-            make.bottom.equalTo(self.view.snp_bottom)
-        }
+        let submitView = UIView(frame: CGRect(x: 0, y: SCREEN_HEIGHT - 50 - 64, width: SCREEN_WIDTH, height: 50))
+        submitView.backgroundColor = FUZZY_BACK
+        
+        // UI线
+        let lineW = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 0.5))
+        lineW.backgroundColor = FUZZY_BACK
+        let lineH = UIView(frame: CGRect(x: SCREEN_WIDTH - 120, y: 10, width: 0.5, height: 30))
+        lineH.backgroundColor = FUZZY_BACK
+        // 提交btn
+        submitBtn = UIButton(type: UIButtonType.custom)
+        submitBtn.frame = CGRect(x: SCREEN_WIDTH - 110, y: 0, width: 100, height: 50)
+        submitBtn.setTitle("提交订单", for: UIControlState.normal)
+        submitBtn.backgroundColor = UIColor.clear
+        submitBtn?.addTarget(self, action: #selector(buttonClicked(_:)), for: UIControlEvents.touchUpInside)
+        setButton(button: submitBtn, with: 1)
+        
+        submitView.addSubview(submitBtn)
+        submitView.addSubview(lineW)
+        submitView.addSubview(lineH)
+        view.addSubview(submitView)
         
         datePicker = UIDatePicker()
         datePicker.frame = CGRect(x: 0, y: self.view.frame.height + 30, width: SCREEN_WIDTH, height: 260)
@@ -101,15 +110,17 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         self.view.addSubview(datePickerButton)
         
         //default text
-        nameTextField.text = "王先生"
-        phoneTextField.text = "13910001111"
+        nameTextField.text = UserData.share.name != nil ? UserData.share.name : "请填写您的姓名"
+        phoneTextField.text = UserData.share.mobileNo != nil ? UserData.share.mobileNo : "联系电话"
+        addressTextField.text = UserData.share.address != nil ? UserData.share.address : "联系地址"
         self.datePickerValueChange(datePicker)
     }
     
     func getTextField() -> UITextField {
         
-        let textField = UITextField(frame: CGRect(x: 10, y: 10, width: SCREEN_WIDTH - 20, height: 40))
-        textField.backgroundColor = UIColor.white
+        let textField = UITextField(frame: CGRect(x: 30, y: 10, width: SCREEN_WIDTH - 30, height: 40))
+        textField.backgroundColor = UIColor.black
+        textField.textColor = UIColor.white
         textField.delegate = self
         textField.borderStyle = .none
         textField.font = UIFont.systemFont(ofSize: 16)
@@ -196,7 +207,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -213,6 +224,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCellIdentifier", for: indexPath)
         cell.selectionStyle = .none
+        cell.backgroundColor = UIColor.black
         for subview in cell.contentView.subviews {
             subview.removeFromSuperview()
         }
@@ -221,6 +233,8 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
             cell.contentView.addSubview(nameTextField)
         }else if (indexPath as NSIndexPath).row == 1 {
             cell.contentView.addSubview(phoneTextField)
+        }else if (indexPath as NSIndexPath).row == 2 {
+            cell.contentView.addSubview(addressTextField)
         }else {
             cell.contentView.addSubview(dateTextField)
         }

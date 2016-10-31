@@ -33,8 +33,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        UserData.share.load()
         let mob: String? = UserData.share.mobileNo
         if mob == nil || mob!.isEmpty {
-            let loginVC = CarBrandsVC()
-            self.navigationController?.pushViewController(loginVC, animated: false)
+//            let loginVC = CarBrandsVC()
+//            self.navigationController?.pushViewController(loginVC, animated: false)
         }
     }
     

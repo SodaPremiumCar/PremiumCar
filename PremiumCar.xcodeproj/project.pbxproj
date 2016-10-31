@@ -29,6 +29,8 @@
 		A8A2406C1D8284CA00964F74 /* CarDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A2406B1D8284CA00964F74 /* CarDetailVC.swift */; };
 		A8B7AA191D867B7400C02B95 /* SubmitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B7AA181D867B7400C02B95 /* SubmitVC.swift */; };
 		A8B7AA1B1D8694CD00C02B95 /* PromptVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B7AA1A1D8694CD00C02B95 /* PromptVC.swift */; };
+		A8B7F4161DC728AF00896BD4 /* ServiceListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B7F4151DC728AF00896BD4 /* ServiceListVC.swift */; };
+		A8B7F4181DC72E5100896BD4 /* ServiceItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B7F4171DC72E5100896BD4 /* ServiceItemModel.swift */; };
 		E6C6D53C4FE73D796292600A /* Pods_PremiumCar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E8A6288D2F82C45F2CFABD /* Pods_PremiumCar.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +65,8 @@
 		A8A2406B1D8284CA00964F74 /* CarDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarDetailVC.swift; sourceTree = "<group>"; };
 		A8B7AA181D867B7400C02B95 /* SubmitVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitVC.swift; sourceTree = "<group>"; };
 		A8B7AA1A1D8694CD00C02B95 /* PromptVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromptVC.swift; sourceTree = "<group>"; };
+		A8B7F4151DC728AF00896BD4 /* ServiceListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceListVC.swift; sourceTree = "<group>"; };
+		A8B7F4171DC72E5100896BD4 /* ServiceItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceItemModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,8 @@
 				A85B6CCE1D7D7DB100E43F59 /* ViewController.swift */,
 				A85B6CED1D7E727400E43F59 /* CarListCell.swift */,
 				A8A2406B1D8284CA00964F74 /* CarDetailVC.swift */,
+				A8B7F4151DC728AF00896BD4 /* ServiceListVC.swift */,
+				A8B7F4171DC72E5100896BD4 /* ServiceItemModel.swift */,
 				A8B7AA181D867B7400C02B95 /* SubmitVC.swift */,
 				A8B7AA1A1D8694CD00C02B95 /* PromptVC.swift */,
 				25813E0A1D94D5BB00291D5B /* CallButlerVC.swift */,
@@ -303,7 +309,9 @@
 				A85B6CCD1D7D7DB100E43F59 /* AppDelegate.swift in Sources */,
 				25813E0F1D94D5BB00291D5B /* MyCarVC.swift in Sources */,
 				A85B6CEE1D7E727400E43F59 /* CarListCell.swift in Sources */,
+				A8B7F4161DC728AF00896BD4 /* ServiceListVC.swift in Sources */,
 				A85B6CE11D7D875D00E43F59 /* ToolLet.swift in Sources */,
+				A8B7F4181DC72E5100896BD4 /* ServiceItemModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -90,8 +90,8 @@ class CarDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     //MARK: Handle
     func buttonClicked(_ sender: UIButton) {
         
-        let submitVC = SubmitVC()
-        self.navigationController?.pushViewController(submitVC, animated: true)
+        let serviceListVC = ServiceListVC()
+        self.navigationController?.pushViewController(serviceListVC, animated: true)
     }
     
     //MARK: TableViewDelegate
