@@ -15,6 +15,7 @@
 		2590CF491DBE14320039D62A /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2590CF481DBE14320039D62A /* RegisterVC.swift */; };
 		2590CF511DBF0C390039D62A /* TimeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2590CF501DBF0C390039D62A /* TimeButton.m */; };
 		2590CF561DBF59590039D62A /* PersonalInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2590CF551DBF59590039D62A /* PersonalInfoVC.swift */; };
+		259960431DC737F70001444F /* CarTModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259960421DC737F70001444F /* CarTModel.swift */; };
 		25BFB9731DC3278D0016150E /* TZNetworkTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFB9721DC3278D0016150E /* TZNetworkTool.swift */; };
 		25BFB9751DC33ECF0016150E /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFB9741DC33ECF0016150E /* UserData.swift */; };
 		A85B6CCD1D7D7DB100E43F59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85B6CCC1D7D7DB100E43F59 /* AppDelegate.swift */; };
@@ -45,6 +46,7 @@
 		2590CF501DBF0C390039D62A /* TimeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeButton.m; sourceTree = "<group>"; };
 		2590CF521DBF0EE30039D62A /* NSString+dataFormat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+dataFormat.h"; sourceTree = "<group>"; };
 		2590CF551DBF59590039D62A /* PersonalInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfoVC.swift; sourceTree = "<group>"; };
+		259960421DC737F70001444F /* CarTModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTModel.swift; sourceTree = "<group>"; };
 		25BFB9721DC3278D0016150E /* TZNetworkTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZNetworkTool.swift; sourceTree = "<group>"; };
 		25BFB9741DC33ECF0016150E /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		91E8A6288D2F82C45F2CFABD /* Pods_PremiumCar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PremiumCar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +132,7 @@
 				25BFB9721DC3278D0016150E /* TZNetworkTool.swift */,
 				A86E83CC1DC378E000652EA7 /* NavigationController.swift */,
 				25BFB9741DC33ECF0016150E /* UserData.swift */,
+				259960421DC737F70001444F /* CarTModel.swift */,
 				A85B6CD31D7D7DB100E43F59 /* Assets.xcassets */,
 				A85B6CD81D7D7DB100E43F59 /* Info.plist */,
 			);
@@ -298,6 +301,7 @@
 				A85B6CE81D7E604B00E43F59 /* SetupViewLET.swift in Sources */,
 				A8B7AA1B1D8694CD00C02B95 /* PromptVC.swift in Sources */,
 				2590CF491DBE14320039D62A /* RegisterVC.swift in Sources */,
+				259960431DC737F70001444F /* CarTModel.swift in Sources */,
 				2590CF511DBF0C390039D62A /* TimeButton.m in Sources */,
 				25813E0E1D94D5BB00291D5B /* MyCarCell.swift in Sources */,
 				A85B6CCD1D7D7DB100E43F59 /* AppDelegate.swift in Sources */,

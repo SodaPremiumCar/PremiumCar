@@ -19,18 +19,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        TZNetworkTool.shareNetworkTool.getCar { (carItems) in
+            
+            print(carItems)
+        }
+        
+        
         mock()
         setupUI()
         self.navigationItem.title = "我的车队"
         self.navigationItem.hidesBackButton = true
+        self.navigationController?.isNavigationBarHidden = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.isNavigationBarHidden = false
-        
-//        UserData.share.load()
+        UserData.share.load()
         let mob: String? = UserData.share.mobileNo
         if mob == nil || mob!.isEmpty {
             let loginVC = CarBrandsVC()
@@ -73,11 +79,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        personalInfo.addTarget(self, action: #selector(buttonClick), for: UIControlEvents.touchUpInside)
         
         carListTableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64 - 44), style: .plain)
-        carListTableView.backgroundColor = UIColor.white
+        carListTableView.backgroundColor = UIColor.clear
         carListTableView.delegate = self
         carListTableView.dataSource = self
+        carListTableView.separatorStyle = UITableViewCellSeparatorStyle.none
         carListTableView.register(CarListCell.self, forCellReuseIdentifier: "CarListCellIdentifier")
-        self.view.addSubview(carListTableView)
+        view.addSubview(carListTableView)
 //        carListTableView.tableFooterView = UIView(frame: CGRect.zero)
         
 //        let header = UIView()
@@ -88,15 +95,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let addBtn = UIButton(type: UIButtonType.custom)
         addBtn.frame = CGRect(x: 0, y: SCREEN_HEIGHT - 44 - 64, width: SCREEN_WIDTH, height: 44)
         addBtn.backgroundColor = FUZZY_BACK
+        addBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 5)
+        addBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0)
         addBtn.setImage(UIImage(named: "addOther"), for: UIControlState.normal)
-        addBtn.setTitle("增加车辆。", for: UIControlState.normal)
+        addBtn.setTitle("增加车辆", for: UIControlState.normal)
         addBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         addBtn.addTarget(self, action: #selector(addMoreCar), for: UIControlEvents.touchUpInside)
         let line = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 0.5))
         line.backgroundColor = FUZZY_BACK
         addBtn.addSubview(line)
-        self.view.addSubview(addBtn)
-//        view.addSubview(addBtn)
+        view.addSubview(addBtn)
     }
     
     func addMoreCar() {
@@ -128,8 +136,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "CarListCellIdentifier", for: indexPath) as! CarListCell
-        cell.selectionStyle = .gray
         cell.accessoryType = .disclosureIndicator
+        // 选中背景颜色
+        cell.selectedBackgroundView = UIView(frame: cell.frame)
+        cell.selectedBackgroundView?.backgroundColor = FUZZY_BACK
+        cell.backgroundColor = COLOR_BLACK
         
         let model: CarModel = dataSource[(indexPath as NSIndexPath).row]
         cell.update(model)

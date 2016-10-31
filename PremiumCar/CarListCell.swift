@@ -33,8 +33,8 @@ class CarListCell: UITableViewCell {
         })
         
         nameLabel = UILabel()
-        nameLabel?.textColor = RGBA(0, g: 0, b: 0, a: 1)
-        nameLabel?.font = UIFont.systemFont(ofSize: 18)
+        nameLabel?.textColor = RGBA(255, g: 255, b: 255, a: 1)
+        nameLabel?.font = UIFont.systemFont(ofSize: 17)
         contentView.addSubview(nameLabel!)
         nameLabel?.snp_makeConstraints({ (make) in
             make.top.equalTo(8)
@@ -43,8 +43,8 @@ class CarListCell: UITableViewCell {
         })
         
         numbelLabel = UILabel()
-        numbelLabel?.textColor = RGBA(110, g: 110, b: 110, a: 1)
-        numbelLabel?.font = UIFont.systemFont(ofSize: 16)
+        numbelLabel?.textColor = RGBA(222, g: 222, b: 222, a: 1)
+        numbelLabel?.font = UIFont.systemFont(ofSize: 15)
         contentView.addSubview(numbelLabel!)
         numbelLabel?.snp_makeConstraints({ (make) in
             make.top.equalTo(nameLabel!.snp_bottom)

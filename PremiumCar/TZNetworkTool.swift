@@ -155,10 +155,10 @@ class TZNetworkTool: NSObject {
     }
     
     // 车型信息
-    func carBrandsList(finished:@escaping (_ results: Bool) -> ()) {
+    func carBrandsList(finished:@escaping (_ brandArray: [AnyObject], _ carBigArray: [[CarTModel]]) -> ()) {
         
         Alamofire
-            .request(KURL(kUrlCarBrands), method: .post, parameters: nil, encoding: JSONEncoding.default)
+            .request(KURL(kUrlCarBrands), method: .post, parameters: [ : ], encoding: JSONEncoding.default)
             .responseJSON { (response) in
                 
                 guard response.result.isSuccess else {
@@ -170,15 +170,110 @@ class TZNetworkTool: NSObject {
                     let dict = JSON(value)
                     let code = dict["result"].intValue
                     let message = dict["errMsg"].stringValue
+                    
                     print("qqqqqqqq", dict)
+                    guard code == 10000 else {
+                        SVProgressHUD.showInfo(withStatus: message)
+                        return
+                    }
+                    //  字典转成模型
+                    let brandArray = dict["carTypes"]["brands"].arrayObject                    
+                    
+                    var carBigArray = [[CarTModel]]()
+                    for key in brandArray! {
+                        
+                        let keyStr = key as! String
+                        if let items = dict["carTypes"]["brandCarTypes"][keyStr].arrayObject {
+                            
+                            var carItems = [CarTModel]()
+                            for item in items {
+                                let carItem = CarTModel(dict: item as! [String: AnyObject])
+                                carItems.append(carItem)
+                            }
+                            carBigArray.append(carItems)
+                        }
+                    }
+                    finished(brandArray as! [AnyObject], carBigArray)
+                }
+        }
+    }
+    
+    // 注册车辆信息
+    func addCar(carTypeId: Int, finished:@escaping (_ results: Bool) -> ()) {
+        
+        UserData.share.load()
+        let params: Parameters = ["authToken": UserData.share.authToken! as String,
+                                  "mobileNo" : UserData.share.mobileNo! as String,
+                                  "carTypeId" : carTypeId]
+        
+        Alamofire
+            .request(KURL(kUrlAddCar), method: .post, parameters: params, encoding: JSONEncoding.default)
+            .responseJSON { (response) in
+                
+                guard response.result.isSuccess else {
+                    SVProgressHUD.showError(withStatus: "添加失败")
+                    return
+                }
+                if let value = response.result.value {
+                    
+                    let dict = JSON(value)
+                    let code = dict["result"].intValue
+                    let message = dict["errMsg"].stringValue
+                    
                     guard code == 10000 else {
                         SVProgressHUD.showInfo(withStatus: message)
                         finished(false)
                         return
                     }
-
+                    
+                    SVProgressHUD.showSuccess(withStatus: "添加成功")
                     finished(true)
                 }
         }
     }
+
+    // 获取车辆列表
+    func getCar(finished:@escaping (_ CarItems: [CarTModel]) -> ()) {
+        
+        UserData.share.load()
+        let params: Parameters = ["authToken": UserData.share.authToken! as String,
+                                  "mobileNo" : UserData.share.mobileNo! as String]
+        print("1111111" , params)
+        Alamofire
+            .request(KURL(kUrlGetCar), method: .post, parameters: params, encoding: JSONEncoding.default)
+            .responseJSON { (response) in
+                
+                guard response.result.isSuccess else {
+                    SVProgressHUD.showError(withStatus: "获取失败")
+                    return
+                }
+                if let value = response.result.value {
+                    
+                    let dict = JSON(value)
+                    let code = dict["result"].intValue
+                    let message = dict["errMsg"].stringValue
+                    print(dict)
+                    guard code == 10000 else {
+                        SVProgressHUD.showInfo(withStatus: message)
+                        return
+                    }
+                    
+                    //  字典转成模型
+                    if let items = dict["carType"].arrayObject {
+                        var carItems = [CarTModel]()
+                        for item in items {
+                            let carItem = CarTModel(dict: item as! [String: AnyObject])
+                            carItems.append(carItem)
+                        }
+                        
+                        finished(carItems)
+                    }
+                    
+                }
+        }
+    }
+    
+    
+    
+    
 }
