@@ -20,12 +20,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        TZNetworkTool.shareNetworkTool.getCar { (carItems) in
-            
-            print(carItems)
-        }
-        
-        
         mock()
         setupUI()
         self.navigationItem.title = "我的车队"
@@ -36,11 +30,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.navigationController?.isNavigationBarHidden = false
         UserData.share.load()
         let mob: String? = UserData.share.mobileNo
-        if mob == nil || mob!.isEmpty {
-//            let loginVC = CarBrandsVC()
-//            self.navigationController?.pushViewController(loginVC, animated: false)
+        let auth: String? = UserData.share.authToken
+        if mob == nil || mob!.isEmpty || auth == nil || auth!.isEmpty   {
+            let loginVC = LoginViewController()
+            self.navigationController?.pushViewController(loginVC, animated: false)
+        }else {
+            TZNetworkTool.shareNetworkTool.getCar { (carItems) in
+                
+                print(carItems)
+            }
         }
     }
     
