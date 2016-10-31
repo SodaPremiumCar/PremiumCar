@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         
-        let vc = ViewController()
+        let vc = CarBrandsVC()
         let nav = UINavigationController(rootViewController: vc)
         nav.setStyle(color: COLOR_BLACK)
         window?.rootViewController = nav

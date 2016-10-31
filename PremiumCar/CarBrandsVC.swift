@@ -17,22 +17,12 @@ class CarBrandsVC: UIViewController {
     var submitBtn: UIButton?
     var brandLabel: UILabel?
     var brandStr: String?
+    var carTypeId: Int?
     
-    let brandstitle = ["奔驰", "宝马", "奥迪", "雷克萨斯", "英菲尼迪", "讴歌", "保时捷"]
-    var typestitle = [String]()
     
-    fileprivate lazy var typesArray:[[String]] = {
-        
-        let Benz = ["E 200", "E 260", "E 320", "E 400", "CLS 260", "CLS 320", "CLS 400", "S 320L", "S 400L", "S 400", "S 500", "S 500L", "GLE 300d", "GLE 350d", "GLE 320", "GLE 400", "GLE 500e", "GLE 450", "R 320", "R 400"]
-        let BMW = ["430i", "440i", "528i", "535i", "528i GT", "535i GT", "550i GT", "640i", "650i", "730Li", "740Le", "750Li", "X5 28i", "X5 30d", "X5 35i", "X5 50i"]
-        let Audi = ["S5", "S6", "A6（进口）", "A7", "A8L", "Q5（进口）", "Q7"]
-        let Lexus = ["ES 300h", "ES 200", "ES 250", "GS 300h", "GS 450h", "RX 200t", "RX 450h"]
-        let Infiniti = ["QX60", "QX70", "Q70"]
-        let Acura = ["MDX", "ZDX", "RLX"]
-        let Porsche = ["Panamera", "Macan", "Cayenne"]
-        let typesArray = [Benz, BMW, Audi, Lexus, Infiniti, Acura, Porsche]
-        return typesArray
-    }()
+    var brandstitle = [String]()
+    var typestitle = [CarTModel]()
+    var typesArray = [[CarTModel]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,15 +31,14 @@ class CarBrandsVC: UIViewController {
         self.navigationController?.isNavigationBarHidden = false
         self.navigationItem.hidesBackButton = true
         
-        self.setupUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        TZNetworkTool.shareNetworkTool.carBrandsList { (Bool) in
+        TZNetworkTool.shareNetworkTool.carBrandsList { (brandArray, carBigArray) in
+            
+            self.brandstitle = brandArray as! [String]
+            self.typesArray = carBigArray
+            self.brandsTabelView.reloadData()
             
         }
+        self.setupUI()
     }
 
     private func setupUI() {
@@ -115,9 +104,15 @@ class CarBrandsVC: UIViewController {
     }
     
     func submitCarBrand () {
-        print("提交")
-        let viewController = ViewController()
-        self.navigationController?.pushViewController(viewController, animated: true)
+
+        TZNetworkTool.shareNetworkTool.addCar(carTypeId: carTypeId!) { (isSuccess) in
+            
+            if isSuccess {
+                
+                let viewController = ViewController()
+                self.navigationController?.pushViewController(viewController, animated: true)
+            }
+        }
     }
 }
 
@@ -139,14 +134,10 @@ extension CarBrandsVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var dataArray: [String]!
-        
         if tableView == brandsTabelView {
             identifier = "brandsCell"
-            dataArray = brandstitle
         }else{
             identifier = "typesCell"
-            dataArray = typestitle
         }
         var cell = tableView.dequeueReusableCell(withIdentifier: identifier as String)
         if cell == nil {
@@ -158,8 +149,12 @@ extension CarBrandsVC: UITableViewDelegate, UITableViewDataSource {
             cell!.selectedBackgroundView?.backgroundColor = FUZZY_BACK
             cell!.backgroundColor = COLOR_BLACK
         }
+        if tableView == brandsTabelView {
+            cell!.textLabel?.text = brandstitle[indexPath.row]
+        }else{
+            cell!.textLabel?.text = typestitle[indexPath.row].model
+        }
         
-        cell!.textLabel?.text = dataArray[indexPath.row]
         return cell!
     }
     
@@ -169,13 +164,17 @@ extension CarBrandsVC: UITableViewDelegate, UITableViewDataSource {
             UITableView.animate(withDuration: 0.7, animations: {
                 self.typesTableView.alpha = 1
             })
+            
             brandStr = brandstitle[indexPath.row]
             self.brandLabel?.text = brandStr
+            
             typestitle = typesArray[indexPath.row]
             typesTableView.reloadData()
         }else{
             
-            self.brandLabel?.text = brandStr! + " " + self.typestitle[indexPath.row]
+            self.brandLabel?.text = brandStr! + " " + self.typestitle[indexPath.row].model!
+            carTypeId = self.typestitle[indexPath.row].id
+            print(carTypeId)
             setButton(button: submitBtn!, with: 1)
         }
     }
