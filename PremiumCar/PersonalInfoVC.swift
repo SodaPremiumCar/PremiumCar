@@ -20,18 +20,21 @@ class PersonalInfoVC: UIViewController {
         super.viewDidLoad()
         
         setupUI()
+        self.navigationItem.title = "填写联系方式"
+        self.navigationItem.hidesBackButton = true
     }
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        
-//        self.navigationController?.isNavigationBarHidden = true
-//    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.isNavigationBarHidden = false
+    }
     
     fileprivate func setupUI() {
     
         self.view.backgroundColor = COLOR_BLACK
         
-        let infoImg = UIImageView(frame: CGRect(x: (SCREEN_WIDTH - 100) * 0.5, y: 150, width: 100, height: 100))
+        let infoImg = UIImageView(frame: CGRect(x: (SCREEN_WIDTH - 100) * 0.5, y: 86, width: 100, height: 100))
         infoImg.image = UIImage(named:"personalInfo")
         view.addSubview(infoImg)
         

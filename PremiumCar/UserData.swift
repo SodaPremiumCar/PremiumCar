@@ -11,16 +11,19 @@ import Foundation
 class UserData: NSObject {
     
     var mobileNo: String?
+    var authToken: String?
     // 单例
     static let share = UserData()
     
     func save() {
         
         UserDefaults.standard.set(mobileNo, forKey: "mobileNo")
+        UserDefaults.standard.set(authToken, forKey: "authToken")
         UserDefaults.standard.synchronize()
     }
     
     func load() {
         mobileNo = UserDefaults.standard.string(forKey: "mobileNo")
+        mobileNo = UserDefaults.standard.string(forKey: "authToken")
     }
 }

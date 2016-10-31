@@ -21,9 +21,9 @@ private func kURLTest(_ URL: String) -> String{
     return "http://premiumcar.chinacloudapp.cn:8088/server/" + URL
 }
 
-let kUrlLogin        = "api/login.c"              //登录
-let kUrlDynamicPws   = "api/getDynamicPws.c"      //验证码
-let kUrlRegister     = "api/register.c"           //注册
+let kUrlLogin        = "openapi/login.c"              //登录
+let kUrlDynamicPws   = "openapi/getDynamicPws.c"      //验证码
+let kUrlRegister     = "openapi/register.c"           //注册
 let kUrlPersonalInfo = "api/updateUserInfo.c"     //个人信息
 
 

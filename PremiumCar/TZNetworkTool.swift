@@ -32,9 +32,10 @@ class TZNetworkTool: NSObject {
                 if let value = response.result.value {
                     
                     let dict = JSON(value)
+                    let authToken = dict["authToken"].stringValue
                     let code = dict["result"].intValue
                     let message = dict["errMsg"].stringValue
-                    
+                    print(dict)
                     guard code == 10000 else {
                         SVProgressHUD.showInfo(withStatus: message)
                         finished(false)
@@ -42,6 +43,7 @@ class TZNetworkTool: NSObject {
                     }
                     
                     UserData.share.mobileNo = mobileNo
+                    UserData.share.authToken = authToken
                     UserData.share.save()
                     SVProgressHUD.showSuccess(withStatus: "登录成功")
                     finished(true)
@@ -107,8 +109,6 @@ class TZNetworkTool: NSObject {
                         return
                     }
                     
-                    UserData.share.mobileNo = mobileNo
-                    UserData.share.save()
                     SVProgressHUD.showSuccess(withStatus: "注册成功")
                     finished(true)
                 }
@@ -118,12 +118,13 @@ class TZNetworkTool: NSObject {
     // 个人信息
     func personalInfo(telephone: String, name: String, addr: String, finished:@escaping (_ results: Bool) -> ()) {
         UserData.share.load()
-
-        let params: Parameters = ["mobileNo" : UserData.share.mobileNo! as String,
+        
+        let params: Parameters = ["authToken": UserData.share.authToken,
+                                  "mobileNo" : UserData.share.mobileNo! as String,
                                   "telephone": telephone,
                                   "name" : name,
                                   "addr" : addr]
-        
+        print("1111111111",params)
         Alamofire
             .request(KURL(kUrlPersonalInfo), method: .post, parameters: params, encoding: JSONEncoding.default)
             .responseJSON { (response) in
@@ -148,5 +149,4 @@ class TZNetworkTool: NSObject {
                 }
         }
     }
-    
 }

@@ -36,14 +36,15 @@ class CarBrandsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = true
+        self.navigationItem.title = "添加车辆"
+//        self.navigationController?.isNavigationBarHidden = true
         self.setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        
+        self.navigationController?.isNavigationBarHidden = false
     }
 
     private func setupUI() {
@@ -56,7 +57,7 @@ class CarBrandsVC: UIViewController {
 //        self.title = "绑定车辆"
         self.view.backgroundColor = COLOR_BLACK
         
-        let chooseImg = UIImageView(frame: CGRect(x: (SCREEN_WIDTH - 100) * 0.5, y: 100, width: 100, height: 100))
+        let chooseImg = UIImageView(frame: CGRect(x: (SCREEN_WIDTH - 100) * 0.5, y: 86, width: 100, height: 100))
         chooseImg.image = UIImage(named:"chooseBrand")
         view.addSubview(chooseImg)
         
@@ -79,7 +80,7 @@ class CarBrandsVC: UIViewController {
         typesTableView.tableFooterView = UIView(frame: CGRect.zero)
         view.addSubview(typesTableView)
         
-        submitView = UIView(frame: CGRect(x: 0, y: SCREEN_HEIGHT - 50, width: SCREEN_WIDTH, height: 50))
+        submitView = UIView(frame: CGRect(x: 0, y: SCREEN_HEIGHT - 50 - 64, width: SCREEN_WIDTH, height: 50))
         submitView?.backgroundColor = FUZZY_BACK
         
         // UI线

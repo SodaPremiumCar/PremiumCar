@@ -26,6 +26,12 @@ class RegisterVC: UIViewController {
         setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -132,6 +138,9 @@ class RegisterVC: UIViewController {
             
             if isSuccess {
                 
+                TZNetworkTool.shareNetworkTool.login(mobileNo: self.mobileNo!.text!, pwd: self.password!.text!, finished: { (isSuccess) in
+                    print("登录")
+                })
                 let personalVC = PersonalInfoVC()
                 self.navigationController?.pushViewController(personalVC, animated: true)
             }
