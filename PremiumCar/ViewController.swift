@@ -24,7 +24,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
 //        mock()
         setupUI()
-        self.navigationItem.title = "我的车队"
+        self.navigationItem.title = "我的车"
         self.navigationItem.hidesBackButton = true
         self.navigationController?.isNavigationBarHidden = false
     }

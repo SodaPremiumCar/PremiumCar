@@ -306,8 +306,8 @@ class TZNetworkTool: NSObject {
         }
     }
     
-    //服务项目
-    func createOrder(finished:@escaping (_ results: Bool) -> ()) {
+    //提交订单
+    func createOrder(content: String, services: [String : String], contacts: [String : String], total: String, remark: String, finished:@escaping (_ results: Bool) -> ()) {
         
         Alamofire
             .request(KURL(kUrlCreateOrder), method: .post, parameters: [:], encoding: JSONEncoding.default)
@@ -329,7 +329,8 @@ class TZNetworkTool: NSObject {
                         return
                     }
                     
-                    SVProgressHUD.showSuccess(withStatus: "添加成功")
+                    SVProgressHUD.showSuccess(withStatus: "提交成功")
+                    SVProgressHUD.dismiss(withDelay: 1.5)
                     finished(true)
                 }
         }
