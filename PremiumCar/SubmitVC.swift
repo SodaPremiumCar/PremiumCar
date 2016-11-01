@@ -163,8 +163,9 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
             let title = String(format: "%@，您的联系方式为%@，预约时间为%@", nameTextField.text!, phoneTextField.text!, dateTextField.text!)
             let alert: UIAlertController = UIAlertController(title: title, message: "", preferredStyle: .alert)
         let action0: UIAlertAction = UIAlertAction(title: "提交", style: .default) { (alert) in
-            let promptVC = PromptVC()
-            self.navigationController?.pushViewController(promptVC, animated: true)
+            
+//            let promptVC = PromptVC()
+//            self.navigationController?.pushViewController(promptVC, animated: true)
         }
         let action1: UIAlertAction = UIAlertAction(title: "取消", style: .cancel) { (alert) in
         }

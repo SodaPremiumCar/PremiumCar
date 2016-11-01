@@ -272,7 +272,7 @@ class TZNetworkTool: NSObject {
         }
     }
 
-    // 服务项目
+    //服务项目
     func serviceList(finished:@escaping (_ results: Bool, _ data: [String : AnyObject]?, _ types: [String]?) -> ()) {
         
         Alamofire
@@ -301,6 +301,35 @@ class TZNetworkTool: NSObject {
                         print(data)
                         finished(true, data as! [String : AnyObject]?, types as! [String]?)
                     }
+                }
+        }
+    }
+    
+    //服务项目
+    func createOrder(finished:@escaping (_ results: Bool) -> ()) {
+        
+        Alamofire
+            .request(KURL(kUrlCreateOrder), method: .post, parameters: [:], encoding: JSONEncoding.default)
+            .responseJSON { (response) in
+                
+                guard response.result.isSuccess else {
+                    SVProgressHUD.showError(withStatus: "添加失败")
+                    return
+                }
+                if let value = response.result.value {
+                    
+                    let dict = JSON(value)
+                    let code = dict["result"].intValue
+                    let message = dict["errMsg"].stringValue
+                    
+                    guard code == 10000 else {
+                        SVProgressHUD.showInfo(withStatus: message)
+                        finished(false)
+                        return
+                    }
+                    
+                    SVProgressHUD.showSuccess(withStatus: "添加成功")
+                    finished(true)
                 }
         }
     }
