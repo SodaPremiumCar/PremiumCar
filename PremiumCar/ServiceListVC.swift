@@ -10,9 +10,14 @@ import Foundation
 
 class ServiceListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var carModel: CarTModel!
+    var idStr: Int!
+    var serviceItems: [ServiceItemModel] = []
+    
     private var submitBtn: UIButton!
     private var priceLabel: UILabel!
     private var tableView: UITableView!
+    
     private var dataSource: [String : AnyObject]?  {
         didSet {
             self.tableView?.reloadData()
@@ -117,6 +122,10 @@ class ServiceListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     //MARK: Handle
     func buttonClicked(sender: UIButton) {
         let submitVC = SubmitVC()
+        submitVC.carModel = self.carModel
+        submitVC.idStr = self.idStr
+        submitVC.serviceItems = self.serviceItems
+        submitVC.count = self.count
         self.navigationController?.pushViewController(submitVC, animated: true)
     }
     
@@ -173,8 +182,10 @@ class ServiceListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         if ids.contains(model.id!) {
             let i = ids.index(of: model.id!)
             ids.remove(at: i!)
+            serviceItems.remove(at: i!)
         }else {
             ids.append(model.id!)
+            serviceItems.append(model)
         }
         tableView.reloadData()
         count = sum()

@@ -160,11 +160,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.deselectRow(at: indexPath, animated: true)
         
         let model: CarTModel = carItems[(indexPath as NSIndexPath).row]
-        let detailVC = CarDetailVC()
-        detailVC.carModel = model
-        print(idArray[indexPath.row])
-        detailVC.idStr = idArray[indexPath.row]
-        detailVC.title = model.brand! + model.model!
-        self.navigationController?.pushViewController(detailVC, animated: true)
+        let serviceListVC = ServiceListVC()
+        serviceListVC.carModel = model
+        serviceListVC.idStr = idArray[indexPath.row]
+        self.navigationController?.pushViewController(serviceListVC, animated: true)
     }
 }

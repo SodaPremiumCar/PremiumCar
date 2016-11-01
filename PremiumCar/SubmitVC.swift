@@ -10,6 +10,11 @@ import UIKit
 
 class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    var carModel: CarTModel!
+    var idStr: Int!
+    var serviceItems: [ServiceItemModel]!
+    var count: Float!
+    
     private var submitBtn: UIButton!
     fileprivate var tableView: UITableView!
     fileprivate var phoneTextField: UITextField!
@@ -164,8 +169,25 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
             let alert: UIAlertController = UIAlertController(title: title, message: "", preferredStyle: .alert)
         let action0: UIAlertAction = UIAlertAction(title: "提交", style: .default) { (alert) in
             
-//            let promptVC = PromptVC()
-//            self.navigationController?.pushViewController(promptVC, animated: true)
+            let content = self.carModel.brand! + self.carModel.model!
+            let contacts = ["name" : (self.nameTextField.text != nil) ? self.nameTextField.text : "",
+                            "addr" : (self.addressTextField.text != nil) ? self.addressTextField.text : "",
+                            "telephone" : (self.phoneTextField.text != nil) ? self.phoneTextField.text : ""]
+            let booking = (self.dateTextField.text != nil) ? self.dateTextField.text : ""
+            var services = [AnyObject]()
+            for model in self.serviceItems {
+                var dic = [String : String]()
+                dic["count"] = "1"
+                dic["price"] = String(describing: model.price!)
+                let serviceDic = [String(describing: model.id!) : dic]
+                services.append(serviceDic as AnyObject)
+            }
+            TZNetworkTool.shareNetworkTool.createOrder(content: content, services: services, contacts: contacts as! [String : String], total: String(self.count), remark: "", carId: String(describing: self.carModel.id!), carTypeId: String(self.idStr!), booking: booking!, finished: { (isSuccess) in
+                if isSuccess {
+                    let promptVC = PromptVC()
+                    self.navigationController?.pushViewController(promptVC, animated: true)
+                }
+            })
         }
         let action1: UIAlertAction = UIAlertAction(title: "取消", style: .cancel) { (alert) in
         }

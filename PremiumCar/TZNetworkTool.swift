@@ -311,10 +311,22 @@ class TZNetworkTool: NSObject {
     }
     
     //提交订单
-    func createOrder(content: String, services: [String : String], contacts: [String : String], total: String, remark: String, finished:@escaping (_ results: Bool) -> ()) {
+    func createOrder(content: String, services: [AnyObject]!, contacts: [String : String]!, total: String, remark: String, carId: String!, carTypeId: String!, booking: String!,  finished:@escaping (_ results: Bool) -> ()) {
+        
+        UserData.share.load()
+        let params: Parameters = ["authToken": UserData.share.authToken! as String,
+                                  "mobileNo" : UserData.share.mobileNo! as String,
+                                  "content" : content,
+                                  "services" : objectToJsonstring(obj: services as AnyObject),
+                                  "contacts" : objectToJsonstring(obj: contacts as AnyObject),
+                                  "total" : total,
+                                  "remark" : remark,
+                                  "carId" : carId,
+                                  "carTypeId" : carTypeId,
+                                  "booking" : booking]
         
         Alamofire
-            .request(KURL(kUrlCreateOrder), method: .post, parameters: [:], encoding: JSONEncoding.default)
+            .request(KURL(kUrlCreateOrder), method: .post, parameters: params, encoding: JSONEncoding.default)
             .responseJSON { (response) in
                 
                 guard response.result.isSuccess else {
@@ -333,11 +345,17 @@ class TZNetworkTool: NSObject {
                         return
                     }
                     
-                    SVProgressHUD.showSuccess(withStatus: "提交成功")
-                    SVProgressHUD.dismiss(withDelay: 1.5)
                     finished(true)
                 }
         }
+    }
+    
+    //Dictionary或Array转JSON串
+    func objectToJsonstring(obj: AnyObject) -> String{
+        
+        let paramsJSON = JSON(obj)
+        let paramsString = paramsJSON.rawString(String.Encoding.utf8, options: .prettyPrinted)
+        return (paramsString != nil) ? paramsString! : ""
     }
 }
 
