@@ -179,8 +179,11 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
                 var dic = [String : String]()
                 dic["count"] = "1"
                 dic["price"] = String(describing: model.price!)
-                let serviceDic = [String(describing: model.id!) : dic]
-                services.append(serviceDic as AnyObject)
+                dic["id"] = String(describing: model.id!)
+                let name: String = (model.name != nil) ? model.name! : ""
+                let item: String = (model.item != nil) ? model.item! : ""
+                dic["name"] = name + item
+                services.append(dic as AnyObject)
             }
             TZNetworkTool.shareNetworkTool.createOrder(content: content, services: services, contacts: contacts as! [String : String], total: String(self.count), remark: "", carId: String(describing: self.carModel.id!), carTypeId: String(self.idStr!), booking: booking!, finished: { (isSuccess) in
                 if isSuccess {
