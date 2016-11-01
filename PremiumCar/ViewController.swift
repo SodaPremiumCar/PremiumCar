@@ -11,16 +11,18 @@ import UIKit
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var carListTableView: UITableView!
-    fileprivate var dataSource: [CarModel] = []  {
-        didSet {
-            carListTableView?.reloadData()
-        }
-    }
+    var carItems = [CarTModel]()
+    
+//    fileprivate var dataSource: [CarModel] = []  {
+//        didSet {
+//            carListTableView?.reloadData()
+//        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mock()
+//        mock()
         setupUI()
         self.navigationItem.title = "我的车队"
         self.navigationItem.hidesBackButton = true
@@ -35,34 +37,37 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let mob: String? = UserData.share.mobileNo
         let auth: String? = UserData.share.authToken
         if mob == nil || mob!.isEmpty || auth == nil || auth!.isEmpty   {
+            
             let loginVC = LoginViewController()
             self.navigationController?.pushViewController(loginVC, animated: false)
         }else {
+            
             TZNetworkTool.shareNetworkTool.getCar { (carItems) in
                 
-                print(carItems)
+                self.carItems = carItems
+                self.carListTableView.reloadData()
             }
         }
     }
     
-    //MARK: Data
-    fileprivate func mock() {
-        
-        let dic0 = ["name" : "保时捷 911", "url" : "Porsche-911", "numbel" : "京A 32N28"]
-        let model0 = CarModel(dic: dic0 as [String : AnyObject])
-        let dic1 = ["name" : "宾利 添越", "url" : "Bingley-bentayga", "numbel" : "京N 2O4P2"]
-        let model1 = CarModel(dic: dic1 as [String : AnyObject])
-        let dic2 = ["name" : "捷豹 F-Pace", "url" : "Jaguar-fPace", "numbel" : "京Q 12JL1"]
-        let model2 = CarModel(dic: dic2 as [String : AnyObject])
-        let dic3 = ["name" : "奔驰 SL", "url" : "Benz-SL", "numbel" : "京A 93DL8"]
-        let model3 = CarModel(dic: dic3 as [String : AnyObject])
-        let dic4 = ["name" : "劳斯莱斯 魅影", "url" : "RollsRoyce-wraith", "numbel" : "京Q J4Y89"]
-        let model4 = CarModel(dic: dic4 as [String : AnyObject])
-        let dic5 = ["name" : "特斯拉 ModelS", "url" : "Tesla-modelS", "numbel" : "京N 6NN18"]
-        let model5 = CarModel(dic: dic5 as [String : AnyObject])
-        
-        dataSource = [model0, model1, model2, model3, model4, model5]
-    }
+//    //MARK: Data
+//    fileprivate func mock() {
+//        
+//        let dic0 = ["name" : "保时捷 911", "url" : "Porsche-911", "numbel" : "京A 32N28"]
+//        let model0 = CarModel(dic: dic0 as [String : AnyObject])
+//        let dic1 = ["name" : "宾利 添越", "url" : "Bingley-bentayga", "numbel" : "京N 2O4P2"]
+//        let model1 = CarModel(dic: dic1 as [String : AnyObject])
+//        let dic2 = ["name" : "捷豹 F-Pace", "url" : "Jaguar-fPace", "numbel" : "京Q 12JL1"]
+//        let model2 = CarModel(dic: dic2 as [String : AnyObject])
+//        let dic3 = ["name" : "奔驰 SL", "url" : "Benz-SL", "numbel" : "京A 93DL8"]
+//        let model3 = CarModel(dic: dic3 as [String : AnyObject])
+//        let dic4 = ["name" : "劳斯莱斯 魅影", "url" : "RollsRoyce-wraith", "numbel" : "京Q J4Y89"]
+//        let model4 = CarModel(dic: dic4 as [String : AnyObject])
+//        let dic5 = ["name" : "特斯拉 ModelS", "url" : "Tesla-modelS", "numbel" : "京N 6NN18"]
+//        let model5 = CarModel(dic: dic5 as [String : AnyObject])
+//        
+//        dataSource = [model0, model1, model2, model3, model4, model5]
+//    }
     
     //MARK: UI
     fileprivate func setupUI() {
@@ -122,8 +127,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     //MARK: TableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if dataSource.count > 0 {
-            return dataSource.count
+        if carItems.count > 0 {
+            return carItems.count
         }else {
             return 0
         }
@@ -143,7 +148,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.selectedBackgroundView?.backgroundColor = FUZZY_BACK
         cell.backgroundColor = COLOR_BLACK
         
-        let model: CarModel = dataSource[(indexPath as NSIndexPath).row]
+        let model: CarTModel = carItems[(indexPath as NSIndexPath).row]
         cell.update(model)
         return cell
     }
@@ -152,10 +157,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let model: CarModel = dataSource[(indexPath as NSIndexPath).row]
+        let model: CarTModel = carItems[(indexPath as NSIndexPath).row]
         let detailVC = CarDetailVC()
         detailVC.carModel = model
-        detailVC.title = model.name
+        detailVC.title = model.brand! + model.model!
         self.navigationController?.pushViewController(detailVC, animated: true)
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 
 class CarDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var carModel: CarModel!
+    var carModel: CarTModel!
     var dataArray: [AnyObject]!
     fileprivate var tableView: UITableView!
     fileprivate var banner: UIImageView!
@@ -38,7 +38,7 @@ class CarDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
             make.left.equalTo(0)
             make.size.equalTo(CGSize(width: SCREEN_WIDTH, height: SCREEN_WIDTH))
         })
-        banner.image = UIImage(named: carModel.url!)
+//        banner.image = UIImage(named: carModel.url!)
         
         self.tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 50 - 64), style: .plain)
         self.tableView.backgroundColor = UIColor.clear
@@ -137,7 +137,7 @@ class CarDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
                 make.centerX.equalTo(self.view)
                 make.size.equalTo(CGSize(width: 200, height: 60))
             })
-            numbelLabel.text = self.carModel.numbel
+//            numbelLabel.text = self.carModel.numbel
             numbelLabel.alpha = 0.85
         }else {
             let text = dataArray[(indexPath as NSIndexPath).row] as! String
