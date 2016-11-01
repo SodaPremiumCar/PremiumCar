@@ -13,12 +13,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var carListTableView: UITableView!
     var carItems = [CarTModel]()
     var idArray = [Int]()
-    
-//    fileprivate var dataSource: [CarModel] = []  {
-//        didSet {
-//            carListTableView?.reloadData()
-//        }
-//    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,24 +47,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-//    //MARK: Data
-//    fileprivate func mock() {
-//        
-//        let dic0 = ["name" : "保时捷 911", "url" : "Porsche-911", "numbel" : "京A 32N28"]
-//        let model0 = CarModel(dic: dic0 as [String : AnyObject])
-//        let dic1 = ["name" : "宾利 添越", "url" : "Bingley-bentayga", "numbel" : "京N 2O4P2"]
-//        let model1 = CarModel(dic: dic1 as [String : AnyObject])
-//        let dic2 = ["name" : "捷豹 F-Pace", "url" : "Jaguar-fPace", "numbel" : "京Q 12JL1"]
-//        let model2 = CarModel(dic: dic2 as [String : AnyObject])
-//        let dic3 = ["name" : "奔驰 SL", "url" : "Benz-SL", "numbel" : "京A 93DL8"]
-//        let model3 = CarModel(dic: dic3 as [String : AnyObject])
-//        let dic4 = ["name" : "劳斯莱斯 魅影", "url" : "RollsRoyce-wraith", "numbel" : "京Q J4Y89"]
-//        let model4 = CarModel(dic: dic4 as [String : AnyObject])
-//        let dic5 = ["name" : "特斯拉 ModelS", "url" : "Tesla-modelS", "numbel" : "京N 6NN18"]
-//        let model5 = CarModel(dic: dic5 as [String : AnyObject])
-//        
-//        dataSource = [model0, model1, model2, model3, model4, model5]
-//    }
     
     //MARK: UI
     fileprivate func setupUI() {
@@ -117,6 +94,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func addMoreCar() {
         let carBrandsVC = CarBrandsVC()
+        carBrandsVC.isFromRegister = false
         self.navigationController?.pushViewController(carBrandsVC, animated: true)
     }
     
@@ -160,9 +138,38 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.deselectRow(at: indexPath, animated: true)
         
         let model: CarTModel = carItems[(indexPath as NSIndexPath).row]
+<<<<<<< HEAD
         let serviceListVC = ServiceListVC()
         serviceListVC.carModel = model
         serviceListVC.idStr = idArray[indexPath.row]
         self.navigationController?.pushViewController(serviceListVC, animated: true)
+=======
+        let detailVC = CarDetailVC()
+        detailVC.carModel = model
+        detailVC.idStr = idArray[indexPath.row]
+        detailVC.title = model.brand! + model.model!
+        self.navigationController?.pushViewController(detailVC, animated: true)
+>>>>>>> origin/ting
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        let idStr = String(describing: idArray[indexPath.row])
+        print(idStr)
+        TZNetworkTool.shareNetworkTool.deleteCar(id: idStr) { (isSuccess) in
+            if isSuccess {
+                
+                TZNetworkTool.shareNetworkTool.getCar { (carItems, idArray) in
+                    
+                    self.carItems = carItems
+                    self.idArray = idArray
+                    self.carListTableView.reloadData()
+                }
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "删除"
     }
 }

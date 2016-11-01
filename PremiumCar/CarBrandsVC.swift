@@ -19,6 +19,8 @@ class CarBrandsVC: UIViewController {
     var brandStr: String?
     var carTypeId: Int?
     
+    var isFromRegister = true
+    
     
     var brandstitle = [String]()
     var typestitle = [CarTModel]()
@@ -29,7 +31,7 @@ class CarBrandsVC: UIViewController {
         
         self.navigationItem.title = "添加车辆"
         self.navigationController?.isNavigationBarHidden = false
-        self.navigationItem.hidesBackButton = true
+        self.navigationItem.hidesBackButton = isFromRegister
         
         TZNetworkTool.shareNetworkTool.carBrandsList { (brandArray, carBigArray) in
             

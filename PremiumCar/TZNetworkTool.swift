@@ -266,7 +266,6 @@ class TZNetworkTool: NSObject {
                            
                             let itemT = item as! [String: AnyObject]
                             let typeItem = itemT["carType"]
-                            let idInt = itemT["id"] as! Int
                             let carItem = CarTModel(dict: typeItem as! [String : AnyObject])
                             carItems.append(carItem)
                             idArray.append(itemT["id"] as! Int)
@@ -274,6 +273,38 @@ class TZNetworkTool: NSObject {
                         
                         finished(carItems, idArray)
                     }
+                }
+        }
+    }
+    
+    //删除车辆
+    func deleteCar(id: String, finished:@escaping (_ results: Bool) -> ()) {
+        
+        UserData.share.load()
+        let params: Parameters = ["authToken": UserData.share.authToken! as String,
+                                  "mobileNo" : UserData.share.mobileNo! as String,
+                                  "id" : id]
+        
+        Alamofire
+            .request(KURL(kUrlDeleteCar), method: .post, parameters: params, encoding: JSONEncoding.default)
+            .responseJSON { (response) in
+                
+                guard response.result.isSuccess else {
+                    SVProgressHUD.showError(withStatus: "网络异常")
+                    return
+                }
+                if let value = response.result.value {
+                    
+                    let dict = JSON(value)
+                    let code = dict["result"].intValue
+                    let message = dict["errMsg"].stringValue
+                    
+                    guard code == 10000 else {
+                        SVProgressHUD.showInfo(withStatus: message)
+                        finished(false)
+                        return
+                    }
+                    finished(true)
                 }
         }
     }
