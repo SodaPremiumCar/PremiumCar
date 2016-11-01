@@ -21,24 +21,28 @@ class CarListCell: UITableViewCell {
         self.backgroundColor = UIColor.white
         
         imgView = UIImageView()
-        imgView?.backgroundColor = RGBA(250, g: 250, b: 250, a: 1)
-        imgView?.clipsToBounds = true
-        imgView?.contentMode = .scaleAspectFill
+        imgView?.backgroundColor = UIColor.clear
+//        imgView?.clipsToBounds = true
+        imgView?.contentMode = .scaleAspectFit
         contentView.addSubview(imgView!)
         imgView?.snp_makeConstraints({ (make) in
-            make.top.equalTo(8)
-            make.left.equalTo(8)
-            make.size.equalTo(CGSize(width: 124, height: 64))
+            make.top.equalTo(20)
+            make.left.equalTo(20)
+            make.size.equalTo(CGSize(width: 40, height: 40))
         })
+        
+        let lineH = UIView(frame: CGRect(x: 80, y: 20, width: 0.5, height: 40))
+        lineH.backgroundColor = RGBA(255, g: 255, b: 255, a: 0.35)
+        contentView.addSubview(lineH)
         
         nameLabel = UILabel()
         nameLabel?.textColor = RGBA(255, g: 255, b: 255, a: 1)
-        nameLabel?.font = UIFont.systemFont(ofSize: 17)
+        nameLabel?.font = UIFont.systemFont(ofSize: 14)
         contentView.addSubview(nameLabel!)
         nameLabel?.snp_makeConstraints({ (make) in
-            make.top.equalTo(8)
-            make.left.equalTo(imgView!.snp_right).offset(8)
-            make.size.equalTo(CGSize(width: SCREEN_WIDTH-8-54-8-8-80-10, height: 32))
+            make.top.equalTo(0)
+            make.left.equalTo(lineH.snp_right).offset(10)
+            make.size.equalTo(CGSize(width: SCREEN_WIDTH * 0.5, height: 80))
         })
         
 //        numbelLabel = UILabel()
@@ -53,13 +57,31 @@ class CarListCell: UITableViewCell {
     }
     
     func update(_ model: CarTModel) {
-
+        
+        var carImg = UIImage()
+        if model.brand == "奔驰" {
+            carImg = UIImage(named: "benz")!
+        }else if model.brand == "讴歌" {
+            carImg = UIImage(named: "acura")!
+        }else if model.brand == "奥迪" {
+            carImg = UIImage(named: "audi")!
+        }else if model.brand == "宝马" {
+            carImg = UIImage(named: "bmw")!
+        }else if model.brand == "英菲尼迪" {
+            carImg = UIImage(named: "infiniti")!
+        }else if model.brand == "雷克萨斯" {
+            carImg = UIImage(named: "lexus")!
+        }else if model.brand == "保时捷" {
+            carImg = UIImage(named: "porsche")!
+        }
+        
+        self.imgView?.image = carImg
         nameLabel?.text = model.brand! + " " + model.model!
     }
     
     class func height() -> CGFloat {
         
-        return 75
+        return 80
     }
     
     required init?(coder aDecoder: NSCoder) {

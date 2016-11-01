@@ -26,11 +26,13 @@ let kUrlDynamicPws   = "openapi/getDynamicPws.c"      //验证码
 let kUrlRegister     = "openapi/register.c"           //注册
 let kUrlPersonalInfo = "api/updateUserInfo.c"         //个人信息
 let kUrlCarBrands    = "openapi/getCarTypeList.c"     //车型列表
-let kUrlServiceList  = "openapi/getServiceList.c"   //获取服务信息
+let kUrlServiceList  = "openapi/getServiceList.c"     //获取服务信息
 let kUrlAddCar       = "api/addCar.c"                 //注册车辆
 let kUrlGetCar       = "api/getCarList.c"             //获取车辆
+let kUrlDeleteCar    = "api/deleteCar.c"              //删除车辆
 let kUrlCreateOrder  = "api/createOrder.c"   //创建订单
 let kUrlGetOrderList = "api/getOrderList.c"  //获取订单列表
+
 
 
 
