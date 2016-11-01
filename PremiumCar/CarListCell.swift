@@ -53,13 +53,9 @@ class CarListCell: UITableViewCell {
         })
     }
     
-    func update(_ model: CarModel) {
-        
-        if model.url != nil {
-            imgView?.image = UIImage(named: model.url!)
-        }
-        nameLabel?.text = model.name
-        numbelLabel?.text = model.numbel
+    func update(_ model: CarTModel) {
+        print(model.brand! + model.model!)
+        nameLabel?.text = model.brand! + model.model!
     }
     
     class func height() -> CGFloat {
@@ -71,9 +67,5 @@ class CarListCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-
-
-
 
 

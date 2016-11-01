@@ -113,11 +113,11 @@
 			isa = PBXGroup;
 			children = (
 				A85B6CCC1D7D7DB100E43F59 /* AppDelegate.swift */,
+				A85B6CCE1D7D7DB100E43F59 /* ViewController.swift */,
 				254C6A661DBDDD5C00C0B80F /* LoginViewController.swift */,
 				2590CF481DBE14320039D62A /* RegisterVC.swift */,
 				2590CF551DBF59590039D62A /* PersonalInfoVC.swift */,
 				25120B901DC08F26000F506F /* CarBrandsVC.swift */,
-				A85B6CCE1D7D7DB100E43F59 /* ViewController.swift */,
 				A85B6CED1D7E727400E43F59 /* CarListCell.swift */,
 				A8A2406B1D8284CA00964F74 /* CarDetailVC.swift */,
 				A8B7F4151DC728AF00896BD4 /* ServiceListVC.swift */,

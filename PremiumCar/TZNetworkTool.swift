@@ -26,7 +26,7 @@ class TZNetworkTool: NSObject {
             .responseJSON { (response) in
                 
                 guard response.result.isSuccess else {
-                    SVProgressHUD.showError(withStatus: "登录失败")
+                    SVProgressHUD.showError(withStatus: "网络异常")
                     return
                 }
                 if let value = response.result.value {
@@ -61,7 +61,7 @@ class TZNetworkTool: NSObject {
             .responseJSON { (response) in
                 
                 guard response.result.isSuccess else {
-                    SVProgressHUD.showError(withStatus: "发送失败")
+                    SVProgressHUD.showError(withStatus: "网络异常")
                     return
                 }
                 if let value = response.result.value {
@@ -94,7 +94,7 @@ class TZNetworkTool: NSObject {
             .responseJSON { (response) in
                 
                 guard response.result.isSuccess else {
-                    SVProgressHUD.showError(withStatus: "注册失败")
+                    SVProgressHUD.showError(withStatus: "网络异常")
                     return
                 }
                 if let value = response.result.value {
@@ -130,7 +130,7 @@ class TZNetworkTool: NSObject {
             .responseJSON { (response) in
                 
                 guard response.result.isSuccess else {
-                    SVProgressHUD.showError(withStatus: "提交失败")
+                    SVProgressHUD.showError(withStatus: "网络异常")
                     return
                 }
                 if let value = response.result.value {
@@ -210,7 +210,7 @@ class TZNetworkTool: NSObject {
             .responseJSON { (response) in
                 
                 guard response.result.isSuccess else {
-                    SVProgressHUD.showError(withStatus: "添加失败")
+                    SVProgressHUD.showError(withStatus: "网络异常")
                     return
                 }
                 if let value = response.result.value {
@@ -237,13 +237,13 @@ class TZNetworkTool: NSObject {
         UserData.share.load()
         let params: Parameters = ["authToken": UserData.share.authToken! as String,
                                   "mobileNo" : UserData.share.mobileNo! as String]
-        print("1111111" , params)
+
         Alamofire
             .request(KURL(kUrlGetCar), method: .post, parameters: params, encoding: JSONEncoding.default)
             .responseJSON { (response) in
                 
                 guard response.result.isSuccess else {
-                    SVProgressHUD.showError(withStatus: "获取失败")
+                    SVProgressHUD.showError(withStatus: "网络异常")
                     return
                 }
                 if let value = response.result.value {
@@ -258,16 +258,18 @@ class TZNetworkTool: NSObject {
                     }
                     
                     //  字典转成模型
-                    if let items = dict["carType"].arrayObject {
+                    if let items = dict["carList"].arrayObject {
                         var carItems = [CarTModel]()
                         for item in items {
-                            let carItem = CarTModel(dict: item as! [String: AnyObject])
+                           
+                            let itemT = item as! [String: AnyObject]
+                            let typeItem = itemT["carType"]
+                            let carItem = CarTModel(dict: typeItem as! [String : AnyObject])
                             carItems.append(carItem)
                         }
                         
                         finished(carItems)
                     }
-                    
                 }
         }
     }
@@ -288,7 +290,6 @@ class TZNetworkTool: NSObject {
                     let dict = JSON(value)
                     let code = dict["result"].intValue
                     let message = dict["errMsg"].stringValue
-                    print("qqqqqqqq", dict)
                     guard code == 10000 else {
                         SVProgressHUD.showInfo(withStatus: message)
                         finished(false, nil, nil)
