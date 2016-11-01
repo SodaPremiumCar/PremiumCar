@@ -225,7 +225,6 @@ class TZNetworkTool: NSObject {
                         return
                     }
                     
-                    SVProgressHUD.showSuccess(withStatus: "添加成功")
                     finished(true)
                 }
         }
