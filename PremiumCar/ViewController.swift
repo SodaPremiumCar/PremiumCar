@@ -12,6 +12,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var carListTableView: UITableView!
     var carItems = [CarTModel]()
+    var idArray = [Int]()
     
 //    fileprivate var dataSource: [CarModel] = []  {
 //        didSet {
@@ -24,7 +25,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
 //        mock()
         setupUI()
-        self.navigationItem.title = "我的车队"
+        self.navigationItem.title = "车库"
         self.navigationItem.hidesBackButton = true
         self.navigationController?.isNavigationBarHidden = false
     }
@@ -42,9 +43,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.navigationController?.pushViewController(loginVC, animated: false)
         }else {
             
-            TZNetworkTool.shareNetworkTool.getCar { (carItems) in
+            TZNetworkTool.shareNetworkTool.getCar { (carItems, idArray) in
                 
                 self.carItems = carItems
+                self.idArray = idArray
                 self.carListTableView.reloadData()
             }
         }
@@ -160,6 +162,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let model: CarTModel = carItems[(indexPath as NSIndexPath).row]
         let detailVC = CarDetailVC()
         detailVC.carModel = model
+        print(idArray[indexPath.row])
+        detailVC.idStr = idArray[indexPath.row]
         detailVC.title = model.brand! + model.model!
         self.navigationController?.pushViewController(detailVC, animated: true)
     }

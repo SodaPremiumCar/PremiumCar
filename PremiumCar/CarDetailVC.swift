@@ -12,6 +12,7 @@ class CarDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
     var carModel: CarTModel!
     var dataArray: [AnyObject]!
+    var idStr: Int!
     fileprivate var tableView: UITableView!
     fileprivate var banner: UIImageView!
     

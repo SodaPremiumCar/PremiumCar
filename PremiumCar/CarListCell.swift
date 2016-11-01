@@ -12,7 +12,6 @@ import SnapKit
 class CarListCell: UITableViewCell {
 
     fileprivate var nameLabel: UILabel?
-    fileprivate var numbelLabel: UILabel?
     fileprivate var imgView: UIImageView?
     
     
@@ -42,25 +41,25 @@ class CarListCell: UITableViewCell {
             make.size.equalTo(CGSize(width: SCREEN_WIDTH-8-54-8-8-80-10, height: 32))
         })
         
-        numbelLabel = UILabel()
-        numbelLabel?.textColor = RGBA(222, g: 222, b: 222, a: 1)
-        numbelLabel?.font = UIFont.systemFont(ofSize: 15)
-        contentView.addSubview(numbelLabel!)
-        numbelLabel?.snp_makeConstraints({ (make) in
-            make.top.equalTo(nameLabel!.snp_bottom)
-            make.left.equalTo(imgView!.snp_right).offset(8)
-            make.size.equalTo(CGSize(width: SCREEN_WIDTH-8-54-8-8-80-10, height: 32))
-        })
+//        numbelLabel = UILabel()
+//        numbelLabel?.textColor = RGBA(222, g: 222, b: 222, a: 1)
+//        numbelLabel?.font = UIFont.systemFont(ofSize: 15)
+//        contentView.addSubview(numbelLabel!)
+//        numbelLabel?.snp_makeConstraints({ (make) in
+//            make.top.equalTo(nameLabel!.snp_bottom)
+//            make.left.equalTo(imgView!.snp_right).offset(8)
+//            make.size.equalTo(CGSize(width: SCREEN_WIDTH-8-54-8-8-80-10, height: 32))
+//        })
     }
     
     func update(_ model: CarTModel) {
-        print(model.brand! + model.model!)
-        nameLabel?.text = model.brand! + model.model!
+
+        nameLabel?.text = model.brand! + " " + model.model!
     }
     
     class func height() -> CGFloat {
         
-        return 81
+        return 75
     }
     
     required init?(coder aDecoder: NSCoder) {

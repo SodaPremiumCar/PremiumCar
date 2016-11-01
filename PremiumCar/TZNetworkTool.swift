@@ -232,7 +232,7 @@ class TZNetworkTool: NSObject {
     }
     
     // 获取车辆列表
-    func getCar(finished:@escaping (_ CarItems: [CarTModel]) -> ()) {
+    func getCar(finished:@escaping (_ CarItems: [CarTModel], _ idArray: [Int]) -> ()) {
         
         UserData.share.load()
         let params: Parameters = ["authToken": UserData.share.authToken! as String,
@@ -251,6 +251,7 @@ class TZNetworkTool: NSObject {
                     let dict = JSON(value)
                     let code = dict["result"].intValue
                     let message = dict["errMsg"].stringValue
+                    
                     print(dict)
                     guard code == 10000 else {
                         SVProgressHUD.showInfo(withStatus: message)
@@ -260,15 +261,18 @@ class TZNetworkTool: NSObject {
                     //  字典转成模型
                     if let items = dict["carList"].arrayObject {
                         var carItems = [CarTModel]()
+                        var idArray = [Int]()
                         for item in items {
                            
                             let itemT = item as! [String: AnyObject]
                             let typeItem = itemT["carType"]
+                            let idInt = itemT["id"] as! Int
                             let carItem = CarTModel(dict: typeItem as! [String : AnyObject])
                             carItems.append(carItem)
+                            idArray.append(itemT["id"] as! Int)
                         }
                         
-                        finished(carItems)
+                        finished(carItems, idArray)
                     }
                 }
         }
