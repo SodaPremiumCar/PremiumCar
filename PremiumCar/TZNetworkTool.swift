@@ -115,7 +115,7 @@ class TZNetworkTool: NSObject {
         }
     }
     
-    // 个人信息
+    // 更改个人信息
     func personalInfo(telephone: String, name: String, addr: String, finished:@escaping (_ results: Bool) -> ()) {
        
         UserData.share.load()
@@ -150,6 +150,43 @@ class TZNetworkTool: NSObject {
                     UserData.share.telephone = telephone
                     UserData.share.save()
                     SVProgressHUD.showSuccess(withStatus: "提交成功")
+                    finished(true)
+                }
+        }
+    }
+    
+    //获取个人信息
+    func getUserInfo(finished:@escaping (_ results: Bool) -> ()) {
+        
+        UserData.share.load()
+        let params: Parameters = ["authToken": UserData.share.authToken! as String,
+                                  "mobileNo" : UserData.share.mobileNo! as String]
+        
+        Alamofire
+            .request(KURL(kUrlGetUserInfo), method: .post, parameters: params, encoding: JSONEncoding.default)
+            .responseJSON { (response) in
+                
+                guard response.result.isSuccess else {
+                    SVProgressHUD.showError(withStatus: "网络异常")
+                    return
+                }
+                if let value = response.result.value {
+                    
+                    let dict = JSON(value)
+                    let code = dict["result"].intValue
+                    let message = dict["errMsg"].stringValue
+                    
+                    guard code == 10000 else {
+                        SVProgressHUD.showInfo(withStatus: message)
+                        finished(false)
+                        return
+                    }
+                    
+                    // 存储个人信息
+                    UserData.share.name = dict["user"]["name"].stringValue
+                    UserData.share.address = dict["user"]["addr"].stringValue
+                    UserData.share.telephone = dict["user"]["telephone"].stringValue
+                    UserData.share.save()
                     finished(true)
                 }
         }

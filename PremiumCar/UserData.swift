@@ -35,4 +35,14 @@ class UserData: NSObject {
         address = UserDefaults.standard.string(forKey: "address")
         telephone = UserDefaults.standard.string(forKey: "telephone")
     }
+    
+    func logout() {
+        mobileNo = nil
+        authToken = nil
+        name = nil
+        address = nil
+        telephone = nil
+        
+        save()
+    }
 }
