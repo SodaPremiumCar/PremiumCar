@@ -37,18 +37,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.navigationController?.pushViewController(loginVC, animated: false)
         }else {
             
-            if (UserData.share.name != nil) {
-                nameLabel?.text = UserData.share.name! + " " + "的车库"
-            }else{
-                nameLabel?.text = "车库"
-            }
-    
             TZNetworkTool.shareNetworkTool.getCar { (carItems, idArray) in
                 
                 self.carItems = carItems
                 self.idArray = idArray
                 self.carListTableView.reloadData()
             }
+            
+            TZNetworkTool.shareNetworkTool.getUserInfo(finished: { (isSuccess) in
+                if isSuccess {
+                    
+                    if (UserData.share.name != nil) {
+                        self.nameLabel?.text = UserData.share.name! + " " + "的车库"
+                    }else{
+                        self.nameLabel?.text = "车库"
+                    }
+                }
+            })
         }
     }
     

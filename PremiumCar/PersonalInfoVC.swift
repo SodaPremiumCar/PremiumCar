@@ -16,6 +16,7 @@ class PersonalInfoVC: UIViewController {
     
     var submitBtn: UIButton?
     var isFromRegister = true
+    var logoutBtn: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,8 +92,21 @@ class PersonalInfoVC: UIViewController {
         setButton(button: submitBtn!, with: 0)
         view.addSubview(submitBtn!)
         
+        if !isFromRegister {
+        
+            logoutBtn = UIButton(type: UIButtonType.custom)
+            logoutBtn?.frame = CGRect(x: 0, y: SCREEN_HEIGHT - 44 - 64, width: SCREEN_WIDTH, height: 44)
+            logoutBtn?.backgroundColor = FUZZY_BACK
+            logoutBtn?.setTitle("退出登录", for: UIControlState.normal)
+            logoutBtn?.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+            logoutBtn?.addTarget(self, action: #selector(logout), for: UIControlEvents.touchUpInside)
+            let line = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 0.5))
+            line.backgroundColor = FUZZY_BACK
+            logoutBtn?.addSubview(line)
+            view.addSubview(logoutBtn!)
+        }
     }
-    
+    // 显示个人信息
     func loadPersonInfo() {
         UserData.share.load()
         if (UserData.share.name != nil) {
@@ -105,6 +119,23 @@ class PersonalInfoVC: UIViewController {
             addressText?.text = UserData.share.address
         }
     }
+    // 登出
+    func logout() {
+        
+        let actionSheet = UIAlertController(title: "是否退出登录", message: nil, preferredStyle: .actionSheet)
+        let logoutAction = UIAlertAction(title: "退出", style: UIAlertActionStyle.destructive) { (UIAlertAction) in
+            UserData.share.logout()
+            
+            let loginVC = LoginViewController()
+            self.navigationController?.pushViewController(loginVC, animated: false)
+        }
+        let cancleAction = UIAlertAction(title: "取消", style: .cancel) { (UIAlertAction) in
+            
+        }
+        actionSheet.addAction(logoutAction)
+        actionSheet.addAction(cancleAction)
+        self.present(actionSheet, animated: true, completion: nil)
+    }
     
     func submitInfo() {
         
@@ -116,7 +147,6 @@ class PersonalInfoVC: UIViewController {
                     let carBrandsVC = CarBrandsVC()
                     self.navigationController?.pushViewController(carBrandsVC, animated: true)
                 }else{
-                    
                     self.navigationController?.popViewController(animated: true)
                 }
             }
