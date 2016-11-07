@@ -41,7 +41,7 @@
     NSString *str = [NSString stringWithFormat:@"%.0f", timeInterval--];
         
     [self setTitle:str forState:UIControlStateNormal];
-    self.backgroundColor = [UIColor colorWithRed:210/255.0 green:210/255.0 blue:210/255.0 alpha:1];
+//    self.backgroundColor = [UIColor colorWithRed:210/255.0 green:210/255.0 blue:210/255.0 alpha:1];
     
     if (self && isWork) {
         

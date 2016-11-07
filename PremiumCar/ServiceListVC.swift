@@ -62,6 +62,8 @@ class ServiceListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     func setupNavigationItem() {
         
         self.navigationItem.title = "服务项目"
+        self.navigationController?.isNavigationBarHidden = false
+
     }
     
     func setupUI() {

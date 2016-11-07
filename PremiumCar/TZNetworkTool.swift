@@ -45,7 +45,7 @@ class TZNetworkTool: NSObject {
                     UserData.share.mobileNo = mobileNo
                     UserData.share.authToken = authToken
                     UserData.share.save()
-                    SVProgressHUD.showSuccess(withStatus: "登录成功")
+//                    SVProgressHUD.showSuccess(withStatus: "登录成功")
                     finished(true)
                 }
         }
@@ -147,6 +147,7 @@ class TZNetworkTool: NSObject {
                     // 存储个人信息
                     UserData.share.name = name
                     UserData.share.address = addr
+                    UserData.share.telephone = telephone
                     UserData.share.save()
                     SVProgressHUD.showSuccess(withStatus: "提交成功")
                     finished(true)
@@ -251,7 +252,6 @@ class TZNetworkTool: NSObject {
                     let code = dict["result"].intValue
                     let message = dict["errMsg"].stringValue
                     
-                    print(dict)
                     guard code == 10000 else {
                         SVProgressHUD.showInfo(withStatus: message)
                         return
