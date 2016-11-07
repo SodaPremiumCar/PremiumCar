@@ -36,14 +36,14 @@ override func viewDidLoad() {
         
         self.view.backgroundColor = RGBA(0, g: 0, b: 0, a: 1)
         
-        let imgView = UIImageView(frame: CGRect(x: ((SCREEN_WIDTH - 200) / 2), y: 100, width: 200, height: 200))
-        imgView.backgroundColor = RGBA(250, g: 250, b: 250, a: 1)
-        imgView.clipsToBounds = true
+        let imgView = UIImageView(frame: CGRect(x: ((SCREEN_WIDTH - 150) / 2), y: 100, width: 150, height: 150))
+        imgView.backgroundColor = UIColor.clear
+//        imgView.clipsToBounds = true
         imgView.contentMode = .scaleAspectFill
-        imgView.image = UIImage(named: "Vip")
+        imgView.image = UIImage(named: "complete")
         self.view.addSubview(imgView)
-        imgView.layer.masksToBounds = true
-        imgView.layer.cornerRadius = imgView.frame.size.width / 2
+//        imgView.layer.masksToBounds = true
+//        imgView.layer.cornerRadius = imgView.frame.size.width / 2
         imgView.layer.allowsEdgeAntialiasing = true
         
         let label = UILabel()
@@ -57,7 +57,7 @@ override func viewDidLoad() {
             make.left.equalTo(10)
             make.size.equalTo(CGSize(width: SCREEN_WIDTH - 20, height: 50))
         })
-        label.text = "操作完成。"
+        label.text = "操作完成"
         
         let label1 = UILabel()
         label1.textColor = RGBA(235, g: 235, b: 235, a: 1)
