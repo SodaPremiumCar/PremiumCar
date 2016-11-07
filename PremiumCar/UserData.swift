@@ -14,6 +14,7 @@ class UserData: NSObject {
     var authToken: String?
     var name: String?
     var address: String?
+    var telephone: String?
     // 单例
     static let share = UserData()
     
@@ -23,6 +24,7 @@ class UserData: NSObject {
         UserDefaults.standard.set(authToken, forKey: "authToken")
         UserDefaults.standard.set(name, forKey: "name")
         UserDefaults.standard.set(address, forKey: "address")
+        UserDefaults.standard.set(telephone, forKey: "telephone")
         UserDefaults.standard.synchronize()
     }
     
@@ -31,5 +33,6 @@ class UserData: NSObject {
         authToken = UserDefaults.standard.string(forKey: "authToken")
         name = UserDefaults.standard.string(forKey: "name")
         address = UserDefaults.standard.string(forKey: "address")
+        telephone = UserDefaults.standard.string(forKey: "telephone")
     }
 }

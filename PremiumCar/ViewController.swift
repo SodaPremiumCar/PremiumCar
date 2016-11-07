@@ -13,22 +13,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var carListTableView: UITableView!
     var carItems = [CarTModel]()
     var idArray = [Int]()
+    var nameLabel: UILabel?
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        mock()
-        setupUI()
-        self.navigationItem.title = "车库"
-        self.navigationItem.hidesBackButton = true
-        self.navigationController?.isNavigationBarHidden = false
+         setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.isNavigationBarHidden = false
+        self.navigationItem.hidesBackButton = true
+        self.navigationController?.isNavigationBarHidden = true
+        
         UserData.share.load()
         let mob: String? = UserData.share.mobileNo
         let auth: String? = UserData.share.authToken
@@ -38,6 +37,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.navigationController?.pushViewController(loginVC, animated: false)
         }else {
             
+            if (UserData.share.name != nil) {
+                nameLabel?.text = UserData.share.name! + " " + "的车库"
+            }else{
+                nameLabel?.text = "车库"
+            }
+    
             TZNetworkTool.shareNetworkTool.getCar { (carItems, idArray) in
                 
                 self.carItems = carItems
@@ -58,12 +63,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         imgView.contentMode = .scaleAspectFill
         imgView.image = img
         
-        let personalInfo = UIButton(frame: CGRect(x: (SCREEN_WIDTH - 70) / 2, y: 64, width: 70, height: 70))
+        let personalInfo = UIButton(frame: CGRect(x: (SCREEN_WIDTH - 200) / 2, y: 44, width: 70, height: 70))
         personalInfo.setImage(UIImage(named: "person"), for: UIControlState.normal)
         personalInfo.backgroundColor = UIColor.clear
-//        personalInfo.addTarget(self, action: #selector(buttonClick), for: UIControlEvents.touchUpInside)
+        personalInfo.addTarget(self, action: #selector(buttonClick), for: UIControlEvents.touchUpInside)
+        view.addSubview(personalInfo)
         
-        carListTableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64 - 44), style: .plain)
+        nameLabel = UILabel(frame: CGRect(x: (personalInfo.frame.maxX) + 10, y: 44, width: 130, height: 70))
+        nameLabel?.font = UIFont.systemFont(ofSize: 16)
+        nameLabel?.adjustsFontSizeToFitWidth = true
+        nameLabel?.textColor = RGBA(255, g: 255, b: 255, a: 0.8)
+        view.addSubview(nameLabel!)
+        
+        carListTableView = UITableView(frame: CGRect(x: 0, y: (personalInfo.frame.maxY) + 10, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - (personalInfo.frame.maxY) - 44 - 10), style: .plain)
         carListTableView.backgroundColor = UIColor.clear
         carListTableView.delegate = self
         carListTableView.dataSource = self
@@ -78,7 +90,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        carListTableView.tableHeaderView = header
         
         let addBtn = UIButton(type: UIButtonType.custom)
-        addBtn.frame = CGRect(x: 0, y: SCREEN_HEIGHT - 44 - 64, width: SCREEN_WIDTH, height: 44)
+        addBtn.frame = CGRect(x: 0, y: SCREEN_HEIGHT - 44, width: SCREEN_WIDTH, height: 44)
         addBtn.backgroundColor = FUZZY_BACK
         addBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 5)
         addBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0)
@@ -101,6 +113,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func buttonClick() {
         
         let personalVC = PersonalInfoVC()
+        personalVC.isFromRegister = false
         self.navigationController?.pushViewController(personalVC, animated: true)
     }
     

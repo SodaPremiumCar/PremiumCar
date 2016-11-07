@@ -15,13 +15,20 @@ class PersonalInfoVC: UIViewController {
     var phoneText: UITextField?
     
     var submitBtn: UIButton?
+    var isFromRegister = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.hidesBackButton = isFromRegister
         setupUI()
-        self.navigationItem.title = "填写联系方式"
-        self.navigationItem.hidesBackButton = true
+        
+        if isFromRegister {
+            self.navigationItem.title = "填写个人信息"
+        }else{
+            self.navigationItem.title = "个人信息"
+            loadPersonInfo()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,12 +93,32 @@ class PersonalInfoVC: UIViewController {
         
     }
     
+    func loadPersonInfo() {
+        UserData.share.load()
+        if (UserData.share.name != nil) {
+            nameTxt?.text = UserData.share.name
+        }
+        if (UserData.share.telephone != nil) {
+            phoneText?.text = UserData.share.telephone
+        }
+        if (UserData.share.address != nil) {
+            addressText?.text = UserData.share.address
+        }
+    }
+    
     func submitInfo() {
         
         TZNetworkTool.shareNetworkTool.personalInfo(telephone: (phoneText?.text)!, name: (nameTxt?.text)!, addr: (addressText?.text)!) { (isSuccess) in
             if isSuccess {
-                let carBrandsVC = CarBrandsVC()
-                self.navigationController?.pushViewController(carBrandsVC, animated: true)
+                
+                if self.isFromRegister {
+                    
+                    let carBrandsVC = CarBrandsVC()
+                    self.navigationController?.pushViewController(carBrandsVC, animated: true)
+                }else{
+                    
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
         }
     }

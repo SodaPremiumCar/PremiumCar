@@ -195,7 +195,7 @@ extension RegisterVC: UITextFieldDelegate,TimeButtonDelegate {
     }
     
     func updateTimeButtonStatus() {
-        
+        verificationBtn?.setTitle("获取验证码", for: UIControlState.normal)
         textFieldDidChange()
     }
 }
