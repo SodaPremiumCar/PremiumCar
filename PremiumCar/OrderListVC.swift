@@ -47,7 +47,8 @@ class OrderListVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     //MARK: UI
     func setupNavigationItem() {
         
-        self.navigationItem.title = "历史订单"
+        self.navigationItem.title = "我的订单"
+        self.navigationController?.isNavigationBarHidden = false
     }
     
     func setupUI() {
@@ -74,7 +75,9 @@ class OrderListVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 4
+//        let model = dataSource![section]
+//        return (model.services != nil) ? (model.services!.count) : 0
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -83,9 +86,7 @@ class OrderListVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         }
         let model = dataSource![section]
         let serialNum: String = (model.serialNum != nil) ? model.serialNum! : ""
-        let state: String = (model.state != nil) ? String(format: "(%@)", model.state!) : ""
-
-        return serialNum + state
+        return "订单号" + serialNum
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -93,15 +94,22 @@ class OrderListVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         cell.selectionStyle = .none
         cell.backgroundColor = UIColor.black
         cell.textLabel?.textColor = UIColor.white
-        guard dataSource!.count > indexPath.row else {
+        guard dataSource!.count > indexPath.section else {
             return cell
         }
         let model = dataSource![indexPath.section]
         
-        let content: String = (model.content != nil) ? model.content! : ""
-        let total: String = String(format: "(￥%.2f)", model.total!)
-        let text = content + total
-        cell.textLabel?.text = text
+        var content: String = ""
+        if indexPath.row == 0 {
+            content = (model.state != nil) ? String(format: "处理状态：%@", model.state!) : "无处理状态"
+        }else if indexPath.row == 1 {
+            content = (model.content != nil) ? String(format: "车型：%@", model.content!) : "无车型"
+        }else if indexPath.row == 2 {
+            content = String(format: "消费：￥%.2f", model.total!)
+        }else if indexPath.row == 3 {
+            content = (model.booking != nil) ? String(format: "预约时间：%@", model.booking!) : "无预约时间"
+        }
+        cell.textLabel?.text = content
         return cell
     }
     

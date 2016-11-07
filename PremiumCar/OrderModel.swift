@@ -20,7 +20,6 @@ class OrderModel: NSObject {
     var booking: String?
     var remark: String?
     
-    
     var services: [ServiceItemModel]?
     var carType :[CarTModel]?
     

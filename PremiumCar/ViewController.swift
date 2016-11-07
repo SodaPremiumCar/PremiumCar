@@ -63,7 +63,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         imgView.contentMode = .scaleAspectFill
         imgView.image = img
         
-        let personalInfo = UIButton(frame: CGRect(x: (SCREEN_WIDTH - 200) / 2, y: 44, width: 70, height: 70))
+        let personalInfo = UIButton(frame: CGRect(x: 20, y: 44, width: 70, height: 70))
         personalInfo.setImage(UIImage(named: "person"), for: UIControlState.normal)
         personalInfo.backgroundColor = UIColor.clear
         personalInfo.addTarget(self, action: #selector(buttonClick), for: UIControlEvents.touchUpInside)
@@ -71,9 +71,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         nameLabel = UILabel(frame: CGRect(x: (personalInfo.frame.maxX) + 10, y: 44, width: 130, height: 70))
         nameLabel?.font = UIFont.systemFont(ofSize: 16)
-        nameLabel?.adjustsFontSizeToFitWidth = true
+//        nameLabel?.adjustsFontSizeToFitWidth = true
         nameLabel?.textColor = RGBA(255, g: 255, b: 255, a: 0.8)
         view.addSubview(nameLabel!)
+        
+        let rightButton = UIButton(type: .custom)
+        rightButton.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchUpInside)
+        rightButton.setTitle("我的订单", for: UIControlState())
+        rightButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        view.addSubview(rightButton)
+        rightButton.snp.makeConstraints { (make) in
+            make.width.equalTo(70)
+            make.height.equalTo(70)
+            make.right.equalTo(-20)
+            make.top.equalTo(44)
+        }
         
         carListTableView = UITableView(frame: CGRect(x: 0, y: (personalInfo.frame.maxY) + 10, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - (personalInfo.frame.maxY) - 44 - 10), style: .plain)
         carListTableView.backgroundColor = UIColor.clear
@@ -102,15 +114,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         line.backgroundColor = FUZZY_BACK
         addBtn.addSubview(line)
         view.addSubview(addBtn)
-        
-        let rightButton = UIButton(type: .custom)
-        rightButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-        rightButton.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchUpInside)
-        rightButton.setTitle("历史订单", for: UIControlState())
-        let item: UIBarButtonItem = UIBarButtonItem(customView: rightButton)
-        let rightSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        rightSpacer.width = -10
-        self.navigationItem.rightBarButtonItems = [rightSpacer, item]
     }
     
     func addMoreCar() {
