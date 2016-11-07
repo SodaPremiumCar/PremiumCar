@@ -32,6 +32,8 @@
 		A8B7AA1B1D8694CD00C02B95 /* PromptVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B7AA1A1D8694CD00C02B95 /* PromptVC.swift */; };
 		A8B7F4161DC728AF00896BD4 /* ServiceListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B7F4151DC728AF00896BD4 /* ServiceListVC.swift */; };
 		A8B7F4181DC72E5100896BD4 /* ServiceItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B7F4171DC72E5100896BD4 /* ServiceItemModel.swift */; };
+		A8F9859D1DD04941006328A2 /* OrderListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F9859C1DD04941006328A2 /* OrderListVC.swift */; };
+		A8F9859F1DD0498E006328A2 /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F9859E1DD0498E006328A2 /* OrderModel.swift */; };
 		E6C6D53C4FE73D796292600A /* Pods_PremiumCar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E8A6288D2F82C45F2CFABD /* Pods_PremiumCar.framework */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +71,8 @@
 		A8B7AA1A1D8694CD00C02B95 /* PromptVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromptVC.swift; sourceTree = "<group>"; };
 		A8B7F4151DC728AF00896BD4 /* ServiceListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceListVC.swift; sourceTree = "<group>"; };
 		A8B7F4171DC72E5100896BD4 /* ServiceItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceItemModel.swift; sourceTree = "<group>"; };
+		A8F9859C1DD04941006328A2 /* OrderListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderListVC.swift; sourceTree = "<group>"; };
+		A8F9859E1DD0498E006328A2 /* OrderModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +125,8 @@
 				A85B6CED1D7E727400E43F59 /* CarListCell.swift */,
 				259486C21DC88E51008A405A /* CarModel.swift */,
 				A8A2406B1D8284CA00964F74 /* CarDetailVC.swift */,
+				A8F9859E1DD0498E006328A2 /* OrderModel.swift */,
+				A8F9859C1DD04941006328A2 /* OrderListVC.swift */,
 				A8B7F4151DC728AF00896BD4 /* ServiceListVC.swift */,
 				A8B7F4171DC72E5100896BD4 /* ServiceItemModel.swift */,
 				A8B7AA181D867B7400C02B95 /* SubmitVC.swift */,
@@ -308,11 +314,13 @@
 				A8B7AA1B1D8694CD00C02B95 /* PromptVC.swift in Sources */,
 				2590CF491DBE14320039D62A /* RegisterVC.swift in Sources */,
 				259960431DC737F70001444F /* CarTModel.swift in Sources */,
+				A8F9859F1DD0498E006328A2 /* OrderModel.swift in Sources */,
 				2590CF511DBF0C390039D62A /* TimeButton.m in Sources */,
 				25813E0E1D94D5BB00291D5B /* MyCarCell.swift in Sources */,
 				A85B6CCD1D7D7DB100E43F59 /* AppDelegate.swift in Sources */,
 				25813E0F1D94D5BB00291D5B /* MyCarVC.swift in Sources */,
 				A85B6CEE1D7E727400E43F59 /* CarListCell.swift in Sources */,
+				A8F9859D1DD04941006328A2 /* OrderListVC.swift in Sources */,
 				A8B7F4161DC728AF00896BD4 /* ServiceListVC.swift in Sources */,
 				A85B6CE11D7D875D00E43F59 /* ToolLet.swift in Sources */,
 				A8B7F4181DC72E5100896BD4 /* ServiceItemModel.swift in Sources */,

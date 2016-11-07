@@ -333,7 +333,6 @@ class TZNetworkTool: NSObject {
                     if var services = dict["services"].dictionaryObject {
                         let data = services["typeServices"]
                         let types = services["types"]
-                        print(data)
                         finished(true, data as! [String : AnyObject]?, types as! [String]?)
                     }
                 }
@@ -376,6 +375,44 @@ class TZNetworkTool: NSObject {
                     }
                     
                     finished(true)
+                }
+        }
+    }
+    
+    //获取订单列表
+    func orderList(finished:@escaping (_ results: Bool, _ data: [OrderModel]?) -> ()) {
+        
+        UserData.share.load()
+        let params: Parameters = ["authToken": UserData.share.authToken! as String,
+                                  "mobileNo" : UserData.share.mobileNo! as String]
+        Alamofire
+            .request(KURL(kUrlGetOrderList), method: .post, parameters: params, encoding: JSONEncoding.default)
+            .responseJSON { (response) in
+                
+                guard response.result.isSuccess else {
+                    SVProgressHUD.showError(withStatus: "网络异常")
+                    return
+                }
+                if let value = response.result.value {
+                    
+                    let dict = JSON(value)
+                    let code = dict["result"].intValue
+                    let message = dict["errMsg"].stringValue
+                    guard code == 10000 else {
+                        SVProgressHUD.showInfo(withStatus: message)
+                        finished(false, nil)
+                        return
+                    }
+
+                    if let items = dict["orderList"].arrayObject {
+                        var orderItems = [OrderModel]()
+                        for item in items {
+                            let dic = item as! [String : AnyObject]
+                            let model = OrderModel(dic: dic)
+                            orderItems.append(model)
+                        }
+                        finished(true, orderItems)
+                    }
                 }
         }
     }

@@ -90,12 +90,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         line.backgroundColor = FUZZY_BACK
         addBtn.addSubview(line)
         view.addSubview(addBtn)
+        
+        let rightButton = UIButton(type: .custom)
+        rightButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        rightButton.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchUpInside)
+        rightButton.setTitle("历史订单", for: UIControlState())
+        let item: UIBarButtonItem = UIBarButtonItem(customView: rightButton)
+        let rightSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        rightSpacer.width = -10
+        self.navigationItem.rightBarButtonItems = [rightSpacer, item]
     }
     
     func addMoreCar() {
         let carBrandsVC = CarBrandsVC()
         carBrandsVC.isFromRegister = false
         self.navigationController?.pushViewController(carBrandsVC, animated: true)
+    }
+    
+    //MARK:Handle
+    func buttonClicked(_ sender: UIButton) {
+        let orderListVC = OrderListVC()
+        self.navigationController?.pushViewController(orderListVC, animated: true)
     }
     
     func buttonClick() {
