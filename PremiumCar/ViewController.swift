@@ -74,9 +74,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         personalInfo.addTarget(self, action: #selector(buttonClick), for: UIControlEvents.touchUpInside)
         view.addSubview(personalInfo)
         
-        nameLabel = UILabel(frame: CGRect(x: (personalInfo.frame.maxX) + 10, y: 44, width: 130, height: 70))
+        nameLabel = UILabel(frame: CGRect(x: (personalInfo.frame.maxX) + 10, y: 44, width: 120, height: 70))
         nameLabel?.font = UIFont.systemFont(ofSize: 16)
-//        nameLabel?.adjustsFontSizeToFitWidth = true
+        nameLabel?.adjustsFontSizeToFitWidth = true
         nameLabel?.textColor = RGBA(255, g: 255, b: 255, a: 0.8)
         view.addSubview(nameLabel!)
         
@@ -84,6 +84,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         rightButton.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchUpInside)
         rightButton.setTitle("我的订单", for: UIControlState())
         rightButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        rightButton.setTitleColor(RGBA(255, g: 255, b: 255, a: 0.8), for: .normal)
         view.addSubview(rightButton)
         rightButton.snp.makeConstraints { (make) in
             make.width.equalTo(70)

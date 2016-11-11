@@ -17,6 +17,7 @@ class PersonalInfoVC: UIViewController {
     var submitBtn: UIButton?
     var isFromRegister = true
     var logoutBtn: UIButton?
+    var suggestionBtn: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +27,10 @@ class PersonalInfoVC: UIViewController {
         
         if isFromRegister {
             self.navigationItem.title = "填写个人信息"
+            
         }else{
             self.navigationItem.title = "个人信息"
+            submitBtn?.setTitle("修改", for: UIControlState.normal)
             loadPersonInfo()
         }
     }
@@ -104,7 +107,23 @@ class PersonalInfoVC: UIViewController {
             line.backgroundColor = FUZZY_BACK
             logoutBtn?.addSubview(line)
             view.addSubview(logoutBtn!)
+            
+            suggestionBtn = UIButton(frame: CGRect(x: 30, y: (submitBtn?.frame.maxY)! + 10, width: 80, height: 15))
+            suggestionBtn?.setImage(UIImage(named: "suggestion"), for: .normal)
+            suggestionBtn?.setTitle("意见反馈", for: .normal)
+            suggestionBtn?.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0)
+            suggestionBtn?.imageView?.contentMode = .scaleAspectFit
+            suggestionBtn?.titleLabel?.font = UIFont.systemFont(ofSize: 11)
+            suggestionBtn?.addTarget(self, action: #selector(giveSuggestionBtn), for: UIControlEvents.touchUpInside)
+            view.addSubview(suggestionBtn!)
         }
+    }
+    
+    // 反馈意见
+    func giveSuggestionBtn() {
+        
+        let suggestionVC = SuggestionVC()
+        navigationController?.pushViewController(suggestionVC, animated: true)
     }
     // 显示个人信息
     func loadPersonInfo() {

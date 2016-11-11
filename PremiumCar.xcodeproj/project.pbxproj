@@ -12,6 +12,7 @@
 		25813E0D1D94D5BB00291D5B /* CallButlerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25813E0A1D94D5BB00291D5B /* CallButlerVC.swift */; };
 		25813E0E1D94D5BB00291D5B /* MyCarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25813E0B1D94D5BB00291D5B /* MyCarCell.swift */; };
 		25813E0F1D94D5BB00291D5B /* MyCarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25813E0C1D94D5BB00291D5B /* MyCarVC.swift */; };
+		258C973B1DD5A26C0070D501 /* SuggestionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258C973A1DD5A26C0070D501 /* SuggestionVC.swift */; };
 		2590CF491DBE14320039D62A /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2590CF481DBE14320039D62A /* RegisterVC.swift */; };
 		2590CF511DBF0C390039D62A /* TimeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2590CF501DBF0C390039D62A /* TimeButton.m */; };
 		2590CF561DBF59590039D62A /* PersonalInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2590CF551DBF59590039D62A /* PersonalInfoVC.swift */; };
@@ -44,6 +45,7 @@
 		25813E0A1D94D5BB00291D5B /* CallButlerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallButlerVC.swift; sourceTree = "<group>"; };
 		25813E0B1D94D5BB00291D5B /* MyCarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCarCell.swift; sourceTree = "<group>"; };
 		25813E0C1D94D5BB00291D5B /* MyCarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCarVC.swift; sourceTree = "<group>"; };
+		258C973A1DD5A26C0070D501 /* SuggestionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionVC.swift; sourceTree = "<group>"; };
 		2590CF481DBE14320039D62A /* RegisterVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		2590CF4B1DBF0BD80039D62A /* PremiumCar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PremiumCar-Bridging-Header.h"; sourceTree = "<group>"; };
 		2590CF4F1DBF0C390039D62A /* TimeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeButton.h; sourceTree = "<group>"; };
@@ -87,6 +89,63 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		25A9C70B1DD1A722001D7170 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A85B6CCE1D7D7DB100E43F59 /* ViewController.swift */,
+				254C6A661DBDDD5C00C0B80F /* LoginViewController.swift */,
+				2590CF481DBE14320039D62A /* RegisterVC.swift */,
+				2590CF551DBF59590039D62A /* PersonalInfoVC.swift */,
+				25120B901DC08F26000F506F /* CarBrandsVC.swift */,
+				A8A2406B1D8284CA00964F74 /* CarDetailVC.swift */,
+				A8F9859C1DD04941006328A2 /* OrderListVC.swift */,
+				A8B7F4151DC728AF00896BD4 /* ServiceListVC.swift */,
+				A8B7AA181D867B7400C02B95 /* SubmitVC.swift */,
+				A8B7AA1A1D8694CD00C02B95 /* PromptVC.swift */,
+				25813E0A1D94D5BB00291D5B /* CallButlerVC.swift */,
+				25813E0C1D94D5BB00291D5B /* MyCarVC.swift */,
+				258C973A1DD5A26C0070D501 /* SuggestionVC.swift */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		25A9C70C1DD1A75B001D7170 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A8F9859E1DD0498E006328A2 /* OrderModel.swift */,
+				259486C21DC88E51008A405A /* CarModel.swift */,
+				A8B7F4171DC72E5100896BD4 /* ServiceItemModel.swift */,
+				259960421DC737F70001444F /* CarTModel.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		25A9C70D1DD1A798001D7170 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A85B6CED1D7E727400E43F59 /* CarListCell.swift */,
+				25813E0B1D94D5BB00291D5B /* MyCarCell.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		25A9C70E1DD1A7D7001D7170 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				25BFB9741DC33ECF0016150E /* UserData.swift */,
+				25BFB9721DC3278D0016150E /* TZNetworkTool.swift */,
+				A85B6CDE1D7D875D00E43F59 /* ColorLET.swift */,
+				A86E83CC1DC378E000652EA7 /* NavigationController.swift */,
+				A85B6CE71D7E604B00E43F59 /* SetupViewLET.swift */,
+				A85B6CDF1D7D875D00E43F59 /* ToolLet.swift */,
+				2590CF4F1DBF0C390039D62A /* TimeButton.h */,
+				2590CF501DBF0C390039D62A /* TimeButton.m */,
+				2590CF521DBF0EE30039D62A /* NSString+dataFormat.h */,
+				2590CF4B1DBF0BD80039D62A /* PremiumCar-Bridging-Header.h */,
+			);
+			name = Tool;
+			sourceTree = "<group>";
+		};
 		A741F859AF8AF1E76F25151B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -117,34 +176,10 @@
 			isa = PBXGroup;
 			children = (
 				A85B6CCC1D7D7DB100E43F59 /* AppDelegate.swift */,
-				A85B6CCE1D7D7DB100E43F59 /* ViewController.swift */,
-				254C6A661DBDDD5C00C0B80F /* LoginViewController.swift */,
-				2590CF481DBE14320039D62A /* RegisterVC.swift */,
-				2590CF551DBF59590039D62A /* PersonalInfoVC.swift */,
-				25120B901DC08F26000F506F /* CarBrandsVC.swift */,
-				A85B6CED1D7E727400E43F59 /* CarListCell.swift */,
-				259486C21DC88E51008A405A /* CarModel.swift */,
-				A8A2406B1D8284CA00964F74 /* CarDetailVC.swift */,
-				A8F9859E1DD0498E006328A2 /* OrderModel.swift */,
-				A8F9859C1DD04941006328A2 /* OrderListVC.swift */,
-				A8B7F4151DC728AF00896BD4 /* ServiceListVC.swift */,
-				A8B7F4171DC72E5100896BD4 /* ServiceItemModel.swift */,
-				A8B7AA181D867B7400C02B95 /* SubmitVC.swift */,
-				A8B7AA1A1D8694CD00C02B95 /* PromptVC.swift */,
-				25813E0A1D94D5BB00291D5B /* CallButlerVC.swift */,
-				25813E0C1D94D5BB00291D5B /* MyCarVC.swift */,
-				25813E0B1D94D5BB00291D5B /* MyCarCell.swift */,
-				A85B6CE71D7E604B00E43F59 /* SetupViewLET.swift */,
-				A85B6CDE1D7D875D00E43F59 /* ColorLET.swift */,
-				A85B6CDF1D7D875D00E43F59 /* ToolLet.swift */,
-				2590CF4F1DBF0C390039D62A /* TimeButton.h */,
-				2590CF501DBF0C390039D62A /* TimeButton.m */,
-				2590CF521DBF0EE30039D62A /* NSString+dataFormat.h */,
-				2590CF4B1DBF0BD80039D62A /* PremiumCar-Bridging-Header.h */,
-				25BFB9721DC3278D0016150E /* TZNetworkTool.swift */,
-				A86E83CC1DC378E000652EA7 /* NavigationController.swift */,
-				25BFB9741DC33ECF0016150E /* UserData.swift */,
-				259960421DC737F70001444F /* CarTModel.swift */,
+				25A9C70B1DD1A722001D7170 /* ViewController */,
+				25A9C70D1DD1A798001D7170 /* View */,
+				25A9C70C1DD1A75B001D7170 /* Model */,
+				25A9C70E1DD1A7D7001D7170 /* Tool */,
 				A85B6CD31D7D7DB100E43F59 /* Assets.xcassets */,
 				A85B6CD81D7D7DB100E43F59 /* Info.plist */,
 			);
@@ -315,6 +350,7 @@
 				2590CF491DBE14320039D62A /* RegisterVC.swift in Sources */,
 				259960431DC737F70001444F /* CarTModel.swift in Sources */,
 				A8F9859F1DD0498E006328A2 /* OrderModel.swift in Sources */,
+				258C973B1DD5A26C0070D501 /* SuggestionVC.swift in Sources */,
 				2590CF511DBF0C390039D62A /* TimeButton.m in Sources */,
 				25813E0E1D94D5BB00291D5B /* MyCarCell.swift in Sources */,
 				A85B6CCD1D7D7DB100E43F59 /* AppDelegate.swift in Sources */,
@@ -428,6 +464,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yuan Zhang (VV2N6DP929)";
 				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PremiumCar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -450,6 +487,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yuan Zhang (VV2N6DP929)";
 				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PremiumCar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
