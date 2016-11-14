@@ -57,10 +57,14 @@ class SuggestionVC: UIViewController {
             }
         }
     }
-     
 }
 
 extension SuggestionVC: UITextViewDelegate {
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        textView?.resignFirstResponder()
+    }
     
     func textViewDidChange(_ textView: UITextView) {
                 
