@@ -20,7 +20,7 @@ class NewsViewController: UIViewController {
     private func setupUI() {
         
         title = "推荐"
-        view.backgroundColor = UIColor.orange
+        view.backgroundColor = COLOR_BLACK
     }
     
 }

@@ -25,8 +25,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationItem.hidesBackButton = true
-        self.navigationController?.isNavigationBarHidden = true
+//        self.navigationItem.hidesBackButton = true
+//        self.navigationController?.isNavigationBarHidden = true
+        title = "服务"
         
         UserData.share.load()
         let mob: String? = UserData.share.mobileNo
