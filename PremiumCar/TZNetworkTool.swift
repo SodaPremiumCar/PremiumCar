@@ -346,7 +346,7 @@ class TZNetworkTool: NSObject {
     }
 
     //服务项目
-    func serviceList(finished:@escaping (_ results: Bool, _ data: [String : AnyObject]?, _ types: [String]?) -> ()) {
+    func serviceList(finished:@escaping (_ typeArray: [AnyObject], _ serviceBigArray: [[ServiceItemModel]]) -> ()) {
         
         Alamofire
             .request(KURL(kUrlServiceList), method: .post, parameters: [:], encoding: JSONEncoding.default)
@@ -363,15 +363,27 @@ class TZNetworkTool: NSObject {
                     let message = dict["errMsg"].stringValue
                     guard code == 10000 else {
                         SVProgressHUD.showInfo(withStatus: message)
-                        finished(false, nil, nil)
                         return
                     }
                     
-                    if var services = dict["services"].dictionaryObject {
-                        let data = services["typeServices"]
-                        let types = services["types"]
-                        finished(true, data as! [String : AnyObject]?, types as! [String]?)
+                    //  字典转成模型
+                    let typeArray = dict["services"]["types"].arrayObject
+                    
+                    var serviceBigArray = [[ServiceItemModel]]()
+                    for key in typeArray! {
+                        
+                        let keyStr = key as! String
+                        if let items = dict["services"]["typeServices"][keyStr].arrayObject {
+                            
+                            var serviceItems = [ServiceItemModel]()
+                            for item in items {
+                                let carItem = ServiceItemModel(dic: item as! [String : AnyObject])
+                                serviceItems.append(carItem)
+                            }
+                            serviceBigArray.append(serviceItems)
+                        }
                     }
+                    finished(typeArray as! [AnyObject], serviceBigArray)
                 }
         }
     }

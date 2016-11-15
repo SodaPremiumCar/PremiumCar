@@ -40,9 +40,8 @@ class ServiceListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        TZNetworkTool.shareNetworkTool.serviceList { (isSuccess, data, types) in
-            self.types = types!
-            self.dataSource = data!
+        TZNetworkTool.shareNetworkTool.serviceList { (typeArray, serviceBigArray) in
+            
         }
     }
     
