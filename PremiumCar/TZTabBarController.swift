@@ -12,7 +12,10 @@ class TZTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tabBar.tintColor = UIColor(red: 245 / 255, green: 80 / 255, blue: 83 / 255, alpha: 1.0)
+        
+        tabBar.barTintColor = RGBA(38, g: 38, b: 38, a: 1)
+        tabBarItem.setTitleTextAttributes([NSForegroundColorAttributeName: unselectColor], for: .normal)
+        tabBar.tintColor = RGBA(199, g: 0, b: 103, a: 1)
         // 添加子控制器
         addChildViewControllers()
     }
