@@ -19,8 +19,8 @@ class MineViewController: UIViewController {
     
     private func setupUI() {
         
-        title = "推荐"
-        view.backgroundColor = UIColor.blue
+        title = "我的"
+        view.backgroundColor = COLOR_BLACK
     }
     
 }

@@ -19,12 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.shared.setStatusBarStyle(.lightContent, animated: false)
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        
-        let vc = ViewController()
-        let nav = UINavigationController(rootViewController: vc)
-        nav.setStyle(color: COLOR_BLACK)
-        window?.rootViewController = nav
         window?.makeKeyAndVisible()
+        window?.rootViewController = TZTabBarController()
+//        
+//        let vc = ViewController()
+//        let nav = UINavigationController(rootViewController: vc)
+//        nav.setStyle(color: COLOR_BLACK)
+        
         return true
     }
 
