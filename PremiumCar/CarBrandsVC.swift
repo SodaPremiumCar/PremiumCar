@@ -175,7 +175,6 @@ extension CarBrandsVC: UITableViewDelegate, UITableViewDataSource {
             
             self.brandLabel?.text = brandStr! + " " + self.typestitle[indexPath.row].model!
             carTypeId = self.typestitle[indexPath.row].id
-            print(carTypeId)
             setButton(button: submitBtn!, with: 1)
         }
     }

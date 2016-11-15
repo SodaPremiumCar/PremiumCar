@@ -69,32 +69,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         imgView.contentMode = .scaleAspectFill
         imgView.image = img
         
-        let personalInfo = UIButton(frame: CGRect(x: 20, y: 44, width: 70, height: 70))
-        personalInfo.setImage(UIImage(named: "person"), for: UIControlState.normal)
-        personalInfo.backgroundColor = UIColor.clear
-        personalInfo.addTarget(self, action: #selector(buttonClick), for: UIControlEvents.touchUpInside)
-        view.addSubview(personalInfo)
-        
-        nameLabel = UILabel(frame: CGRect(x: (personalInfo.frame.maxX) + 10, y: 44, width: 120, height: 70))
-        nameLabel?.font = UIFont.systemFont(ofSize: 16)
-        nameLabel?.adjustsFontSizeToFitWidth = true
-        nameLabel?.textColor = RGBA(255, g: 255, b: 255, a: 0.8)
-        view.addSubview(nameLabel!)
-        
-        let rightButton = UIButton(type: .custom)
-        rightButton.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchUpInside)
-        rightButton.setTitle("我的订单", for: UIControlState())
-        rightButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        rightButton.setTitleColor(RGBA(255, g: 255, b: 255, a: 0.8), for: .normal)
-        view.addSubview(rightButton)
-        rightButton.snp.makeConstraints { (make) in
-            make.width.equalTo(70)
-            make.height.equalTo(70)
-            make.right.equalTo(-20)
-            make.top.equalTo(44)
-        }
-        
-        carListTableView = UITableView(frame: CGRect(x: 0, y: (personalInfo.frame.maxY) + 10, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - (personalInfo.frame.maxY) - 44 - 10), style: .plain)
+        carListTableView = UITableView(frame: CGRect(x: 0, y: 20, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 44 - 20), style: .plain)
         carListTableView.backgroundColor = UIColor.clear
         carListTableView.delegate = self
         carListTableView.dataSource = self
@@ -108,31 +83,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        header.addSubview(personalInfo)
 //        carListTableView.tableHeaderView = header
         
-        let addBtn = UIButton(type: UIButtonType.custom)
-        addBtn.frame = CGRect(x: 0, y: SCREEN_HEIGHT - 44, width: SCREEN_WIDTH, height: 44)
-        addBtn.backgroundColor = FUZZY_BACK
-        addBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 5)
-        addBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0)
-        addBtn.setImage(UIImage(named: "addOther"), for: UIControlState.normal)
-        addBtn.setTitle("增加车辆", for: UIControlState.normal)
-        addBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        addBtn.addTarget(self, action: #selector(addMoreCar), for: UIControlEvents.touchUpInside)
-        let line = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 0.5))
-        line.backgroundColor = FUZZY_BACK
-        addBtn.addSubview(line)
-        view.addSubview(addBtn)
+//        let addBtn = UIButton(type: UIButtonType.custom)
+//        addBtn.frame = CGRect(x: 0, y: SCREEN_HEIGHT - 44, width: SCREEN_WIDTH, height: 44)
+//        addBtn.backgroundColor = FUZZY_BACK
+//        addBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 5)
+//        addBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0)
+//        addBtn.setImage(UIImage(named: "addOther"), for: UIControlState.normal)
+//        addBtn.setTitle("增加车辆", for: UIControlState.normal)
+//        addBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+//        addBtn.addTarget(self, action: #selector(addMoreCar), for: UIControlEvents.touchUpInside)
+//        let line = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 0.5))
+//        line.backgroundColor = FUZZY_BACK
+//        addBtn.addSubview(line)
+//        view.addSubview(addBtn)
     }
     
     func addMoreCar() {
         let carBrandsVC = CarBrandsVC()
         carBrandsVC.isFromRegister = false
         self.navigationController?.pushViewController(carBrandsVC, animated: true)
-    }
-    
-    //MARK:Handle
-    func buttonClicked(_ sender: UIButton) {
-        let orderListVC = OrderListVC()
-        self.navigationController?.pushViewController(orderListVC, animated: true)
     }
     
     func buttonClick() {
@@ -185,7 +154,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         let idStr = String(describing: idArray[indexPath.row])
-        print(idStr)
         TZNetworkTool.shareNetworkTool.deleteCar(id: idStr) { (isSuccess) in
             if isSuccess {
                 
