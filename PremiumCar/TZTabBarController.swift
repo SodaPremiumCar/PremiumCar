@@ -47,6 +47,7 @@ class TZTabBarController: UITabBarController {
         vc.tabBarItem.selectedImage = UIImage(named: imageName + "selected")
         vc.title = title
         // 给每个控制器包装一个导航控制器
+
         let nav = TZNavigationController()
         nav.addChildViewController(vc)
         addChildViewController(nav)

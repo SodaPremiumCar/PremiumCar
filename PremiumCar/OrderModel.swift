@@ -11,6 +11,7 @@ import SwiftyJSON
 
 class OrderModel: NSObject {
     
+    let orderState = ["已下单", "已完成", "已确认", "取车中", "服务中", "送车中", "", "", "", "已取消"]
     var id: Int?
     var state: String?
     var total: Float?
@@ -34,14 +35,8 @@ class OrderModel: NSObject {
         booking = dic["booking"] as? String
         remark = dic["remark"] as? String
         total = dic["total"] as? Float
-        let s = dic["state"] as? Int
-        //(state: 0 待处理，1 已受理， 2 已完成)
-        if s == 0 {
-            state = "待处理"
-        }else if s == 1 {
-            state = "已受理"
-        }else if s == 2 {
-            state = "已完成"
+        if let s = dic["state"] as? Int {
+            state = orderState[s]
         }
     }
 }
