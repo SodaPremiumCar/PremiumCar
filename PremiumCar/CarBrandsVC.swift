@@ -21,7 +21,6 @@ class CarBrandsVC: UIViewController {
     
     var isFromRegister = true
     
-    
     var brandstitle = [String]()
     var typestitle = [CarTModel]()
     var typesArray = [[CarTModel]]()

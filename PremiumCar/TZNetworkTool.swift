@@ -52,12 +52,17 @@ class TZNetworkTool: NSObject {
     }
     
     // 获取验证码
-    func getVerificationCode(mobileNo: String, finished:@escaping (_ results: Bool) -> ()) {
+    func getVerificationCode(isForget: Bool, mobileNo: String, finished:@escaping (_ results: Bool) -> ()) {
         
         let params: Parameters = ["mobileNo" : mobileNo]
-        
+        var url = ""
+        if isForget {
+            url = KURL(kUrlUserDynamic)
+        }else{
+            url = KURL(kUrlDynamicPws)
+        }
         Alamofire
-            .request(KURL(kUrlDynamicPws), method: .post, parameters: params, encoding: JSONEncoding.default)
+            .request(url, method: .post, parameters: params, encoding: JSONEncoding.default)
             .responseJSON { (response) in
                 
                 guard response.result.isSuccess else {
@@ -82,15 +87,21 @@ class TZNetworkTool: NSObject {
         }
     }
     
-    // 注册
-    func register(mobileNo: String, dynamicPws: String, pwd: String, finished:@escaping (_ results: Bool) -> ()) {
+    // 注册&修改
+    func register(isForget: Bool, mobileNo: String, dynamicPws: String, pwd: String, finished:@escaping (_ results: Bool) -> ()) {
         
         let params: Parameters = ["mobileNo" : mobileNo,
                                   "dynamicPws": dynamicPws,
                                   "pwd" : pwd]
-        
+        var url = ""
+        if isForget {
+            url = KURL(kUrlUserReset)
+        }else{
+            url = KURL(kUrlRegister)
+        }
+
         Alamofire
-            .request(KURL(kUrlRegister), method: .post, parameters: params, encoding: JSONEncoding.default)
+            .request(url, method: .post, parameters: params, encoding: JSONEncoding.default)
             .responseJSON { (response) in
                 
                 guard response.result.isSuccess else {
@@ -108,8 +119,9 @@ class TZNetworkTool: NSObject {
                         finished(false)
                         return
                     }
-                    
-                    SVProgressHUD.showSuccess(withStatus: "注册成功")
+                    if isForget {
+                        SVProgressHUD.showSuccess(withStatus: "修改成功")
+                    }
                     finished(true)
                 }
         }
@@ -473,14 +485,40 @@ class TZNetworkTool: NSObject {
         let paramsString = paramsJSON.rawString(String.Encoding.utf8, options: .prettyPrinted)
         return (paramsString != nil) ? paramsString! : ""
     }
+    
+    // 意见反馈
+    func feedBack (content: String, finished:@escaping (_ results: Bool) -> ()) {
+        
+        UserData.share.load()
+        let params: Parameters = ["authToken": UserData.share.authToken! as String,
+                                  "mobileNo" : UserData.share.mobileNo! as String,
+                                  "content" : content]
+
+        Alamofire
+            .request(KURL(kUrlFeedBack), method: .post, parameters: params, encoding: JSONEncoding.default)
+            .responseJSON { (response) in
+                
+                guard response.result.isSuccess else {
+                    SVProgressHUD.showError(withStatus: "网络异常")
+                    return
+                }
+                if let value = response.result.value {
+                    
+                    let dict = JSON(value)
+                    let code = dict["result"].intValue
+                    let message = dict["errMsg"].stringValue
+                    
+                    guard code == 10000 else {
+                        SVProgressHUD.showInfo(withStatus: message)
+                        finished(false)
+                        return
+                    }
+                    SVProgressHUD.showSuccess(withStatus: "提交成功")
+                    finished(true)
+                }
+        }
+    }
 }
-
-
-
-
-
-
-
 
 
 

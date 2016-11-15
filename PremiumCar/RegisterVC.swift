@@ -15,10 +15,12 @@ class RegisterVC: UIViewController {
     var verificationText: UITextField?
     var verificationBtn: TimeButton?
     var password: UITextField?
+    var registerImg: UIImageView?
     
     var registerBtn: UIButton?
     var loginBtn: UIButton?
-    
+    // 是否为忘记密码页
+    var isForgetPassword = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +32,7 @@ class RegisterVC: UIViewController {
         super.viewWillAppear(animated)
         
         self.navigationController?.isNavigationBarHidden = true
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -42,11 +45,11 @@ class RegisterVC: UIViewController {
 
         self.view.backgroundColor = COLOR_BLACK
         
-        let registerImg = UIImageView(frame: CGRect(x: (SCREEN_WIDTH - 100) * 0.5, y: 150, width: 100, height: 100))
-        registerImg.image = UIImage(named:"registerNumber")
-        view.addSubview(registerImg)
+        registerImg = UIImageView(frame: CGRect(x: (SCREEN_WIDTH - 100) * 0.5, y: 150, width: 100, height: 100))
+        registerImg?.image = UIImage(named:"registerNumber")
+        view.addSubview(registerImg!)
         
-        mobileNo = UITextField(frame: CGRect(x: 30, y:(registerImg.frame.maxY) + 15, width: SCREEN_WIDTH - 60, height: 40))
+        mobileNo = UITextField(frame: CGRect(x: 30, y:(registerImg?.frame.maxY)! + 15, width: SCREEN_WIDTH - 60, height: 40))
         mobileNo?.attributedPlaceholder = NSAttributedString(string:"手机号", attributes: [NSForegroundColorAttributeName: UIColor.white])
         mobileNo?.borderStyle = UITextBorderStyle.roundedRect
         mobileNo?.backgroundColor = FUZZY_BACK
@@ -121,11 +124,20 @@ class RegisterVC: UIViewController {
         loginBtn?.addSubview(line)
         view.addSubview(loginBtn!)
         
+        // 如果是忘记密码页面，UI调整
+        if isForgetPassword {
+            
+            registerImg?.image = UIImage(named:"forgetPassword")
+            password?.attributedPlaceholder = NSAttributedString(string:"新密码", attributes: [NSForegroundColorAttributeName: UIColor.white])
+            registerBtn?.setTitle("修改", for: UIControlState.normal)
+            loginBtn?.setTitle("返回登录", for: UIControlState.normal)
+        }
     }
         
     func getVerification() {
+        
         //获取验证码
-        TZNetworkTool.shareNetworkTool.getVerificationCode(mobileNo: (mobileNo?.text)!) { (isSuccess) in
+        TZNetworkTool.shareNetworkTool.getVerificationCode(isForget: isForgetPassword, mobileNo: (mobileNo?.text)!) { (isSuccess) in
             if isSuccess {
                 self.verificationBtn?.setTime(60)
             }
@@ -134,15 +146,20 @@ class RegisterVC: UIViewController {
     
     func register() {
         
-        TZNetworkTool.shareNetworkTool.register(mobileNo: mobileNo!.text!, dynamicPws: verificationText!.text!, pwd: password!.text!) { (isSuccess) in
+        TZNetworkTool.shareNetworkTool.register(isForget: isForgetPassword, mobileNo: mobileNo!.text!, dynamicPws: verificationText!.text!, pwd: password!.text!) { (isSuccess) in
             
             if isSuccess {
                 
-                TZNetworkTool.shareNetworkTool.login(mobileNo: self.mobileNo!.text!, pwd: self.password!.text!, finished: { (isSuccess) in
-                    print("登录")
-                })
-                let personalVC = PersonalInfoVC()
-                self.navigationController?.pushViewController(personalVC, animated: true)
+                if self.isForgetPassword {
+                    // 修改成功退回登录页
+                    self.navigationController?.popViewController(animated: true)
+                }else {
+                    TZNetworkTool.shareNetworkTool.login(mobileNo: self.mobileNo!.text!, pwd: self.password!.text!, finished: { (isSuccess) in
+                        
+                    })
+                    let personalVC = PersonalInfoVC()
+                    self.navigationController?.pushViewController(personalVC, animated: true)
+                }
             }
 //            SVProgressHUD.dismiss(withDelay: 100)
         }

@@ -82,6 +82,23 @@ class LoginViewController: UIViewController {
         line.backgroundColor = FUZZY_BACK
         registerBtn?.addSubview(line)
         view.addSubview(registerBtn!)
+        
+        let forgetPassword = UIButton(type: UIButtonType.custom)
+        forgetPassword.frame = CGRect(x: SCREEN_WIDTH * 0.7 - 30, y: (loginBtn?.frame.maxY)!, width: SCREEN_WIDTH * 0.3, height: 40)
+        forgetPassword.setTitle("忘记密码", for: .normal)
+        forgetPassword.setTitleColor(RGBA(255, g: 255, b: 255, a: 0.8), for: .normal)
+        forgetPassword.titleEdgeInsets = UIEdgeInsets(top: -5, left: 0, bottom: 0, right: -40)
+        forgetPassword.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        forgetPassword.addTarget(self, action: #selector(goForgetPassword), for: UIControlEvents.touchUpInside)
+        view.addSubview(forgetPassword)
+        
+    }
+    
+    func goForgetPassword() {
+
+        let forgetPasswordVC = RegisterVC()
+        forgetPasswordVC.isForgetPassword = true
+        self.navigationController?.pushViewController(forgetPasswordVC, animated: true)
     }
     
     func textFieldDidChange() {
@@ -107,7 +124,7 @@ class LoginViewController: UIViewController {
     func register() {
         
         let registerVC = RegisterVC()
-        navigationController?.pushViewController(registerVC, animated: true)
+        self.navigationController?.pushViewController(registerVC, animated: true)
     }
     
 }
