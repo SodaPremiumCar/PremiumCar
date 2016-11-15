@@ -24,6 +24,8 @@
 		259960431DC737F70001444F /* CarTModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259960421DC737F70001444F /* CarTModel.swift */; };
 		25BFB9731DC3278D0016150E /* TZNetworkTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFB9721DC3278D0016150E /* TZNetworkTool.swift */; };
 		25BFB9751DC33ECF0016150E /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFB9741DC33ECF0016150E /* UserData.swift */; };
+		A838FC431DDAFBF50025C2E5 /* MyOrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838FC421DDAFBF50025C2E5 /* MyOrderCell.swift */; };
+		A838FC481DDB05D90025C2E5 /* MixLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838FC471DDB05D90025C2E5 /* MixLabel.swift */; };
 		A85B6CCD1D7D7DB100E43F59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85B6CCC1D7D7DB100E43F59 /* AppDelegate.swift */; };
 		A85B6CCF1D7D7DB100E43F59 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85B6CCE1D7D7DB100E43F59 /* ViewController.swift */; };
 		A85B6CD41D7D7DB100E43F59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A85B6CD31D7D7DB100E43F59 /* Assets.xcassets */; };
@@ -66,6 +68,8 @@
 		25BFB9741DC33ECF0016150E /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		91E8A6288D2F82C45F2CFABD /* Pods_PremiumCar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PremiumCar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A47E5A7B3061FA25282F601C /* Pods-PremiumCar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PremiumCar.release.xcconfig"; path = "Pods/Target Support Files/Pods-PremiumCar/Pods-PremiumCar.release.xcconfig"; sourceTree = "<group>"; };
+		A838FC421DDAFBF50025C2E5 /* MyOrderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyOrderCell.swift; sourceTree = "<group>"; };
+		A838FC471DDB05D90025C2E5 /* MixLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixLabel.swift; sourceTree = "<group>"; };
 		A85B6CC91D7D7DB100E43F59 /* PremiumCar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PremiumCar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A85B6CCC1D7D7DB100E43F59 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A85B6CCE1D7D7DB100E43F59 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +121,7 @@
 				258C97401DDAEBA60070D501 /* MineViewController.swift */,
 				258C97421DDAEF520070D501 /* TZNavigationController.swift */,
 				258C973C1DDAE8880070D501 /* TZTabBarController.swift */,
+				A838FC471DDB05D90025C2E5 /* MixLabel.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -137,6 +142,7 @@
 			children = (
 				A85B6CED1D7E727400E43F59 /* CarListCell.swift */,
 				25813E0B1D94D5BB00291D5B /* MyCarCell.swift */,
+				A838FC421DDAFBF50025C2E5 /* MyOrderCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -356,9 +362,11 @@
 				2590CF561DBF59590039D62A /* PersonalInfoVC.swift in Sources */,
 				259486C31DC88E51008A405A /* CarModel.swift in Sources */,
 				25BFB9751DC33ECF0016150E /* UserData.swift in Sources */,
+				A838FC481DDB05D90025C2E5 /* MixLabel.swift in Sources */,
 				A85B6CE01D7D875D00E43F59 /* ColorLET.swift in Sources */,
 				A86E83CD1DC378E000652EA7 /* NavigationController.swift in Sources */,
 				A85B6CE81D7E604B00E43F59 /* SetupViewLET.swift in Sources */,
+				A838FC431DDAFBF50025C2E5 /* MyOrderCell.swift in Sources */,
 				258C97431DDAEF520070D501 /* TZNavigationController.swift in Sources */,
 				A8B7AA1B1D8694CD00C02B95 /* PromptVC.swift in Sources */,
 				2590CF491DBE14320039D62A /* RegisterVC.swift in Sources */,
