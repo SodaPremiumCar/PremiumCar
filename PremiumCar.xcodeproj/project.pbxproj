@@ -13,6 +13,9 @@
 		25813E0E1D94D5BB00291D5B /* MyCarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25813E0B1D94D5BB00291D5B /* MyCarCell.swift */; };
 		25813E0F1D94D5BB00291D5B /* MyCarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25813E0C1D94D5BB00291D5B /* MyCarVC.swift */; };
 		258C973B1DD5A26C0070D501 /* SuggestionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258C973A1DD5A26C0070D501 /* SuggestionVC.swift */; };
+		258C973D1DDAE8880070D501 /* TZTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258C973C1DDAE8880070D501 /* TZTabBarController.swift */; };
+		258C973F1DDAE97A0070D501 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258C973E1DDAE97A0070D501 /* NewsViewController.swift */; };
+		258C97411DDAEBA60070D501 /* MineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258C97401DDAEBA60070D501 /* MineViewController.swift */; };
 		2590CF491DBE14320039D62A /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2590CF481DBE14320039D62A /* RegisterVC.swift */; };
 		2590CF511DBF0C390039D62A /* TimeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2590CF501DBF0C390039D62A /* TimeButton.m */; };
 		2590CF561DBF59590039D62A /* PersonalInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2590CF551DBF59590039D62A /* PersonalInfoVC.swift */; };
@@ -46,6 +49,9 @@
 		25813E0B1D94D5BB00291D5B /* MyCarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCarCell.swift; sourceTree = "<group>"; };
 		25813E0C1D94D5BB00291D5B /* MyCarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCarVC.swift; sourceTree = "<group>"; };
 		258C973A1DD5A26C0070D501 /* SuggestionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionVC.swift; sourceTree = "<group>"; };
+		258C973C1DDAE8880070D501 /* TZTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZTabBarController.swift; sourceTree = "<group>"; };
+		258C973E1DDAE97A0070D501 /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
+		258C97401DDAEBA60070D501 /* MineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineViewController.swift; sourceTree = "<group>"; };
 		2590CF481DBE14320039D62A /* RegisterVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		2590CF4B1DBF0BD80039D62A /* PremiumCar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PremiumCar-Bridging-Header.h"; sourceTree = "<group>"; };
 		2590CF4F1DBF0C390039D62A /* TimeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeButton.h; sourceTree = "<group>"; };
@@ -105,6 +111,9 @@
 				25813E0A1D94D5BB00291D5B /* CallButlerVC.swift */,
 				25813E0C1D94D5BB00291D5B /* MyCarVC.swift */,
 				258C973A1DD5A26C0070D501 /* SuggestionVC.swift */,
+				258C973E1DDAE97A0070D501 /* NewsViewController.swift */,
+				258C97401DDAEBA60070D501 /* MineViewController.swift */,
+				258C973C1DDAE8880070D501 /* TZTabBarController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -338,6 +347,7 @@
 				A85B6CCF1D7D7DB100E43F59 /* ViewController.swift in Sources */,
 				254C6A671DBDDD5C00C0B80F /* LoginViewController.swift in Sources */,
 				A8A2406C1D8284CA00964F74 /* CarDetailVC.swift in Sources */,
+				258C973D1DDAE8880070D501 /* TZTabBarController.swift in Sources */,
 				25813E0D1D94D5BB00291D5B /* CallButlerVC.swift in Sources */,
 				25120B911DC08F26000F506F /* CarBrandsVC.swift in Sources */,
 				2590CF561DBF59590039D62A /* PersonalInfoVC.swift in Sources */,
@@ -358,8 +368,10 @@
 				A85B6CEE1D7E727400E43F59 /* CarListCell.swift in Sources */,
 				A8F9859D1DD04941006328A2 /* OrderListVC.swift in Sources */,
 				A8B7F4161DC728AF00896BD4 /* ServiceListVC.swift in Sources */,
+				258C973F1DDAE97A0070D501 /* NewsViewController.swift in Sources */,
 				A85B6CE11D7D875D00E43F59 /* ToolLet.swift in Sources */,
 				A8B7F4181DC72E5100896BD4 /* ServiceItemModel.swift in Sources */,
+				258C97411DDAEBA60070D501 /* MineViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
