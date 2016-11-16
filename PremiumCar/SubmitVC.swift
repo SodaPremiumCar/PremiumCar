@@ -7,15 +7,15 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    var carModel: CarTModel!
-    var idStr: Int!
-    var serviceItems: [ServiceItemModel]!
-    var count: Float!
+    var carModel: CarTModel!    //车型model
+    var idStr: Int!                     //车的id
+    var serviceItems: [ServiceItemModel]!   //选择服务的model数组
     
-    private var submitBtn: UIButton!
+    fileprivate var submitBtn: UIButton!
     fileprivate var tableView: UITableView!
     fileprivate var phoneTextField: UITextField!
     fileprivate var nameTextField: UITextField!
@@ -52,7 +52,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
     //MARK: UI
     func initNavigation() {
         
-        self.navigationItem.title = "生成订单"
+        self.navigationItem.title = "填写订单"
     }
     
     func initUI() {
@@ -61,10 +61,9 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         
         self.tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 50 - 64), style: .plain)
         self.tableView.backgroundColor = UIColor.black
-        self.tableView.separatorColor = UIColor.init(colorLiteralRed: 100, green: 100, blue: 100, alpha: 1)
+        self.tableView.separatorStyle = .none
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCellIdentifier")
         self.view.addSubview(self.tableView)
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         
@@ -74,6 +73,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         addressTextField = self.getTextField()
         dateTextField = self.getTextField()
         
+        //底部提交栏
         let submitView = UIView(frame: CGRect(x: 0, y: SCREEN_HEIGHT - 50 - 64, width: SCREEN_WIDTH, height: 50))
         submitView.backgroundColor = FUZZY_BACK
         
@@ -82,18 +82,23 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         lineW.backgroundColor = FUZZY_BACK
         let lineH = UIView(frame: CGRect(x: SCREEN_WIDTH - 120, y: 10, width: 0.5, height: 30))
         lineH.backgroundColor = FUZZY_BACK
+        
         // 提交btn
         submitBtn = UIButton(type: UIButtonType.custom)
         submitBtn.frame = CGRect(x: SCREEN_WIDTH - 110, y: 0, width: 100, height: 50)
-        submitBtn.setTitle("提交订单", for: UIControlState.normal)
+        submitBtn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        submitBtn.titleLabel?.numberOfLines = 2
+        submitBtn.titleLabel?.textAlignment = .center
+        submitBtn.setTitleColor(UIColor.green, for: .normal)
         submitBtn.backgroundColor = UIColor.clear
-        submitBtn?.addTarget(self, action: #selector(buttonClicked(_:)), for: UIControlEvents.touchUpInside)
-        setButton(button: submitBtn, with: 1)
+        submitBtn.addTarget(self, action: #selector(buttonClicked(_:)), for: UIControlEvents.touchUpInside)
         
         submitView.addSubview(submitBtn)
         submitView.addSubview(lineW)
         submitView.addSubview(lineH)
         view.addSubview(submitView)
+        
+        updateSubmitView()
         
         datePicker = UIDatePicker()
         datePicker.frame = CGRect(x: 0, y: self.view.frame.height + 30, width: SCREEN_WIDTH, height: 260)
@@ -117,18 +122,31 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         //default text
         nameTextField.text = UserData.share.name != nil ? UserData.share.name : "请填写您的姓名"
         phoneTextField.text = UserData.share.mobileNo != nil ? UserData.share.mobileNo : "联系电话"
-        addressTextField.text = UserData.share.address != nil ? UserData.share.address : "联系地址"
+        addressTextField.text = UserData.share.address != nil ? UserData.share.address : "取车地址"
         self.datePickerValueChange(datePicker)
+    }
+    
+    func updateSubmitView() {
+        
+        if serviceItems.count > 0 {
+            var total: Float = 0.0
+            for model in serviceItems {
+                total += model.price!
+            }
+            let text = String(format: "%.2f元\n确认提交", total)
+            submitBtn?.setTitle(text, for: UIControlState.normal)
+        }else {
+        }
     }
     
     func getTextField() -> UITextField {
         
-        let textField = UITextField(frame: CGRect(x: 30, y: 10, width: SCREEN_WIDTH - 30, height: 40))
-        textField.backgroundColor = UIColor.black
+        let textField = UITextField(frame: CGRect(x: 80, y: 5, width: SCREEN_WIDTH - 110, height: 30))
+        textField.backgroundColor = RGBA(0, g: 0, b: 0, a: 1)
         textField.textColor = UIColor.white
         textField.delegate = self
         textField.borderStyle = .none
-        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.font = UIFont.systemFont(ofSize: 14)
         textField.keyboardAppearance = .light
         textField.returnKeyType = .done
         
@@ -155,7 +173,6 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
       
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "MM月dd日 hh:mm"
-//        formatter.setLocalizedDateFormatFromTemplate("MM月dd日 hh-mm")
         dateTextField.text = formatter.string(from: picker.date)
     }
     
@@ -165,9 +182,14 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         if sender == datePickerButton {
             self.hideDatePicker()
         }else {
-            let title = String(format: "%@，您的联系方式为%@，预约时间为%@", nameTextField.text!, phoneTextField.text!, dateTextField.text!)
-            let alert: UIAlertController = UIAlertController(title: title, message: "", preferredStyle: .alert)
-        let action0: UIAlertAction = UIAlertAction(title: "提交", style: .default) { (alert) in
+            
+            guard nameTextField.text!.isEmpty == false &&
+                        phoneTextField.text!.isEmpty == false &&
+                        addressTextField.text!.isEmpty == false
+            else {
+                SVProgressHUD.showInfo(withStatus: "为确保您的爱车及时享受服务，请填写您的姓名、联系电话和取车地点")
+                return
+            }
             
             let content = self.carModel.brand! + self.carModel.model!
             let contacts = ["name" : (self.nameTextField.text != nil) ? self.nameTextField.text : "",
@@ -175,7 +197,9 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
                             "telephone" : (self.phoneTextField.text != nil) ? self.phoneTextField.text : ""]
             let booking = (self.dateTextField.text != nil) ? self.dateTextField.text : ""
             var services = [AnyObject]()
+            var total: Float = 0.0
             for model in self.serviceItems {
+                total += model.price!
                 var dic = [String : String]()
                 dic["count"] = "1"
                 dic["price"] = String(describing: model.price!)
@@ -185,19 +209,12 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
                 dic["name"] = name + item
                 services.append(dic as AnyObject)
             }
-            TZNetworkTool.shareNetworkTool.createOrder(content: content, services: services, contacts: contacts as! [String : String], total: String(self.count), remark: "", carId: String(describing: self.carModel.id!), carTypeId: String(self.idStr!), booking: booking!, finished: { (isSuccess) in
+            TZNetworkTool.shareNetworkTool.createOrder(content: content, services: services, contacts: contacts as! [String : String], total: String(total), remark: "", carId: String(describing: self.carModel.id!), carTypeId: String(self.idStr!), booking: booking!, finished: { (isSuccess) in
                 if isSuccess {
                     let promptVC = PromptVC()
                     self.navigationController?.pushViewController(promptVC, animated: true)
                 }
             })
-        }
-        let action1: UIAlertAction = UIAlertAction(title: "取消", style: .cancel) { (alert) in
-        }
-        alert.addAction(action0)
-        alert.addAction(action1)
-        self.present(alert, animated: true) {
-        }
         }
     }
     
@@ -228,44 +245,97 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
     //MARK: TableViewDelegate
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        return 1
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 4
+        if section == 0 {
+            return 4
+        }else if section == 1 {
+            return 1
+        }else {
+            return serviceItems.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 20
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 40
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        return 60
+        let label = UILabel(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 30))
+        label.textColor = RGBA(100, g: 100, b: 100, a: 1)
+        label.backgroundColor = UIColor.black
+        label.font = UIFont.systemFont(ofSize: 12)
+        if section == 0 {
+            label.text = "    联系方式"
+        }else if section == 1 {
+            label.text = "    车型"
+        }else {
+            label.text = "    服务内容"
+        }
+        return label
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        
         return UIView()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCellIdentifier", for: indexPath)
-        cell.selectionStyle = .none
-        cell.backgroundColor = UIColor.black
-        for subview in cell.contentView.subviews {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCellIdentifier")
+        if cell == nil {
+            cell = UITableViewCell(style: .value1, reuseIdentifier: "UITableViewCellIdentifier" as String?)
+            cell?.selectionStyle = .none
+            cell?.textLabel?.font = UIFont.systemFont(ofSize: 14)
+            cell?.detailTextLabel?.font = UIFont.systemFont(ofSize: 14)
+            cell?.textLabel?.textColor = RGBA(200, g: 200, b: 200, a: 1)
+            cell?.detailTextLabel?.textColor = RGBA(250, g: 250, b: 250, a: 1)
+            cell?.backgroundColor = UIColor.black
+        }
+
+        for subview in (cell?.contentView.subviews)! {
             subview.removeFromSuperview()
         }
         
-        if (indexPath as NSIndexPath).row == 0 {
-            cell.contentView.addSubview(nameTextField)
-        }else if (indexPath as NSIndexPath).row == 1 {
-            cell.contentView.addSubview(phoneTextField)
-        }else if (indexPath as NSIndexPath).row == 2 {
-            cell.contentView.addSubview(addressTextField)
+        if indexPath.section == 0 {
+            if (indexPath as NSIndexPath).row == 0 {
+                cell?.textLabel?.text = "姓名"
+                cell?.contentView.addSubview(nameTextField)
+            }else if (indexPath as NSIndexPath).row == 1 {
+                cell?.textLabel?.text = "联系电话"
+                cell?.contentView.addSubview(phoneTextField)
+            }else if (indexPath as NSIndexPath).row == 2 {
+                cell?.textLabel?.text = "取车地点"
+                cell?.contentView.addSubview(addressTextField)
+            }else {
+                cell?.textLabel?.text = "预约时间"
+                cell?.contentView.addSubview(dateTextField)
+            }
+            let line = UIView(frame: CGRect(x: 75, y: 35, width: SCREEN_WIDTH - 100, height: 0.5))
+            line.backgroundColor = FUZZY_BACK
+            cell?.contentView.addSubview(line)
+        }else if indexPath.section == 1 {
+            cell?.textLabel?.text = carModel.brand! + "  " + carModel.model!
         }else {
-            cell.contentView.addSubview(dateTextField)
+            let model = serviceItems[indexPath.row]
+            let price = String(format: "￥%.2f", model.price!)
+            cell?.textLabel?.text = model.type! + "  " + model.name!
+            cell?.detailTextLabel?.text = price
         }
+        
     
-        return cell
+        return cell!
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -275,7 +345,18 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         
         nameTextField.resignFirstResponder()
         phoneTextField.resignFirstResponder()
+        addressTextField.resignFirstResponder()
         dateTextField.resignFirstResponder()
         self.hideDatePicker()
     }
 }
+
+
+
+
+
+
+
+
+
+
