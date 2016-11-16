@@ -377,7 +377,6 @@ class TZNetworkTool: NSObject {
                         SVProgressHUD.showInfo(withStatus: message)
                         return
                     }
-                    
                     //  字典转成模型
                     let typeArray = dict["services"]["types"].arrayObject
                     

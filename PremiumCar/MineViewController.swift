@@ -25,7 +25,7 @@ class MineViewController: UIViewController {
         title = "我的"
         view.backgroundColor = COLOR_BLACK
         
-        let frame: CGRect = CGRect(x: 0, y: 40, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 44 - 40)
+        let frame: CGRect = CGRect(x: 0, y: 64, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 44 - 40)
         tableView = UITableView.init(frame: frame, style: UITableViewStyle.plain)
         tableView.delegate = self
         tableView.dataSource = self
