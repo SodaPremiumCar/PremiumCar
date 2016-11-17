@@ -172,7 +172,8 @@ extension ServiceViewController: UITableViewDelegate, UITableViewDataSource {
         }else{
             let model = currentDataArray[indexPath.row]
             let price = String(format: "（￥%.2f）", model.price!)
-            cell!.textLabel?.text = model.name! + price
+            let item = (model.item != nil) ? model.item! : ""
+            cell!.textLabel?.text = model.name! + item + price
             cell!.accessoryType = (model.isSelected == true) ? .checkmark : .none
         }
         

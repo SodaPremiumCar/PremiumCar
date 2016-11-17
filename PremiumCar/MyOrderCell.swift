@@ -14,7 +14,7 @@ class MyOrderCell: UITableViewCell {
     fileprivate var carType: UILabel!
     fileprivate var booking: UILabel!
     fileprivate var total: UILabel!
-    fileprivate var state: UILabel!
+    fileprivate var state: UIButton!
     fileprivate var service: UILabel!
     fileprivate var line: UIView!
     
@@ -70,22 +70,8 @@ class MyOrderCell: UITableViewCell {
         service.numberOfLines = 0
         contentView.addSubview(service)
         
-        state = UILabel()
-        state.textColor = RGBA(200, g: 200, b: 200, a: 1)
-        state.numberOfLines = 1
-        state.font = UIFont.boldSystemFont(ofSize: 12)
-        state.adjustsFontSizeToFitWidth = true
-        state.textAlignment = .center
-        state.backgroundColor = RGBA(50, g: 50, b: 50, a: 1)
-        state.layer.masksToBounds = true
-        state.layer.cornerRadius = 3
+        state = getStateButton(frame: CGRect.init(x: SCREEN_WIDTH - 50 - 18, y: 16, width: 50, height: 20), title: "", fontSize: 10)
         contentView.addSubview(state)
-        state.snp.makeConstraints { (make) in
-            make.width.equalTo(60)
-            make.top.equalTo(16)
-            make.right.equalTo(-18)
-            make.height.equalTo(18)
-        }
         
         line = UIView()
         line.backgroundColor = RGBA(55, g: 55, b: 55, a: 1)
@@ -97,8 +83,7 @@ class MyOrderCell: UITableViewCell {
         carType.mix(img: UIImage(named: "myOrderCar")!, text: model.content!, imgSize: CGSize.init(width: 14, height: 14))
         booking.mix(img: UIImage(named: "myOrderBooking")!, text: model.booking!, imgSize: CGSize.init(width: 14, height: 14))
         total.mix(img: UIImage(named: "myOrderTotal")!, text: String(format: "消费：￥%.2f", model.total!), imgSize: CGSize.init(width: 14, height: 14))
-        state.text = model.state!
-    
+        state.setTitle(model.state!, for: UIControlState.normal)
         if (model.services != nil) {
             var text = ""
             for dic in model.services! {

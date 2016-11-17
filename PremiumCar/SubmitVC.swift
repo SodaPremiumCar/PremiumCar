@@ -105,7 +105,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         datePicker.backgroundColor = RGBA(230, g: 230, b: 230, a: 1)
         datePicker.setDate(Date(), animated: false)
         datePicker.datePickerMode = UIDatePickerMode.dateAndTime
-        datePicker.minuteInterval = 60 * 60
+        datePicker.minuteInterval = 30
         datePicker.minimumDate = Date()
         datePicker.addTarget(self, action:#selector(SubmitVC.datePickerValueChange(_:)), for: UIControlEvents.valueChanged)
         self.view.addSubview(datePicker)
@@ -113,16 +113,19 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         datePickerButton = UIButton(type: .custom)
         datePickerButton.frame = CGRect(x: 0, y: self.view.frame.height, width: SCREEN_WIDTH, height: 30)
         datePickerButton.backgroundColor = RGBA(230, g: 230, b: 230, a: 1)
-        datePickerButton.setTitle("选定预约", for: UIControlState())
-        datePickerButton.setTitleColor(UIColor.black, for: UIControlState())
-        datePickerButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        datePickerButton.setTitle("确定", for: UIControlState())
+        datePickerButton.setTitleColor(SEC_ORANGE, for: UIControlState())
+        datePickerButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         datePickerButton.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchUpInside)
         self.view.addSubview(datePickerButton)
         
         //default text
-        nameTextField.text = UserData.share.name != nil ? UserData.share.name : "请填写您的姓名"
-        phoneTextField.text = UserData.share.mobileNo != nil ? UserData.share.mobileNo : "联系电话"
-        addressTextField.text = UserData.share.address != nil ? UserData.share.address : "取车地址"
+        nameTextField.placeholder = "请填写您的姓名"
+        phoneTextField.placeholder = "联系电话"
+        addressTextField.placeholder = "取车地址"
+        nameTextField.text = UserData.share.name != nil ? UserData.share.name : ""
+        phoneTextField.text = UserData.share.mobileNo != nil ? UserData.share.mobileNo : ""
+        addressTextField.text = UserData.share.address != nil ? UserData.share.address : ""
         self.datePickerValueChange(datePicker)
     }
     

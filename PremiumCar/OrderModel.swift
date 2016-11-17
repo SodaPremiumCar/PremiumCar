@@ -39,16 +39,16 @@ class OrderModel: NSObject {
             state = orderState[s]
         }
         
-        let string = dic["services"] as! String
-        let data = string.data(using: String.Encoding.utf8)!
-        let json = try! JSONSerialization.jsonObject(with: data, options: [])
-        print(json)
-        if ((json as? [[String : AnyObject]]) != nil) {
-            var array = [[String : AnyObject]]()
-            for dic in json as! [[String : AnyObject]] {
-                array.append(dic)
+        if let string = dic["services"] as? String {
+            let data = string.data(using: String.Encoding.utf8)!
+            let json = try! JSONSerialization.jsonObject(with: data, options: [])
+            if ((json as? [[String : AnyObject]]) != nil) {
+                var array = [[String : AnyObject]]()
+                for dic in json as! [[String : AnyObject]] {
+                    array.append(dic)
+                }
+                services = array
             }
-            services = array
         }
     }
 }
