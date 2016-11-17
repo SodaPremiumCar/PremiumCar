@@ -97,8 +97,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let model: CarTModel = carItems[(indexPath as NSIndexPath).row]
         let serviceViewController = ServiceViewController()
-//        serviceListVC.carModel = model
-//        serviceListVC.idStr = idArray[indexPath.row]
+        serviceViewController.carModel = model
+        serviceViewController.idStr = idArray[indexPath.row]
         self.navigationController?.pushViewController(serviceViewController, animated: true)
     }
     

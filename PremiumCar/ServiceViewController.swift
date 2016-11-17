@@ -11,30 +11,31 @@ import Foundation
 class ServiceViewController: UIViewController {
     
     var identifier: NSString!
-    var brandsTabelView: UITableView!
-    var typesTableView: UITableView!
-    var submitView: UIView?
+    var typeTabelView: UITableView!
+    var nameTableView: UITableView!
     var submitBtn: UIButton?
-    var brandLabel: UILabel?
-    var brandStr: String?
-    var carTypeId: Int?
+    var submitLabel: UILabel?
     
-    var brandstitle = [String]()
-    var typestitle = [ServiceItemModel]()
-    var typesArray = [[ServiceItemModel]]()
+    var carModel: CarTModel!    //车型model
+    var idStr: Int!                     //车辆id
+    
+    var typeArray = [String]()    //tableview1 cell text
+    var currentDataArray = [ServiceItemModel]()   //tableview2 current data
+    var allDataArray = [[ServiceItemModel]]()     //tableview2 all data
+    var selectedDataArray = [ServiceItemModel]()    //选定的服务项目model
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "服务项目"
-        
         TZNetworkTool.shareNetworkTool.serviceList { (typeArray, serviceBigArray) in
             
-            self.brandstitle = typeArray as! [String]
-            self.typesArray = serviceBigArray
-            self.brandsTabelView.reloadData()
+            self.typeArray = typeArray as! [String]
+            self.allDataArray = serviceBigArray
+            self.currentDataArray = []
+            self.typeTabelView.reloadData()
         }
-
         self.setupUI()
     }
     
@@ -42,104 +43,129 @@ class ServiceViewController: UIViewController {
         
         self.view.backgroundColor = COLOR_BLACK
         
-        let frame: CGRect = CGRect(x: 0, y: 15, width: SCREEN_WIDTH, height: SCREEN_HEIGHT * 0.5)
-        brandsTabelView = UITableView.init(frame: frame, style: UITableViewStyle.plain)
-        brandsTabelView.delegate = self
-        brandsTabelView.dataSource = self
-        brandsTabelView.backgroundColor = UIColor.clear
-        brandsTabelView.separatorColor = FUZZY_BACK
-        brandsTabelView.tableFooterView = UIView(frame: CGRect.zero)
-        view.addSubview(brandsTabelView)
+        //服务大类别TableView
+        let frame: CGRect = CGRect(x: 0, y: 0, width: 120, height: SCREEN_HEIGHT - 64 - 50)
+        typeTabelView = UITableView.init(frame: frame, style: UITableViewStyle.plain)
+        typeTabelView.delegate = self
+        typeTabelView.dataSource = self
+        typeTabelView.backgroundColor = UIColor.clear
+        typeTabelView.separatorColor = FUZZY_BACK
+        typeTabelView.tableFooterView = UIView(frame: CGRect.zero)
+        view.addSubview(typeTabelView)
         
-        let frameRight:CGRect = CGRect(x: 100, y: 15, width: SCREEN_WIDTH, height: SCREEN_HEIGHT * 0.5)
-        typesTableView = UITableView(frame: frameRight, style: UITableViewStyle.plain)
-        typesTableView.delegate = self
-        typesTableView.dataSource = self
-        typesTableView.backgroundColor = UIColor.clear
-        typesTableView.alpha = 0
-        typesTableView.separatorColor = FUZZY_BACK
-        typesTableView.tableFooterView = UIView(frame: CGRect.zero)
-        view.addSubview(typesTableView)
+        //服务二级内容TableView
+        let frameRight:CGRect = CGRect(x: 120, y: 0, width: SCREEN_WIDTH - 120, height: SCREEN_HEIGHT - 64 - 50)
+        nameTableView = UITableView(frame: frameRight, style: UITableViewStyle.plain)
+        nameTableView.delegate = self
+        nameTableView.dataSource = self
+        nameTableView.backgroundColor = UIColor.clear
+        nameTableView.alpha = 0
+        nameTableView.separatorColor = FUZZY_BACK
+        nameTableView.tableFooterView = UIView(frame: CGRect.zero)
+        view.addSubview(nameTableView)
         
-        submitView = UIView(frame: CGRect(x: 0, y: SCREEN_HEIGHT - 50 - 64, width: SCREEN_WIDTH, height: 50))
-        submitView?.backgroundColor = FUZZY_BACK
+        //底部提交栏
+        let submitView = UIView(frame: CGRect(x: 0, y: SCREEN_HEIGHT - 50 - 64, width: SCREEN_WIDTH, height: 50))
+        submitView.backgroundColor = FUZZY_BACK
         
         // UI线
         let lineW = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 0.5))
         lineW.backgroundColor = FUZZY_BACK
         let lineH = UIView(frame: CGRect(x: SCREEN_WIDTH - 90, y: 10, width: 0.5, height: 30))
         lineH.backgroundColor = FUZZY_BACK
+        
         // 提交btn
         submitBtn = UIButton(type: UIButtonType.custom)
         submitBtn?.frame = CGRect(x: SCREEN_WIDTH - 80, y: 0, width: 70, height: 50)
-        submitBtn?.setTitle("提交", for: UIControlState.normal)
+        submitBtn?.setTitle("下一步", for: UIControlState.normal)
         submitBtn?.backgroundColor = UIColor.clear
-        submitBtn?.addTarget(self, action: #selector(submitCarBrand), for: UIControlEvents.touchUpInside)
+        submitBtn?.addTarget(self, action: #selector(buttonClicked(sender:)), for: UIControlEvents.touchUpInside)
         setButton(button: submitBtn!, with: 0)
+        
         //选择label
-        brandLabel = UILabel(frame: CGRect(x: 20, y: 0, width: 150, height: 50))
-        brandLabel?.text = "请选择服务项目"
-        brandLabel?.textColor = UIColor.white
-        brandLabel?.font = UIFont.systemFont(ofSize: 15)
+        submitLabel = UILabel(frame: CGRect(x: 20, y: 0, width: SCREEN_WIDTH - 170, height: 50))
+        submitLabel?.textColor = UIColor.white
+        submitLabel?.font = UIFont.systemFont(ofSize: 15)
+        submitLabel?.numberOfLines = 2
         
-        submitView?.addSubview(submitBtn!)
-        submitView?.addSubview(lineW)
-        submitView?.addSubview(lineH)
-        submitView?.addSubview(brandLabel!)
-        view.addSubview(submitView!)
+        submitView.addSubview(submitBtn!)
+        submitView.addSubview(lineW)
+        submitView.addSubview(lineH)
+        submitView.addSubview(submitLabel!)
+        view.addSubview(submitView)
         
+        updateSubmitView()
     }
     
-    func submitCarBrand () {
+    func buttonClicked(sender: UIButton) {
         
-        TZNetworkTool.shareNetworkTool.addCar(carTypeId: carTypeId!) { (isSuccess) in
-            
-            if isSuccess {
-                
-                let viewController = ViewController()
-                self.navigationController?.pushViewController(viewController, animated: true)
+        let submitVC = SubmitVC()
+        submitVC.carModel = self.carModel
+        submitVC.idStr = self.idStr
+        submitVC.serviceItems = self.selectedDataArray
+        self.navigationController?.pushViewController(submitVC, animated: true)
+    }
+    
+    func updateSubmitView() {
+        
+        if selectedDataArray.count > 0 {
+            setButton(button: submitBtn!, with: 1)
+            var total: Float = 0.0
+            var count: Int = 0
+            for model in selectedDataArray {
+                total += model.price!
+                count += 1
             }
+            submitLabel?.text = String(format: "选择%i个项目，费用%.2f元", count, total)
+        }else {
+            setButton(button: submitBtn!, with: 0)
+            submitLabel?.text = "请选择服务项目"
         }
     }
 }
+
 
 extension ServiceViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if tableView == brandsTabelView {
-            return brandstitle.count
+        if tableView == typeTabelView {
+            return typeArray.count
         }else{
-            return typestitle.count
+            return currentDataArray.count
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return 40
+        return 45
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if tableView == brandsTabelView {
-            identifier = "brandsCell"
+        if tableView == typeTabelView {
+            identifier = "typeCell"
         }else{
-            identifier = "typesCell"
+            identifier = "nameCell"
         }
         var cell = tableView.dequeueReusableCell(withIdentifier: identifier as String)
         if cell == nil {
             cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: identifier as String?)
             cell!.textLabel?.textColor = UIColor.white
-            cell!.textLabel?.font =  UIFont.systemFont(ofSize: 14)
+            cell!.textLabel?.font =  UIFont.systemFont(ofSize: 15)
+            cell!.textLabel?.adjustsFontSizeToFitWidth = true
             // 选中背景颜色
             cell!.selectedBackgroundView = UIView(frame: cell!.frame)
             cell!.selectedBackgroundView?.backgroundColor = FUZZY_BACK
             cell!.backgroundColor = COLOR_BLACK
         }
-        if tableView == brandsTabelView {
-            cell!.textLabel?.text = brandstitle[indexPath.row]
+        if tableView == typeTabelView {
+            cell!.textLabel?.text = typeArray[indexPath.row]
         }else{
-            cell!.textLabel?.text = typestitle[indexPath.row].name
+            let model = currentDataArray[indexPath.row]
+            let price = String(format: "（￥%.2f）", model.price!)
+            cell!.textLabel?.text = model.name! + price
+            cell!.accessoryType = (model.isSelected == true) ? .checkmark : .none
         }
         
         return cell!
@@ -147,21 +173,34 @@ extension ServiceViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if tableView == brandsTabelView {
-            UITableView.animate(withDuration: 0.7, animations: {
-                self.typesTableView.alpha = 1
+        if tableView == typeTabelView {
+            UITableView.animate(withDuration: 0.25, animations: {
+                self.nameTableView.alpha = 1
             })
-            
-//            brandStr = brandstitle[indexPath.row]
-//            self.brandLabel?.text = brandStr
-            
-            typestitle = typesArray[indexPath.row]
-            typesTableView.reloadData()
+            currentDataArray = allDataArray[indexPath.row]
         }else{
-            
-//            self.brandLabel?.text = brandStr! + " " + self.typestitle[indexPath.row].name!
-//            carTypeId = self.typestitle[indexPath.row].id
-            setButton(button: submitBtn!, with: 1)
+            let model = currentDataArray[indexPath.row]
+            if selectedDataArray.contains(model) {
+                model.isSelected = false
+                let i = selectedDataArray.index(of: model)
+                selectedDataArray.remove(at: i!)
+            }else {
+                model.isSelected = true
+                selectedDataArray.append(model)
+            }
+            updateSubmitView()
         }
+        nameTableView.reloadData()
     }
 }
+
+
+
+
+
+
+
+
+
+
+

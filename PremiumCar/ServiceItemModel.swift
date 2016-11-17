@@ -14,6 +14,8 @@ class ServiceItemModel: NSObject {
     var type: String?
     var name: String?
     var item: String?
+    var isSelected: Bool = false
+    
     
     init(dic: [String : AnyObject]) {
         super.init()
