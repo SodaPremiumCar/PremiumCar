@@ -39,6 +39,12 @@ class ServiceViewController: UIViewController {
         self.setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
     private func setupUI() {
         
         self.view.backgroundColor = COLOR_BLACK

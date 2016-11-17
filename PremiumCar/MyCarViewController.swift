@@ -26,13 +26,11 @@ class MyCarViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewWillAppear(animated)
         
         title = "我的车库"
-            
-            TZNetworkTool.shareNetworkTool.getCar { (carItems, idArray) in
-                
-                self.carItems = carItems
-                self.idArray = idArray
-                self.carListTableView.reloadData()
-            }
+        TZNetworkTool.shareNetworkTool.getCar { (carItems, idArray, orderItems) in
+            self.carItems = carItems
+            self.idArray = idArray
+            self.carListTableView.reloadData()
+        }
     }
     
     
@@ -107,9 +105,7 @@ class MyCarViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let idStr = String(describing: idArray[indexPath.row])
         TZNetworkTool.shareNetworkTool.deleteCar(id: idStr) { (isSuccess) in
             if isSuccess {
-                
-                TZNetworkTool.shareNetworkTool.getCar { (carItems, idArray) in
-                    
+                TZNetworkTool.shareNetworkTool.getCar { (carItems, idArray, orderItems) in
                     self.carItems = carItems
                     self.idArray = idArray
                     self.carListTableView.reloadData()

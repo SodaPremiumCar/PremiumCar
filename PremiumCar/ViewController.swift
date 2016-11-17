@@ -12,6 +12,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var carListTableView: UITableView!
     var carItems = [CarTModel]()
+    var orderItems = [OrderModel]()
     var idArray = [Int]()
     var nameLabel: UILabel?
     
@@ -31,13 +32,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let loginVC = LoginViewController()
             self.navigationController?.pushViewController(loginVC, animated: false)
         }else {
-            
-            TZNetworkTool.shareNetworkTool.getCar { (carItems, idArray) in
-                
+            TZNetworkTool.shareNetworkTool.getCar(finished: { (carItems, idArray, orderItems) in
                 self.carItems = carItems
                 self.idArray = idArray
+                self.orderItems = orderItems
                 self.carListTableView.reloadData()
-            }
+            })
         }
     }
     
@@ -86,20 +86,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.selectedBackgroundView?.backgroundColor = FUZZY_BACK
         cell.backgroundColor = COLOR_BLACK
         
+        let orderModel = orderItems[indexPath.row]
+        if (orderModel.state != nil) {
+            cell.accessoryType = .none
+            cell.selectionStyle = .none
+        }
+        cell.stateSource = orderModel
         let model: CarTModel = carItems[(indexPath as NSIndexPath).row]
         cell.update(model)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let model: CarTModel = carItems[(indexPath as NSIndexPath).row]
-        let serviceViewController = ServiceViewController()
-        serviceViewController.carModel = model
-        serviceViewController.idStr = idArray[indexPath.row]
-        self.navigationController?.pushViewController(serviceViewController, animated: true)
+        if (orderItems[indexPath.row].state == nil) {
+            let model: CarTModel = carItems[(indexPath as NSIndexPath).row]
+            let serviceViewController = ServiceViewController()
+            serviceViewController.carModel = model
+            serviceViewController.idStr = idArray[indexPath.row]
+            self.navigationController?.pushViewController(serviceViewController, animated: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -108,8 +115,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         TZNetworkTool.shareNetworkTool.deleteCar(id: idStr) { (isSuccess) in
             if isSuccess {
                 
-                TZNetworkTool.shareNetworkTool.getCar { (carItems, idArray) in
-                    
+                TZNetworkTool.shareNetworkTool.getCar { (carItems, idArray, orderItems) in
                     self.carItems = carItems
                     self.idArray = idArray
                     self.carListTableView.reloadData()

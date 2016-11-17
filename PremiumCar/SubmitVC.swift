@@ -209,7 +209,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
                 dic["name"] = name + item
                 services.append(dic as AnyObject)
             }
-            TZNetworkTool.shareNetworkTool.createOrder(content: content, services: services, contacts: contacts as! [String : String], total: String(total), remark: "", carId: String(describing: self.carModel.id!), carTypeId: String(self.idStr!), booking: booking!, finished: { (isSuccess) in
+            TZNetworkTool.shareNetworkTool.createOrder(content: content, services: services, contacts: contacts as! [String : String], total: String(total), remark: "", carId: String(self.idStr!), carTypeId: String(describing: self.carModel.id!), booking: booking!, finished: { (isSuccess) in
                 if isSuccess {
                     let promptVC = PromptVC()
                     self.navigationController?.pushViewController(promptVC, animated: true)

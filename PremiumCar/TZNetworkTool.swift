@@ -193,7 +193,6 @@ class TZNetworkTool: NSObject {
                         finished(false)
                         return
                     }
-                    
                     // 存储个人信息
                     UserData.share.name = dict["user"]["name"].stringValue
                     UserData.share.address = dict["user"]["addr"].stringValue
@@ -281,7 +280,7 @@ class TZNetworkTool: NSObject {
     }
     
     // 获取车辆列表
-    func getCar(finished:@escaping (_ CarItems: [CarTModel], _ idArray: [Int]) -> ()) {
+    func getCar(finished:@escaping (_ CarItems: [CarTModel], _ idArray: [Int], _ orderItems: [OrderModel]) -> ()) {
         
         UserData.share.load()
         let params: Parameters = ["authToken": UserData.share.authToken! as String,
@@ -305,21 +304,31 @@ class TZNetworkTool: NSObject {
                         SVProgressHUD.showInfo(withStatus: message)
                         return
                     }
-                    print("tttttttt", dict)
                     //  字典转成模型
                     if let items = dict["carList"].arrayObject {
                         var carItems = [CarTModel]()
                         var idArray = [Int]()
+                        var orderItems = [OrderModel]()
                         for item in items {
                            
                             let itemT = item as! [String: AnyObject]
                             let typeItem = itemT["carType"]
+//                            let orderData = itemT["openingOrder"]
                             let carItem = CarTModel(dict: typeItem as! [String : AnyObject])
+                            // 车的服务状态
+                            if let orderData = itemT["openingOrder"] as? [String : AnyObject]{
+                                let orderItem = OrderModel(dic: orderData)
+                                orderItems.append(orderItem)
+                            }else{
+                                let orderItem = OrderModel(dic: [:])
+                                orderItems.append(orderItem)
+                            }
+                            
                             carItems.append(carItem)
                             idArray.append(itemT["id"] as! Int)
                         }
                         
-                        finished(carItems, idArray)
+                        finished(carItems, idArray, orderItems)
                     }
                 }
         }

@@ -56,7 +56,6 @@ class MyCarCell: UICollectionViewCell {
         licenseLable.frame = CGRect(x: carTypeLabel.frame.maxX, y: width, width: width - carTypeLabel.frame.maxX - 5, height: height - width)
     }
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
