@@ -161,7 +161,7 @@ class TZNetworkTool: NSObject {
                     UserData.share.address = addr
                     UserData.share.telephone = telephone
                     UserData.share.save()
-                    SVProgressHUD.showSuccess(withStatus: "提交成功")
+//                    SVProgressHUD.showSuccess(withStatus: "修改成功")
                     finished(true)
                 }
         }

@@ -1,37 +1,31 @@
 //
-//  ViewController.swift
+//  MyCarViewController.swift
 //  PremiumCar
 //
-//  Created by ethen on 16/9/5.
+//  Created by 赵霆 on 16/11/16.
 //  Copyright © 2016年 soda. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MyCarViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var carListTableView: UITableView!
     var carItems = [CarTModel]()
     var idArray = [Int]()
     var nameLabel: UILabel?
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
-        print("qqqqqqqq")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        title = "服务"
-        
-        if checkLoginStatus() {
-            
-            let loginVC = LoginViewController()
-            self.navigationController?.pushViewController(loginVC, animated: false)
-        }else {
+        title = "我的车库"
             
             TZNetworkTool.shareNetworkTool.getCar { (carItems, idArray) in
                 
@@ -39,7 +33,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self.idArray = idArray
                 self.carListTableView.reloadData()
             }
-        }
     }
     
     
@@ -53,7 +46,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         imgView.contentMode = .scaleAspectFill
         imgView.image = img
         
-        carListTableView = UITableView(frame: CGRect(x: 0, y: 20, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 84), style: .plain)
+        carListTableView = UITableView(frame: CGRect(x: 0, y: 20, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 44 - 84), style: .plain)
         carListTableView.backgroundColor = UIColor.clear
         carListTableView.delegate = self
         carListTableView.dataSource = self
@@ -61,6 +54,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         carListTableView.register(CarListCell.self, forCellReuseIdentifier: "CarListCellIdentifier")
         view.addSubview(carListTableView)
 
+        let addBtn = UIButton(type: UIButtonType.custom)
+        addBtn.frame = CGRect(x: 0, y: SCREEN_HEIGHT - 44 - 64, width: SCREEN_WIDTH, height: 44)
+        addBtn.backgroundColor = FUZZY_BACK
+        addBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 5)
+        addBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0)
+        addBtn.setImage(UIImage(named: "addOther"), for: UIControlState.normal)
+        addBtn.setTitle("增加车辆", for: UIControlState.normal)
+        addBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        addBtn.addTarget(self, action: #selector(addMoreCar), for: UIControlEvents.touchUpInside)
+        let line = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 0.5))
+        line.backgroundColor = FUZZY_BACK
+        addBtn.addSubview(line)
+        view.addSubview(addBtn)
+    }
+    
+    func addMoreCar() {
+        let carBrandsVC = CarBrandsVC()
+        carBrandsVC.isFromRegister = false
+        self.navigationController?.pushViewController(carBrandsVC, animated: true)
     }
     
     //MARK: TableViewDelegate
@@ -81,26 +93,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "CarListCellIdentifier", for: indexPath) as! CarListCell
-        cell.accessoryType = .disclosureIndicator
         // 选中背景颜色
-        cell.selectedBackgroundView = UIView(frame: cell.frame)
-        cell.selectedBackgroundView?.backgroundColor = FUZZY_BACK
+        cell.selectionStyle = .none
         cell.backgroundColor = COLOR_BLACK
         
         let model: CarTModel = carItems[(indexPath as NSIndexPath).row]
         cell.update(model)
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        let model: CarTModel = carItems[(indexPath as NSIndexPath).row]
-        let serviceViewController = ServiceViewController()
-        serviceViewController.carModel = model
-        serviceViewController.idStr = idArray[indexPath.row]
-        self.navigationController?.pushViewController(serviceViewController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

@@ -36,6 +36,7 @@ class MineViewController: UIViewController {
         view.addSubview(tableView)
         
     }
+    
 }
 
 extension MineViewController: UITableViewDelegate, UITableViewDataSource {
@@ -60,8 +61,7 @@ extension MineViewController: UITableViewDelegate, UITableViewDataSource {
             cell!.textLabel?.font =  UIFont.systemFont(ofSize: 16)
             cell!.accessoryType = .disclosureIndicator
             // 选中背景颜色
-            cell!.selectedBackgroundView = UIView(frame: cell!.frame)
-            cell!.selectedBackgroundView?.backgroundColor = FUZZY_BACK
+            cell!.selectionStyle = .none
             cell!.backgroundColor = COLOR_BLACK
         }
         cell?.textLabel?.text = titles[indexPath.row]
@@ -83,6 +83,8 @@ extension MineViewController: UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(orderListVC, animated: true)
         }else if indexPath.row == 2 {
             
+            let myCarViewController = MyCarViewController()
+            navigationController?.pushViewController(myCarViewController, animated: true)
         }else{
             let suggestionVC = SuggestionVC()
             navigationController?.pushViewController(suggestionVC, animated: true)

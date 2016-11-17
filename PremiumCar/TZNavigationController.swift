@@ -35,8 +35,9 @@ class TZNavigationController: UINavigationController {
             viewController.hidesBottomBarWhenPushed = true
             viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain, target: self, action: #selector(navigationBackClick))
         }
-        super.pushViewController(viewController, animated: true)
+        super.pushViewController(viewController, animated: animated)
     }
+    
     /// 返回按钮
     func navigationBackClick() {
 

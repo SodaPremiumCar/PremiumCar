@@ -29,6 +29,17 @@ func setButton(button: UIButton, with type: Int){
         button.isEnabled = true
     }
 }
+
+// 查看登录状态
+func checkLoginStatus() -> Bool{
+    
+    UserData.share.load()
+    let mob: String? = UserData.share.mobileNo
+    let auth: String? = UserData.share.authToken
+    return mob == nil || mob!.isEmpty || auth == nil || auth!.isEmpty
+}
+
+
 // 隐藏sv
 func hideSV() {
     SVProgressHUD.dismiss()

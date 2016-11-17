@@ -23,6 +23,12 @@ class PersonalInfoVC: UIViewController {
         
         self.navigationItem.hidesBackButton = isFromRegister
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.isNavigationBarHidden = false
         
         if isFromRegister {
             self.navigationItem.title = "填写个人信息"
@@ -32,12 +38,6 @@ class PersonalInfoVC: UIViewController {
             submitBtn?.setTitle("修改", for: UIControlState.normal)
             loadPersonInfo()
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.navigationController?.isNavigationBarHidden = false
     }
     
     fileprivate func setupUI() {
@@ -129,9 +129,14 @@ class PersonalInfoVC: UIViewController {
         let actionSheet = UIAlertController(title: "是否退出登录", message: nil, preferredStyle: .actionSheet)
         let logoutAction = UIAlertAction(title: "退出", style: UIAlertActionStyle.destructive) { (UIAlertAction) in
             UserData.share.logout()
+        
+            self.navigationController?.popViewController(animated: true)
+//            self.navigationController?.popToRootViewController(animated: true)
+            if checkLoginStatus() {
+                let loginVC = LoginViewController()
+                self.navigationController?.pushViewController(loginVC, animated: false)
+            }
             
-            let loginVC = LoginViewController()
-            self.navigationController?.pushViewController(loginVC, animated: false)
         }
         let cancleAction = UIAlertAction(title: "取消", style: .cancel) { (UIAlertAction) in
             
