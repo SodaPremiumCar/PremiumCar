@@ -112,15 +112,21 @@ class PersonalInfoVC: UIViewController {
     
     // 显示个人信息
     func loadPersonInfo() {
-        UserData.share.load()
-        if (UserData.share.name != nil) {
-            nameTxt?.text = UserData.share.name
-        }
-        if (UserData.share.telephone != nil) {
-            phoneText?.text = UserData.share.telephone
-        }
-        if (UserData.share.address != nil) {
-            addressText?.text = UserData.share.address
+        
+        TZNetworkTool.shareNetworkTool.getUserInfo { (isSuccess) in
+            if isSuccess {
+               
+                UserData.share.load()
+                if (UserData.share.name != nil) {
+                    self.nameTxt?.text = UserData.share.name
+                }
+                if (UserData.share.telephone != nil) {
+                    self.phoneText?.text = UserData.share.telephone
+                }
+                if (UserData.share.address != nil) {
+                    self.addressText?.text = UserData.share.address
+                }
+            }
         }
     }
     // 登出

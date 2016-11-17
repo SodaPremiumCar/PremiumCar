@@ -30,6 +30,24 @@ func setButton(button: UIButton, with type: Int){
     }
 }
 
+// state button样式
+func  getStateButton(frame: CGRect, title: String, fontSize: CGFloat) -> UIButton {
+    
+    let button = UIButton(type: UIButtonType.roundedRect)
+    button.frame = frame
+    button.layer.cornerRadius = 3
+    button.layer.borderWidth = 0.8
+    button.layer.borderColor = SEC_ORANGE.cgColor
+    button.layer.masksToBounds = true
+    button.titleLabel?.adjustsFontSizeToFitWidth = true
+    button.titleLabel?.font = UIFont.systemFont(ofSize: fontSize)
+    button.setTitleColor(SEC_ORANGE, for: .normal)
+    button.isEnabled = false
+    button.backgroundColor = UIColor.clear
+    button.setTitle(title, for: UIControlState.normal)
+    return button
+}
+
 // 查看登录状态
 func checkLoginStatus() -> Bool{
     

@@ -13,6 +13,7 @@ class CarListCell: UITableViewCell {
 
     fileprivate var nameLabel: UILabel?
     fileprivate var imgView: UIImageView?
+    fileprivate var stateBtn: UIButton?
     
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -45,15 +46,18 @@ class CarListCell: UITableViewCell {
             make.size.equalTo(CGSize(width: SCREEN_WIDTH * 0.5, height: 80))
         })
         
-//        numbelLabel = UILabel()
-//        numbelLabel?.textColor = RGBA(222, g: 222, b: 222, a: 1)
-//        numbelLabel?.font = UIFont.systemFont(ofSize: 15)
-//        contentView.addSubview(numbelLabel!)
-//        numbelLabel?.snp_makeConstraints({ (make) in
-//            make.top.equalTo(nameLabel!.snp_bottom)
-//            make.left.equalTo(imgView!.snp_right).offset(8)
-//            make.size.equalTo(CGSize(width: SCREEN_WIDTH-8-54-8-8-80-10, height: 32))
-//        })
+    }
+    
+    var stateSource: OrderModel? {
+        
+        didSet {
+            if ((stateSource?.state) != nil) {
+                
+                let frame = CGRect(x: SCREEN_WIDTH - 50 - 15, y: 30, width: 50, height: 20)
+                stateBtn = getStateButton(frame: frame, title: (stateSource?.state)!, fontSize: 10)
+                contentView.addSubview(stateBtn!)
+            }
+        }
     }
     
     func update(_ model: CarTModel) {
