@@ -118,7 +118,6 @@
 				25813E0A1D94D5BB00291D5B /* CallButlerVC.swift */,
 				25813E0C1D94D5BB00291D5B /* MyCarVC.swift */,
 				258C973A1DD5A26C0070D501 /* SuggestionVC.swift */,
-				258C97441DDC0A340070D501 /* ServiceViewController.swift */,
 				258C97461DDC3B360070D501 /* MyCarViewController.swift */,
 				258C973E1DDAE97A0070D501 /* NewsViewController.swift */,
 				258C97401DDAEBA60070D501 /* MineViewController.swift */,

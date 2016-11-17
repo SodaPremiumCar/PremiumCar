@@ -84,9 +84,10 @@ class ServiceViewController: UIViewController {
         submitBtn = UIButton(type: UIButtonType.custom)
         submitBtn?.frame = CGRect(x: SCREEN_WIDTH - 80, y: 0, width: 70, height: 50)
         submitBtn?.setTitle("下一步", for: UIControlState.normal)
+        submitBtn?.setTitleColor(SEC_ORANGE, for: .normal)
         submitBtn?.backgroundColor = UIColor.clear
         submitBtn?.addTarget(self, action: #selector(buttonClicked(sender:)), for: UIControlEvents.touchUpInside)
-        setButton(button: submitBtn!, with: 0)
+        submitBtn?.isEnabled = false
         
         //选择label
         submitLabel = UILabel(frame: CGRect(x: 20, y: 0, width: SCREEN_WIDTH - 170, height: 50))
@@ -115,7 +116,7 @@ class ServiceViewController: UIViewController {
     func updateSubmitView() {
         
         if selectedDataArray.count > 0 {
-            setButton(button: submitBtn!, with: 1)
+            submitBtn?.isEnabled = true
             var total: Float = 0.0
             var count: Int = 0
             for model in selectedDataArray {
@@ -124,7 +125,7 @@ class ServiceViewController: UIViewController {
             }
             submitLabel?.text = String(format: "选择%i个项目，费用%.2f元", count, total)
         }else {
-            setButton(button: submitBtn!, with: 0)
+            submitBtn?.isEnabled = false
             submitLabel?.text = "请选择服务项目"
         }
     }
@@ -157,6 +158,7 @@ extension ServiceViewController: UITableViewDelegate, UITableViewDataSource {
         var cell = tableView.dequeueReusableCell(withIdentifier: identifier as String)
         if cell == nil {
             cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: identifier as String?)
+            cell?.tintColor = SEC_ORANGE
             cell!.textLabel?.textColor = UIColor.white
             cell!.textLabel?.font =  UIFont.systemFont(ofSize: 15)
             cell!.textLabel?.adjustsFontSizeToFitWidth = true
@@ -170,7 +172,8 @@ extension ServiceViewController: UITableViewDelegate, UITableViewDataSource {
         }else{
             let model = currentDataArray[indexPath.row]
             let price = String(format: "（￥%.2f）", model.price!)
-            cell!.textLabel?.text = model.name! + price
+            let item = (model.item != nil) ? model.item! : ""
+            cell!.textLabel?.text = model.name! + item + price
             cell!.accessoryType = (model.isSelected == true) ? .checkmark : .none
         }
         

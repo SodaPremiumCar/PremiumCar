@@ -55,7 +55,7 @@ class OrderListVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         
         self.view.backgroundColor = UIColor.black
         
-        self.tableView = UITableView(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64 - 50), style: .plain)
+        self.tableView = UITableView(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64), style: .plain)
         self.tableView.backgroundColor = UIColor.black
         self.tableView.separatorStyle = .none
         self.tableView.delegate = self
@@ -75,7 +75,8 @@ class OrderListVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return MyOrderCell.height()
+        let model = dataSource![indexPath.row]
+        return MyOrderCell.height(model: model)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

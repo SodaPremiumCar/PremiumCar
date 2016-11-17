@@ -14,7 +14,9 @@ class MyOrderCell: UITableViewCell {
     fileprivate var carType: UILabel!
     fileprivate var booking: UILabel!
     fileprivate var total: UILabel!
-    fileprivate var state: UILabel!
+    fileprivate var state: UIButton!
+    fileprivate var service: UILabel!
+    fileprivate var line: UIView!
     
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -37,7 +39,7 @@ class MyOrderCell: UITableViewCell {
         contentView.addSubview(carType)
         carType.snp.makeConstraints { (make) in
             make.left.equalTo(18)
-            make.top.equalTo(numbel.snp.bottom)
+            make.top.equalTo(numbel.snp.bottom).offset(5)
             make.right.equalTo(-10)
             make.height.equalTo(22)
         }
@@ -47,7 +49,7 @@ class MyOrderCell: UITableViewCell {
         contentView.addSubview(booking)
         booking.snp.makeConstraints { (make) in
             make.left.equalTo(18)
-            make.top.equalTo(carType.snp.bottom)
+            make.top.equalTo(carType.snp.bottom).offset(5)
             make.right.equalTo(-10)
             make.height.equalTo(22)
         }
@@ -57,35 +59,23 @@ class MyOrderCell: UITableViewCell {
         contentView.addSubview(total)
         total.snp.makeConstraints { (make) in
             make.left.equalTo(18)
-            make.top.equalTo(booking.snp.bottom)
+            make.top.equalTo(booking.snp.bottom).offset(5)
             make.right.equalTo(-10)
             make.height.equalTo(22)
         }
         
-        state = UILabel()
-        state.textColor = RGBA(200, g: 200, b: 200, a: 1)
-        state.numberOfLines = 1
-        state.font = UIFont.boldSystemFont(ofSize: 12)
-        state.adjustsFontSizeToFitWidth = true
-        state.textAlignment = .center
-        state.backgroundColor = RGBA(50, g: 50, b: 50, a: 1)
-        contentView.addSubview(state)
-        state.snp.makeConstraints { (make) in
-            make.width.equalTo(60)
-            make.top.equalTo(15)
-            make.right.equalTo(-18)
-            make.height.equalTo(18)
-        }
+        service = UILabel()
+        service.font = UIFont.systemFont(ofSize: 13)
+        service.textColor = RGBA(180, g: 180, b: 180, a: 1)
+        service.numberOfLines = 0
+        contentView.addSubview(service)
         
-        let line = UIView()
+        state = getStateButton(frame: CGRect.init(x: SCREEN_WIDTH - 50 - 18, y: 16, width: 50, height: 20), title: "", fontSize: 10)
+        contentView.addSubview(state)
+        
+        line = UIView()
         line.backgroundColor = RGBA(55, g: 55, b: 55, a: 1)
         contentView.addSubview(line)
-        line.snp.makeConstraints { (make) in
-            make.top.equalTo(total.snp.bottom).offset(14.5)
-            make.left.equalTo(20)
-            make.right.equalTo(-20)
-            make.height.equalTo(0.5)
-        }
     }
     
     func update(model: OrderModel) {
@@ -93,16 +83,32 @@ class MyOrderCell: UITableViewCell {
         carType.mix(img: UIImage(named: "myOrderCar")!, text: model.content!, imgSize: CGSize.init(width: 14, height: 14))
         booking.mix(img: UIImage(named: "myOrderBooking")!, text: model.booking!, imgSize: CGSize.init(width: 14, height: 14))
         total.mix(img: UIImage(named: "myOrderTotal")!, text: String(format: "消费：￥%.2f", model.total!), imgSize: CGSize.init(width: 14, height: 14))
-        state.text = model.state!
+        state.setTitle(model.state!, for: UIControlState.normal)
+        if (model.services != nil) {
+            var text = ""
+            for dic in model.services! {
+                if text.isEmpty == false {
+                    text += "\n"
+                }
+                text += String(describing: dic["name"]!) + "(￥" + String(describing: dic["price"]!) + ")"
+            }
+            service.text = text
+            
+            let height = CGFloat(17 * (model.services!.count)) > 22 ? CGFloat(17 * (model.services!.count)) : 22
+            service.frame = CGRect.init(x: 43, y: 15 + 22 * 4 + 5 * 4, width: SCREEN_WIDTH - 50, height: height)
+            line.frame = CGRect.init(x: 20, y: MyOrderCell.height(model: model) - 0.5, width: SCREEN_WIDTH - 40, height: 0.5)
+        }
     }
     
-    class func height() -> CGFloat {
-        return 15 + 22 * 4 + 15
+    class func height(model: OrderModel) -> CGFloat {
+        let height = CGFloat(17 * (model.services!.count)) > 22 ? CGFloat(17 * (model.services!.count)) : 22
+        let white = 15 + 15 + 5 * 4
+        return 22 * 4 + CGFloat(height) + CGFloat(white)
     }
     
     //MARK: 私有
     fileprivate func setLabelStyle(lable: UILabel) {
-        lable.textColor = UIColor.white
+        lable.textColor = RGBA(220, g: 220, b: 220, a: 1)
         lable.numberOfLines = 1
         lable.font = UIFont.systemFont(ofSize: 14)
         lable.adjustsFontSizeToFitWidth = true

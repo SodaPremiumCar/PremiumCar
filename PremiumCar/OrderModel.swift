@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 class OrderModel: NSObject {
     
@@ -21,7 +20,7 @@ class OrderModel: NSObject {
     var booking: String?
     var remark: String?
     
-    var services: [ServiceItemModel]?
+    var services: [[String : AnyObject]]?
     var carType :[CarTModel]?
     
     
@@ -35,8 +34,21 @@ class OrderModel: NSObject {
         booking = dic["booking"] as? String
         remark = dic["remark"] as? String
         total = dic["total"] as? Float
+        
         if let s = dic["state"] as? Int {
             state = orderState[s]
+        }
+        
+        if let string = dic["services"] as? String {
+            let data = string.data(using: String.Encoding.utf8)!
+            let json = try! JSONSerialization.jsonObject(with: data, options: [])
+            if ((json as? [[String : AnyObject]]) != nil) {
+                var array = [[String : AnyObject]]()
+                for dic in json as! [[String : AnyObject]] {
+                    array.append(dic)
+                }
+                services = array
+            }
         }
     }
 }
