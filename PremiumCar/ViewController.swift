@@ -19,7 +19,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         
         setupUI()
-        print("qqqqqqqq")
     }
     
     override func viewWillAppear(_ animated: Bool) {

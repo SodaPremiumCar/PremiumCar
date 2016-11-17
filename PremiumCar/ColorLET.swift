@@ -10,6 +10,7 @@ import Foundation
 
 let COLOR_BLACK = RGBA(0, g: 0, b: 0, a: 1)
 let FUZZY_BACK = RGBA(255, g: 255, b: 255, a: 0.2)
+let SEC_ORANGE = RGBA(252, g: 130, b: 9, a: 1)
 
 func KURL(_ URL: String) -> String{
     

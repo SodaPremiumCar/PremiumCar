@@ -14,7 +14,7 @@ class TZTabBarController: UITabBarController {
         super.viewDidLoad()
         
         tabBar.barTintColor = RGBA(38, g: 38, b: 38, a: 1)
-        tabBar.tintColor = RGBA(199, g: 0, b: 103, a: 1)
+        tabBar.tintColor = SEC_ORANGE
         // 添加子控制器
         addChildViewControllers()
     }
