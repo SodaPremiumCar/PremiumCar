@@ -89,7 +89,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         submitBtn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         submitBtn.titleLabel?.numberOfLines = 2
         submitBtn.titleLabel?.textAlignment = .center
-        submitBtn.setTitleColor(UIColor.green, for: .normal)
+        submitBtn.setTitleColor(SEC_ORANGE, for: .normal)
         submitBtn.backgroundColor = UIColor.clear
         submitBtn.addTarget(self, action: #selector(buttonClicked(_:)), for: UIControlEvents.touchUpInside)
         
