@@ -305,7 +305,7 @@ class TZNetworkTool: NSObject {
                         SVProgressHUD.showInfo(withStatus: message)
                         return
                     }
-                    
+                    print("tttttttt", dict)
                     //  字典转成模型
                     if let items = dict["carList"].arrayObject {
                         var carItems = [CarTModel]()

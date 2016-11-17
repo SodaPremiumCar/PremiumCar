@@ -14,7 +14,6 @@ class TZNavigationController: UINavigationController {
         super.initialize()
         /// 设置导航栏标题
         let navBar = UINavigationBar.appearance()
-//        navBar.barTintColor = YMGlobalRedColor()
         navBar.tintColor = UIColor.white
         navBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont.systemFont(ofSize: 18)]
         
