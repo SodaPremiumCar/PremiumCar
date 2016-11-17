@@ -109,9 +109,12 @@ class CarBrandsVC: UIViewController {
         TZNetworkTool.shareNetworkTool.addCar(carTypeId: carTypeId!) { (isSuccess) in
             
             if isSuccess {
-                
-                let viewController = ViewController()
-                self.navigationController?.pushViewController(viewController, animated: true)
+                if self.isFromRegister {
+                    let viewController = ViewController()
+                    self.navigationController?.popToRootViewController(animated: true)
+                }else{
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
         }
     }

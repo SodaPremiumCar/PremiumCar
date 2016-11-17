@@ -26,6 +26,8 @@ class LoginViewController: UIViewController {
         
         self.navigationController?.isNavigationBarHidden = true
     }
+    
+ 
     // 隐藏状态栏
 //    override func
     
@@ -115,8 +117,9 @@ class LoginViewController: UIViewController {
         
         TZNetworkTool.shareNetworkTool.login(mobileNo: (mobileNo?.text)!, pwd: (password?.text)!) { (isSuccess) in
             if isSuccess {
-                let viewController = ViewController()
-                self.navigationController?.pushViewController(viewController, animated: true)
+
+                self.navigationController?.isNavigationBarHidden = false
+                self.navigationController?.popViewController(animated: true)
             }
         }
     }
