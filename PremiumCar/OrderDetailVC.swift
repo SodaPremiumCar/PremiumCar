@@ -85,6 +85,21 @@ class OrderDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
 
         let myOrderCell = cell as! MyOrderCell
         myOrderCell.update(model: model!)
+        
+        //点选完成按钮的block call back
+        myOrderCell.completed = { [weak self] () in
+            if let strongSelf = self {
+                TZNetworkTool.shareNetworkTool.finishOrder(orderId: strongSelf.orderID!, finished: { (isSuccess) in
+                    if isSuccess {
+                        //reloadData
+                        TZNetworkTool.shareNetworkTool.orderDetail(orderId: strongSelf.orderID!, finished: { (isSuccess, data) in
+                            strongSelf.model = data!
+                        })
+                    }
+                })
+            }
+        }
+        
         return cell
     }
     

@@ -37,6 +37,7 @@ let kUrlDeleteCar    = "api/deleteCar.c"                //删除车辆
 let kUrlCreateOrder  = "api/createOrder.c"              //创建订单
 let kUrlGetOrderList = "api/getOrderList.c"             //获取订单列表
 let kUrlGetOrderDetail = "api/getOrderById.c"             //获取订单详情
+let kUrlFinishOrder = "api/finishOrderById.c"        //完成订单
 let kUrlFeedBack     = "api/addFeedback.c"              //意见反馈
 
 
