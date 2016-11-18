@@ -8,26 +8,37 @@
 
 import UIKit
 import SVProgressHUD
+import CoreLocation
 
-class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
     var carModel: CarTModel!    //车型model
     var idStr: Int!                     //车的id
     var serviceItems: [ServiceItemModel]!   //选择服务的model数组
     
     fileprivate var submitBtn: UIButton!
+    fileprivate var getLocationBtn: UIButton!
     fileprivate var tableView: UITableView!
     fileprivate var phoneTextField: UITextField!
     fileprivate var nameTextField: UITextField!
-    fileprivate var addressTextField: UITextField!
+    fileprivate var addressTextView: UITextView!
     fileprivate var dateTextField: UITextField!
     fileprivate var datePicker: UIDatePicker!
     fileprivate var datePickerButton: UIButton!
+    
+    var locationManager: CLLocationManager!
     
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        if CLLocationManager.locationServicesEnabled() == true {
+            self.locationManager = CLLocationManager()
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            self.locationManager.distanceFilter = kCLLocationAccuracyKilometer
+        }else {
+        }
         
         self.initNavigation()
         self.initUI()
@@ -43,6 +54,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        stopUpdatingLocation()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -70,8 +82,23 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         nameTextField = self.getTextField()
         phoneTextField = self.getTextField()
         phoneTextField.keyboardType = .numberPad
-        addressTextField = self.getTextField()
         dateTextField = self.getTextField()
+        
+        addressTextView = UITextView(frame: CGRect(x: 80, y: 5, width: SCREEN_WIDTH - 110, height: 60))
+        addressTextView.backgroundColor = RGBA(0, g: 0, b: 0, a: 1)
+        addressTextView.textColor = UIColor.white
+        addressTextView.font = UIFont.systemFont(ofSize: 14)
+        addressTextView.keyboardAppearance = .light
+        addressTextView.returnKeyType = .done
+        
+        getLocationBtn = UIButton(type: UIButtonType.custom)
+        getLocationBtn.frame = CGRect(x: SCREEN_WIDTH - 140, y: 70, width: 120, height: 40)
+        getLocationBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        getLocationBtn.titleLabel?.textAlignment = .center
+        getLocationBtn.setTitle("获取当前位置", for: .normal)
+        getLocationBtn.setTitleColor(SEC_ORANGE, for: .normal)
+        getLocationBtn.backgroundColor = UIColor.clear
+        getLocationBtn.addTarget(self, action: #selector(buttonClicked(_:)), for: UIControlEvents.touchUpInside)
         
         //底部提交栏
         let submitView = UIView(frame: CGRect(x: 0, y: SCREEN_HEIGHT - 50 - 64, width: SCREEN_WIDTH, height: 50))
@@ -85,7 +112,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         
         // 提交btn
         submitBtn = UIButton(type: UIButtonType.custom)
-        submitBtn.frame = CGRect(x: SCREEN_WIDTH - 110, y: 0, width: 100, height: 50)
+        submitBtn.frame = CGRect(x: SCREEN_WIDTH - 110, y: 0, width: 120, height: 50)
         submitBtn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         submitBtn.titleLabel?.numberOfLines = 2
         submitBtn.titleLabel?.textAlignment = .center
@@ -122,10 +149,9 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         //default text
         nameTextField.placeholder = "请填写您的姓名"
         phoneTextField.placeholder = "联系电话"
-        addressTextField.placeholder = "取车地址"
         nameTextField.text = UserData.share.name != nil ? UserData.share.name : ""
         phoneTextField.text = UserData.share.mobileNo != nil ? UserData.share.mobileNo : ""
-        addressTextField.text = UserData.share.address != nil ? UserData.share.address : ""
+        addressTextView.text = UserData.share.address != nil ? UserData.share.address : ""
         self.datePickerValueChange(datePicker)
     }
     
@@ -149,6 +175,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         textField.textColor = UIColor.white
         textField.delegate = self
         textField.borderStyle = .none
+        textField.adjustsFontSizeToFitWidth = true
         textField.font = UIFont.systemFont(ofSize: 14)
         textField.keyboardAppearance = .light
         textField.returnKeyType = .done
@@ -184,19 +211,22 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         
         if sender == datePickerButton {
             self.hideDatePicker()
+        }else if sender == getLocationBtn {
+            startUpdatingLocation()
         }else {
             
             guard nameTextField.text!.isEmpty == false &&
                         phoneTextField.text!.isEmpty == false &&
-                        addressTextField.text!.isEmpty == false
+                        addressTextView.text!.isEmpty == false
             else {
                 SVProgressHUD.showInfo(withStatus: "为确保您的爱车及时享受服务，请填写您的姓名、联系电话和取车地点")
                 return
             }
             
-            let content = self.carModel.brand! + self.carModel.model!
+            let licenseNum = (carModel.licenseNum != nil) ? carModel.licenseNum! : ""
+            let content = carModel.brand! + " " + carModel.model! + "  (" + licenseNum + ")"
             let contacts = ["name" : (self.nameTextField.text != nil) ? self.nameTextField.text : "",
-                            "addr" : (self.addressTextField.text != nil) ? self.addressTextField.text : "",
+                            "addr" : (self.addressTextView.text != nil) ? self.addressTextView.text : "",
                             "telephone" : (self.phoneTextField.text != nil) ? self.phoneTextField.text : ""]
             let booking = (self.dateTextField.text != nil) ? self.dateTextField.text : ""
             var services = [AnyObject]()
@@ -271,7 +301,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40
+        return (indexPath.section == 0 && indexPath.row == 2) ? 110 : 40
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -283,7 +313,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         if section == 0 {
             label.text = "    联系方式"
         }else if section == 1 {
-            label.text = "    车型"
+            label.text = "    车辆"
         }else {
             label.text = "    服务内容"
         }
@@ -302,15 +332,17 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
             cell?.selectionStyle = .none
             cell?.textLabel?.font = UIFont.systemFont(ofSize: 14)
             cell?.detailTextLabel?.font = UIFont.systemFont(ofSize: 14)
+            cell?.textLabel?.numberOfLines = 0
             cell?.textLabel?.textColor = RGBA(200, g: 200, b: 200, a: 1)
             cell?.detailTextLabel?.textColor = RGBA(250, g: 250, b: 250, a: 1)
             cell?.backgroundColor = UIColor.black
         }
 
+        cell?.detailTextLabel?.text = ""
         for subview in (cell?.contentView.subviews)! {
             subview.removeFromSuperview()
         }
-        
+
         if indexPath.section == 0 {
             if (indexPath as NSIndexPath).row == 0 {
                 cell?.textLabel?.text = "姓名"
@@ -319,25 +351,26 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
                 cell?.textLabel?.text = "联系电话"
                 cell?.contentView.addSubview(phoneTextField)
             }else if (indexPath as NSIndexPath).row == 2 {
-                cell?.textLabel?.text = "取车地点"
-                cell?.contentView.addSubview(addressTextField)
+                cell?.textLabel?.text = "取车地点\n\n\n\n"
+                cell?.contentView.addSubview(addressTextView)
+                cell?.contentView.addSubview(getLocationBtn)
             }else {
                 cell?.textLabel?.text = "预约时间"
                 cell?.contentView.addSubview(dateTextField)
             }
-            let line = UIView(frame: CGRect(x: 75, y: 35, width: SCREEN_WIDTH - 100, height: 0.5))
+            let line = UIView(frame: CGRect(x: 75, y: (indexPath.row == 2) ? 105 : 35, width: SCREEN_WIDTH - 100, height: 0.5))
             line.backgroundColor = FUZZY_BACK
             cell?.contentView.addSubview(line)
         }else if indexPath.section == 1 {
-            cell?.textLabel?.text = carModel.brand! + "  " + carModel.model!
+            let licenseNum = (carModel.licenseNum != nil) ? carModel.licenseNum! : ""
+            cell?.textLabel?.text = carModel.brand! + " " + carModel.model! + "  (" + licenseNum + ")"
         }else {
             let model = serviceItems[indexPath.row]
             let price = String(format: "￥%.2f", model.price!)
-            cell?.textLabel?.text = model.type! + "  " + model.name!
+            cell?.textLabel?.text = model.type! + " " + model.name!
             cell?.detailTextLabel?.text = price
         }
         
-    
         return cell!
     }
     
@@ -348,11 +381,81 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         
         nameTextField.resignFirstResponder()
         phoneTextField.resignFirstResponder()
-        addressTextField.resignFirstResponder()
+        addressTextView.resignFirstResponder()
         dateTextField.resignFirstResponder()
         self.hideDatePicker()
     }
+    
+    
+    //MARK: CoreLocationManager
+    func startUpdatingLocation() {
+        
+        if self.locationManager != nil {
+            self.locationManager.delegate = self
+            self.locationManager.requestWhenInUseAuthorization()
+            self.locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func stopUpdatingLocation() {
+        
+        if self.locationManager != nil {
+            self.locationManager!.stopUpdatingLocation()
+            self.locationManager?.delegate = nil
+        }
+    }
+    
+    //获取位置的文字描述
+    func getLocationDescription(location: CLLocation) {
+        
+        let geocoder = CLGeocoder()
+        var p:CLPlacemark?
+        geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+            if error != nil {
+                SVProgressHUD.showInfo(withStatus: "获取地址失败: \(error!.localizedDescription)")
+                return
+            }
+            let pm = placemarks! as [CLPlacemark]
+            if (pm.count > 0) {
+                p = placemarks![0] as CLPlacemark
+                //省市
+                let administrativeArea = p?.administrativeArea != nil ? p!.administrativeArea! : ""
+                //城市
+                let locality = p?.locality != nil ? p!.locality! : ""
+                //区
+                let subLocality = p?.subLocality != nil ? p!.subLocality! : ""
+                //街道
+                let thoroughfare = p?.thoroughfare != nil ? p!.thoroughfare! : ""
+                //门牌号
+                let subThoroughfare = p?.subThoroughfare != nil ? p!.subThoroughfare! : ""
+                
+                self.addressTextView.text = administrativeArea + " " + locality + " " + subLocality + " " + thoroughfare + " " + subThoroughfare
+            }
+        })
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        stopUpdatingLocation()
+        let location: CLLocation = locations[locations.count - 1] as CLLocation
+        getLocationDescription(location: location)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
+        
+        let status = CLLocationManager.authorizationStatus()
+        if status == .denied {
+            print("denied")
+            SVProgressHUD.showInfo(withStatus: "如需获取当前位置，请在系统设置->隐私->定位服务中开启豪车汇的授权")
+        }else if status == .notDetermined {
+            print("notDetermined")
+        }else if status == .restricted {
+            print("restricted")
+        }
+    }
 }
+
 
 
 

@@ -15,8 +15,11 @@ class MyOrderCell: UITableViewCell {
     fileprivate var booking: UILabel!
     fileprivate var total: UILabel!
     fileprivate var state: UIButton!
+    fileprivate var complete: UIButton!
     fileprivate var service: UILabel!
     fileprivate var line: UIView!
+    
+    var completed: (() -> Void)?
     
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -73,6 +76,20 @@ class MyOrderCell: UITableViewCell {
         state = getStateButton(frame: CGRect.init(x: SCREEN_WIDTH - 50 - 18, y: 16, width: 50, height: 20), title: "", fontSize: 10)
         contentView.addSubview(state)
         
+        complete = UIButton(type: UIButtonType.roundedRect)
+        complete.frame = CGRect.init(x: SCREEN_WIDTH - 50 - 18, y: 46, width: 50, height: 50)
+        complete.layer.cornerRadius = 3
+        complete.layer.masksToBounds = true
+        complete.titleLabel?.adjustsFontSizeToFitWidth = true
+        complete.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        complete.setTitleColor(UIColor.black, for: .normal)
+        complete.addTarget(self, action: #selector(buttonClick), for: .touchUpInside)
+        complete.backgroundColor = SEC_ORANGE
+        complete.setTitle("确认\n收车", for: UIControlState.normal)
+        complete.titleLabel?.numberOfLines = 2
+        contentView.addSubview(complete)
+        complete.isHidden = true
+        
         line = UIView()
         line.backgroundColor = RGBA(55, g: 55, b: 55, a: 1)
         contentView.addSubview(line)
@@ -84,6 +101,11 @@ class MyOrderCell: UITableViewCell {
         booking.mix(img: UIImage(named: "myOrderBooking")!, text: model.booking!, imgSize: CGSize.init(width: 14, height: 14))
         total.mix(img: UIImage(named: "myOrderTotal")!, text: String(format: "消费：￥%.2f", model.total!), imgSize: CGSize.init(width: 14, height: 14))
         state.setTitle(model.state!, for: UIControlState.normal)
+        
+        //送车中，显示完成按钮
+        complete.isHidden = (model.state! == "送车中") ? false : true
+        
+        print(model.state!)
         if (model.services != nil) {
             var text = ""
             for dic in model.services! {
@@ -96,7 +118,10 @@ class MyOrderCell: UITableViewCell {
             
             let height = CGFloat(17 * (model.services!.count)) > 22 ? CGFloat(17 * (model.services!.count)) : 22
             service.frame = CGRect.init(x: 43, y: 15 + 22 * 4 + 5 * 4, width: SCREEN_WIDTH - 50, height: height)
-            line.frame = CGRect.init(x: 20, y: MyOrderCell.height(model: model) - 0.5, width: SCREEN_WIDTH - 40, height: 0.5)
+            
+            let cellHeight = MyOrderCell.height(model: model)
+            complete.frame = CGRect.init(x: SCREEN_WIDTH - 50 - 18, y: cellHeight - 60, width: 50, height: 50)
+            line.frame = CGRect.init(x: 20, y: cellHeight - 0.5, width: SCREEN_WIDTH - 40, height: 0.5)
         }
     }
     
@@ -104,6 +129,12 @@ class MyOrderCell: UITableViewCell {
         let height = CGFloat(17 * (model.services!.count)) > 22 ? CGFloat(17 * (model.services!.count)) : 22
         let white = 15 + 15 + 5 * 4
         return 22 * 4 + CGFloat(height) + CGFloat(white)
+    }
+    
+    func buttonClick() -> Void {
+        if completed != nil {
+            self.completed!()
+        }
     }
     
     //MARK: 私有

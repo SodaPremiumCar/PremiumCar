@@ -1,23 +1,24 @@
 //
-//  OrderListVC.swift
+//  OrderDetailVC.swift
 //  PremiumCar
 //
-//  Created by ethen on 2016/11/7.
+//  Created by ethen on 2016/11/18.
 //  Copyright © 2016年 soda. All rights reserved.
 //
 
 import Foundation
 
-class OrderListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+class OrderDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    var orderID: String!
     private var tableView: UITableView!
     
-    private var dataSource: [OrderModel]?  {
+    private var model: OrderModel?  {
         didSet {
             self.tableView?.reloadData()
         }
     }
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +28,9 @@ class OrderListVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        TZNetworkTool.shareNetworkTool.orderList { (isSuccess, data) in
-            self.dataSource = data!
-        }
+        TZNetworkTool.shareNetworkTool.orderDetail(orderId: orderID, finished: { (isSuccess, data) in
+            self.model = data!
+        })
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -47,7 +48,7 @@ class OrderListVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     //MARK: UI
     func setupNavigationItem() {
         
-        self.navigationItem.title = "我的订单"
+        self.navigationItem.title = "订单详情"
         self.navigationController?.isNavigationBarHidden = false
     }
     
@@ -71,35 +72,31 @@ class OrderListVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     
     //MARK: TableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (dataSource != nil) ? (dataSource!.count) : 0
+        return (model != nil) ? 1 : 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let model = dataSource![indexPath.row]
-        return MyOrderCell.height(model: model)
+        return MyOrderCell.height(model: model!)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyOrderCell", for: indexPath)
         cell.selectionStyle = .none
-        guard dataSource!.count > indexPath.row else {
-            return cell
-        }
-        let model = dataSource![indexPath.row]
+
         let myOrderCell = cell as! MyOrderCell
-        myOrderCell.update(model: model)
+        myOrderCell.update(model: model!)
         
         //点选完成按钮的block call back
         myOrderCell.completed = { [weak self] () in
             if let strongSelf = self {
                 let alert: UIAlertController = UIAlertController(title: "您确认收车吗？", message: "", preferredStyle: .alert)
                 let action0: UIAlertAction = UIAlertAction(title: "确认收车", style: .default) { (alert) in
-                    TZNetworkTool.shareNetworkTool.finishOrder(orderId: String(model.id!), finished: { (isSuccess) in
+                    TZNetworkTool.shareNetworkTool.finishOrder(orderId: strongSelf.orderID!, finished: { (isSuccess) in
                         if isSuccess {
                             //Request & reloadData
-                            TZNetworkTool.shareNetworkTool.orderList { (isSuccess, data) in
-                                strongSelf.dataSource = data!
-                            }
+                            TZNetworkTool.shareNetworkTool.orderDetail(orderId: strongSelf.orderID!, finished: { (isSuccess, data) in
+                                strongSelf.model = data!
+                            })
                         }
                     })
                 }
@@ -109,6 +106,7 @@ class OrderListVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
                 strongSelf.present(alert, animated: true, completion: nil)
             }
         }
+        
         return cell
     }
     

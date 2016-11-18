@@ -129,12 +129,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if (orderItems[indexPath.row].state == nil) {
+        let orderModel = orderItems[indexPath.row]
+        if (orderModel.state == nil) {
             let model: CarTModel = carItems[(indexPath as NSIndexPath).row]
             let serviceViewController = ServiceViewController()
             serviceViewController.carModel = model
             serviceViewController.idStr = idArray[indexPath.row]
             self.navigationController?.pushViewController(serviceViewController, animated: true)
+        }else {
+            let orderID = String(describing: orderModel.id!)
+            let orderDetailVC = OrderDetailVC()
+            orderDetailVC.orderID = orderID
+            self.navigationController?.pushViewController(orderDetailVC, animated: true)
         }
     }
     
