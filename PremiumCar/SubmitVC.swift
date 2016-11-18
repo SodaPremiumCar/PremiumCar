@@ -223,7 +223,8 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
                 return
             }
             
-            let content = self.carModel.brand! + self.carModel.model!
+            let licenseNum = (carModel.licenseNum != nil) ? carModel.licenseNum! : ""
+            let content = carModel.brand! + " " + carModel.model! + "  (" + licenseNum + ")"
             let contacts = ["name" : (self.nameTextField.text != nil) ? self.nameTextField.text : "",
                             "addr" : (self.addressTextView.text != nil) ? self.addressTextView.text : "",
                             "telephone" : (self.phoneTextField.text != nil) ? self.phoneTextField.text : ""]
@@ -312,7 +313,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         if section == 0 {
             label.text = "    联系方式"
         }else if section == 1 {
-            label.text = "    车型"
+            label.text = "    车辆"
         }else {
             label.text = "    服务内容"
         }
@@ -337,6 +338,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
             cell?.backgroundColor = UIColor.black
         }
 
+        cell?.detailTextLabel?.text = ""
         for subview in (cell?.contentView.subviews)! {
             subview.removeFromSuperview()
         }
@@ -360,11 +362,12 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
             line.backgroundColor = FUZZY_BACK
             cell?.contentView.addSubview(line)
         }else if indexPath.section == 1 {
-            cell?.textLabel?.text = carModel.brand! + "  " + carModel.model!
+            let licenseNum = (carModel.licenseNum != nil) ? carModel.licenseNum! : ""
+            cell?.textLabel?.text = carModel.brand! + " " + carModel.model! + "  (" + licenseNum + ")"
         }else {
             let model = serviceItems[indexPath.row]
             let price = String(format: "￥%.2f", model.price!)
-            cell?.textLabel?.text = model.type! + "  " + model.name!
+            cell?.textLabel?.text = model.type! + " " + model.name!
             cell?.detailTextLabel?.text = price
         }
         
@@ -423,8 +426,10 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
                 let subLocality = p?.subLocality != nil ? p!.subLocality! : ""
                 //街道
                 let thoroughfare = p?.thoroughfare != nil ? p!.thoroughfare! : ""
-
-                self.addressTextView.text = administrativeArea + " " + locality + " " + subLocality + " " + thoroughfare
+                //门牌号
+                let subThoroughfare = p?.subThoroughfare != nil ? p!.subThoroughfare! : ""
+                
+                self.addressTextView.text = administrativeArea + " " + locality + " " + subLocality + " " + thoroughfare + " " + subThoroughfare
             }
         })
     }

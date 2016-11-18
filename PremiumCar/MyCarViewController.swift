@@ -44,7 +44,7 @@ class MyCarViewController: UIViewController, UITableViewDelegate, UITableViewDat
         imgView.contentMode = .scaleAspectFill
         imgView.image = img
         
-        carListTableView = UITableView(frame: CGRect(x: 0, y: 20, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 44 - 84), style: .plain)
+        carListTableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 44 - 64), style: .plain)
         carListTableView.backgroundColor = UIColor.clear
         carListTableView.delegate = self
         carListTableView.dataSource = self

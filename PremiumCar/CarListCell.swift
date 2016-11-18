@@ -14,6 +14,7 @@ class CarListCell: UITableViewCell {
     fileprivate var nameLabel: UILabel?
     fileprivate var imgView: UIImageView?
     fileprivate var stateBtn: UIButton?
+    fileprivate var licenseLabel: UILabel?
     
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -41,22 +42,24 @@ class CarListCell: UITableViewCell {
         nameLabel?.font = UIFont.systemFont(ofSize: 14)
         contentView.addSubview(nameLabel!)
         nameLabel?.snp_makeConstraints({ (make) in
-            make.top.equalTo(0)
+            make.top.equalTo(20)
             make.left.equalTo(lineH.snp_right).offset(10)
-            make.size.equalTo(CGSize(width: SCREEN_WIDTH * 0.5, height: 80))
+            make.size.equalTo(CGSize(width: SCREEN_WIDTH * 0.5, height: 20))
         })
         
+        licenseLabel = UILabel(frame: CGRect(x: (lineH.frame.maxX) + 10, y: 40, width: SCREEN_WIDTH * 0.5, height: 20))
+        licenseLabel?.textColor = UIColor.white
+        licenseLabel?.font = UIFont.systemFont(ofSize: 12)
+        contentView.addSubview(licenseLabel!)
     }
     
     var stateSource: OrderModel? {
         
         didSet {
-            if ((stateSource?.state) != nil) {
-                
-                let frame = CGRect(x: SCREEN_WIDTH - 50 - 15, y: 30, width: 50, height: 20)
-                stateBtn = getStateButton(frame: frame, title: (stateSource?.state)!, fontSize: 10)
-                contentView.addSubview(stateBtn!)
-            }
+            
+            let frame = CGRect(x: SCREEN_WIDTH - 50 - 15, y: 30, width: 50, height: 20)
+            stateBtn = getStateButton(frame: frame, title: (stateSource?.state)!, fontSize: 10)
+            contentView.addSubview(stateBtn!)
         }
     }
     
@@ -81,6 +84,7 @@ class CarListCell: UITableViewCell {
         
         self.imgView?.image = carImg
         nameLabel?.text = model.brand! + " " + model.model!
+        licenseLabel?.text = model.licenseNum
     }
     
     class func height() -> CGFloat {
