@@ -89,14 +89,21 @@ class OrderDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         //点选完成按钮的block call back
         myOrderCell.completed = { [weak self] () in
             if let strongSelf = self {
-                TZNetworkTool.shareNetworkTool.finishOrder(orderId: strongSelf.orderID!, finished: { (isSuccess) in
-                    if isSuccess {
-                        //reloadData
-                        TZNetworkTool.shareNetworkTool.orderDetail(orderId: strongSelf.orderID!, finished: { (isSuccess, data) in
-                            strongSelf.model = data!
-                        })
-                    }
-                })
+                let alert: UIAlertController = UIAlertController(title: "您确认收车吗？", message: "", preferredStyle: .alert)
+                let action0: UIAlertAction = UIAlertAction(title: "确认收车", style: .default) { (alert) in
+                    TZNetworkTool.shareNetworkTool.finishOrder(orderId: strongSelf.orderID!, finished: { (isSuccess) in
+                        if isSuccess {
+                            //Request & reloadData
+                            TZNetworkTool.shareNetworkTool.orderDetail(orderId: strongSelf.orderID!, finished: { (isSuccess, data) in
+                                strongSelf.model = data!
+                            })
+                        }
+                    })
+                }
+                let action1: UIAlertAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+                alert.addAction(action0)
+                alert.addAction(action1)
+                strongSelf.present(alert, animated: true, completion: nil)
             }
         }
         

@@ -77,15 +77,16 @@ class MyOrderCell: UITableViewCell {
         contentView.addSubview(state)
         
         complete = UIButton(type: UIButtonType.roundedRect)
-        complete.frame = CGRect.init(x: SCREEN_WIDTH - 50 - 18, y: 41, width: 50, height: 20)
+        complete.frame = CGRect.init(x: SCREEN_WIDTH - 50 - 18, y: 46, width: 50, height: 50)
         complete.layer.cornerRadius = 3
         complete.layer.masksToBounds = true
         complete.titleLabel?.adjustsFontSizeToFitWidth = true
-        complete.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        complete.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         complete.setTitleColor(UIColor.black, for: .normal)
         complete.addTarget(self, action: #selector(buttonClick), for: .touchUpInside)
         complete.backgroundColor = SEC_ORANGE
-        complete.setTitle("确认收车", for: UIControlState.normal)
+        complete.setTitle("确认\n收车", for: UIControlState.normal)
+        complete.titleLabel?.numberOfLines = 2
         contentView.addSubview(complete)
         complete.isHidden = true
         
@@ -117,7 +118,10 @@ class MyOrderCell: UITableViewCell {
             
             let height = CGFloat(17 * (model.services!.count)) > 22 ? CGFloat(17 * (model.services!.count)) : 22
             service.frame = CGRect.init(x: 43, y: 15 + 22 * 4 + 5 * 4, width: SCREEN_WIDTH - 50, height: height)
-            line.frame = CGRect.init(x: 20, y: MyOrderCell.height(model: model) - 0.5, width: SCREEN_WIDTH - 40, height: 0.5)
+            
+            let cellHeight = MyOrderCell.height(model: model)
+            complete.frame = CGRect.init(x: SCREEN_WIDTH - 50 - 18, y: cellHeight - 60, width: 50, height: 50)
+            line.frame = CGRect.init(x: 20, y: cellHeight - 0.5, width: SCREEN_WIDTH - 40, height: 0.5)
         }
     }
     
