@@ -204,7 +204,7 @@ class TZNetworkTool: NSObject {
     }
     
     // 车型信息
-    func carBrandsList(finished:@escaping (_ brandArray: [AnyObject], _ carBigArray: [[CarTModel]]) -> ()) {
+    func carBrandsList(finished:@escaping (_ brandArray: [AnyObject], _ carBigArray: [[CarModel]]) -> ()) {
         
         Alamofire
             .request(KURL(kUrlCarBrands), method: .post, parameters: [ : ], encoding: JSONEncoding.default)
@@ -227,15 +227,15 @@ class TZNetworkTool: NSObject {
                     //  字典转成模型
                     let brandArray = dict["carTypes"]["brands"].arrayObject
                     
-                    var carBigArray = [[CarTModel]]()
+                    var carBigArray = [[CarModel]]()
                     for key in brandArray! {
                         
                         let keyStr = key as! String
                         if let items = dict["carTypes"]["brandCarTypes"][keyStr].arrayObject {
                             
-                            var carItems = [CarTModel]()
+                            var carItems = [CarModel]()
                             for item in items {
-                                let carItem = CarTModel(dict: item as! [String: AnyObject])
+                                let carItem = CarModel(dict: item as! [String: AnyObject])
                                 carItems.append(carItem)
                             }
                             carBigArray.append(carItems)
@@ -247,12 +247,13 @@ class TZNetworkTool: NSObject {
     }
     
     // 注册车辆信息
-    func addCar(carTypeId: Int, finished:@escaping (_ results: Bool) -> ()) {
+    func addCar(carTypeId: Int, licenseNum: String, finished:@escaping (_ results: Bool) -> ()) {
         
         UserData.share.load()
         let params: Parameters = ["authToken": UserData.share.authToken! as String,
                                   "mobileNo" : UserData.share.mobileNo! as String,
-                                  "carTypeId" : carTypeId]
+                                  "carTypeId" : carTypeId,
+                                  "licenseNum": licenseNum]
         
         Alamofire
             .request(KURL(kUrlAddCar), method: .post, parameters: params, encoding: JSONEncoding.default)
@@ -299,11 +300,12 @@ class TZNetworkTool: NSObject {
                     let dict = JSON(value)
                     let code = dict["result"].intValue
                     let message = dict["errMsg"].stringValue
-                    
                     guard code == 10000 else {
+
                         SVProgressHUD.showInfo(withStatus: message)
                         return
                     }
+                    
                     //  字典转成模型
                     if let items = dict["carList"].arrayObject {
                         var carItems = [CarTModel]()
@@ -312,9 +314,7 @@ class TZNetworkTool: NSObject {
                         for item in items {
                            
                             let itemT = item as! [String: AnyObject]
-                            let typeItem = itemT["carType"]
-//                            let orderData = itemT["openingOrder"]
-                            let carItem = CarTModel(dict: typeItem as! [String : AnyObject])
+                            let carItem = CarTModel(dict: itemT)
                             // 车的服务状态
                             if let orderData = itemT["openingOrder"] as? [String : AnyObject]{
                                 let orderItem = OrderModel(dic: orderData)
@@ -526,9 +526,38 @@ class TZNetworkTool: NSObject {
                 }
         }
     }
+    
+    //用获取个人信息接口检查登录
+    func checkLoginStatus(finished:@escaping (_ results: Bool) -> ()) {
+        
+        UserData.share.load()
+        let params: Parameters = ["authToken": UserData.share.authToken! as String,
+                                  "mobileNo" : UserData.share.mobileNo! as String]
+        
+        Alamofire
+            .request(KURL(kUrlGetUserInfo), method: .post, parameters: params, encoding: JSONEncoding.default)
+            .responseJSON { (response) in
+                
+                guard response.result.isSuccess else {
+                    SVProgressHUD.showError(withStatus: "网络异常")
+                    return
+                }
+                if let value = response.result.value {
+                    
+                    let dict = JSON(value)
+                    let code = dict["result"].intValue
+                    let message = dict["errMsg"].stringValue
+                    
+                    if code == 10000 {
+                        finished(true)
+                        return
+                    }else if code == 12000{
+                        finished(false)
+                    }else{
+                        SVProgressHUD.showInfo(withStatus: message)
+                        return
+                    }
+                }
+        }
+    }
 }
-
-
-
-
-

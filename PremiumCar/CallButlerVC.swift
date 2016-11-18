@@ -16,9 +16,7 @@ class CallButlerVC: UIViewController {
         setupUI()
     }
     
-    
     fileprivate func setupUI() {
-        
         
         let phoneImg = UIImageView(frame: CGRect(x: 50, y: 120, width: 80, height: 80))
         phoneImg.image = UIImage(named: "phone")

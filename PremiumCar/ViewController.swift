@@ -26,21 +26,33 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewWillAppear(animated)
         
         title = "服务"
+        navigationController?.isNavigationBarHidden = false
         
         if checkLoginStatus() {
             
             let loginVC = LoginViewController()
             self.navigationController?.pushViewController(loginVC, animated: false)
         }else {
+            // 网络监察登录状态
+            TZNetworkTool.shareNetworkTool.checkLoginStatus(finished: { (isSuccess) in
+                if !isSuccess {
+                    let loginVC = LoginViewController()
+                    self.navigationController?.pushViewController(loginVC, animated: false)
+                }
+            })
+            
             TZNetworkTool.shareNetworkTool.getCar(finished: { (carItems, idArray, orderItems) in
                 self.carItems = carItems
                 self.idArray = idArray
                 self.orderItems = orderItems
                 self.carListTableView.reloadData()
             })
+            // 加载个人信息
+            TZNetworkTool.shareNetworkTool.getUserInfo(finished: { (isSuccess) in
+                
+            })
         }
     }
-    
     
     //MARK: UI
     fileprivate func setupUI() {
@@ -52,12 +64,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         imgView.contentMode = .scaleAspectFill
         imgView.image = img
         
-        carListTableView = UITableView(frame: CGRect(x: 0, y: 20, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 84), style: .plain)
+        carListTableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64), style: .plain)
         carListTableView.backgroundColor = UIColor.clear
         carListTableView.delegate = self
         carListTableView.dataSource = self
         carListTableView.separatorStyle = UITableViewCellSeparatorStyle.none
-        carListTableView.register(CarListCell.self, forCellReuseIdentifier: "CarListCellIdentifier")
+//        carListTableView.register(CarListCell.self, forCellReuseIdentifier: "CarListCellIdentifier")
         view.addSubview(carListTableView)
 
     }
@@ -79,22 +91,39 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CarListCellIdentifier", for: indexPath) as! CarListCell
-        cell.accessoryType = .disclosureIndicator
-        // 选中背景颜色
-        cell.selectedBackgroundView = UIView(frame: cell.frame)
-        cell.selectedBackgroundView?.backgroundColor = FUZZY_BACK
-        cell.backgroundColor = COLOR_BLACK
-        
         let orderModel = orderItems[indexPath.row]
-        if (orderModel.state != nil) {
-            cell.accessoryType = .none
-            cell.selectionStyle = .none
+        // 两种Cell
+        if orderModel.state == nil {
+            
+            var cell = tableView.dequeueReusableCell(withIdentifier: "defaultCell") as? CarListCell
+            if cell == nil {
+                cell = CarListCell(style: UITableViewCellStyle.default, reuseIdentifier:"defaultCell")
+                cell?.backgroundColor = COLOR_BLACK
+                
+                cell?.selectedBackgroundView = UIView(frame: (cell?.frame)!)
+                cell?.selectedBackgroundView?.backgroundColor = FUZZY_BACK
+                cell?.accessoryType = .disclosureIndicator
+            }
+            
+            let model: CarTModel = carItems[(indexPath as NSIndexPath).row]
+            cell?.update(model)
+            return cell!
+        }else{
+            
+            var cell = tableView.dequeueReusableCell(withIdentifier: "stateCell") as? CarListCell
+            if cell == nil {
+                cell = CarListCell(style: UITableViewCellStyle.default, reuseIdentifier:"stateCell")
+                cell?.backgroundColor = COLOR_BLACK
+              
+                cell?.accessoryType = .none
+                cell?.selectionStyle = .none
+            }
+            
+            let model: CarTModel = carItems[(indexPath as NSIndexPath).row]
+            cell?.update(model)
+            cell?.stateSource = orderModel
+            return cell!
         }
-        cell.stateSource = orderModel
-        let model: CarTModel = carItems[(indexPath as NSIndexPath).row]
-        cell.update(model)
-        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -118,6 +147,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 TZNetworkTool.shareNetworkTool.getCar { (carItems, idArray, orderItems) in
                     self.carItems = carItems
                     self.idArray = idArray
+                    self.orderItems = orderItems
                     self.carListTableView.reloadData()
                 }
             }

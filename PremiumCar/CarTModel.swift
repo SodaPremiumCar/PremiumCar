@@ -14,15 +14,17 @@ class CarTModel: NSObject {
     var brand: String?
     var series: String?
     var model: String?
+    var licenseNum: String?
     
     
     init(dict: [String : AnyObject]) {
         
         super.init()
         
-        id = dict["id"] as? Int
-        brand = dict["brand"] as? String
-        series = dict["series"] as? String
-        model = dict["model"] as? String
+        id = dict["carType"]?["id"] as? Int
+        brand = dict["carType"]?["brand"] as? String
+        series = dict["carType"]?["series"] as? String
+        model = dict["carType"]?["model"] as? String
+        licenseNum = dict["licenseNum"] as? String
     }
 }

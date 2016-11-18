@@ -10,22 +10,19 @@ import Foundation
 
 class CarModel: NSObject {
     
-    var url: String?
-    var name: String?
-    var numbel: String?
-    var maintenance: String?
-    var insurance: String?
+    var id: Int?
+    var brand: String?
+    var series: String?
+    var model: String?
     
-    
-    init(dic: [String : AnyObject]) {
+    init(dict: [String : AnyObject]) {
         
         super.init()
-
-        url = dic["url"] as? String
-        name = dic["name"] as? String
-        numbel = dic["numbel"] as? String
-        maintenance = dic["maintenance"] as? String
-        insurance = dic["insurance"] as? String
+        
+        id = dict["id"] as? Int
+        brand = dict["brand"] as? String
+        series = dict["series"] as? String
+        model = dict["model"] as? String
     }
 }
 

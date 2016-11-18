@@ -11,8 +11,8 @@ import Foundation
 class MineViewController: UIViewController {
     
     var tableView: UITableView!
-    let titles = ["个人信息", "我的订单", "我的车库", "意见反馈"]
-    let images = ["personalInfoCell", "oders", "myCars", "suggestionCell"]
+    let titles = ["个人信息", "我的订单", "我的车库", "意见反馈", "联系客服"]
+    let images = ["personalInfoCell", "oders", "myCars", "suggestionCell", "phoneCell"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,21 +34,19 @@ class MineViewController: UIViewController {
         tableView.separatorColor = FUZZY_BACK
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         view.addSubview(tableView)
-        
     }
-    
 }
 
 extension MineViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 4
+        return 5
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return 60
+        return 50
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -85,9 +83,11 @@ extension MineViewController: UITableViewDelegate, UITableViewDataSource {
             
             let myCarViewController = MyCarViewController()
             navigationController?.pushViewController(myCarViewController, animated: true)
-        }else{
+        }else if indexPath.row == 3 {
             let suggestionVC = SuggestionVC()
             navigationController?.pushViewController(suggestionVC, animated: true)
+        }else{
+            UIApplication.shared.openURL(URL(string: "telprompt://4000607927")!)
         }
     }
 }
