@@ -20,7 +20,7 @@ class CarBrandsVC: UIViewController {
     var carTypeId: Int?
     var licenseNum: UITextField?
     //是否已选择车型
-    var choosed: Bool?
+    var choosed = false
     
     var isFromRegister = true
     
@@ -146,7 +146,7 @@ class CarBrandsVC: UIViewController {
     
     func textFieldDidChange() {
         
-        if choosed! && licenseNum?.text?.characters.count != 0 {
+        if choosed && licenseNum?.text?.characters.count != 0 {
             
             setButton(button: submitBtn!, with: 1)
         }else{
