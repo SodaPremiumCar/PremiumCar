@@ -29,13 +29,21 @@ class ServiceViewController: UIViewController {
         super.viewDidLoad()
         
         title = "服务项目"
-        TZNetworkTool.shareNetworkTool.serviceList { (typeArray, serviceBigArray) in
+        TZNetworkTool.shareNetworkTool.serviceList(carTypeId: carModel.id!) { (typeArray, serviceBigArray) in
             
             self.typeArray = typeArray as! [String]
             self.allDataArray = serviceBigArray
             self.currentDataArray = []
             self.typeTabelView.reloadData()
         }
+        
+//        TZNetworkTool.shareNetworkTool.serviceList { (typeArray, serviceBigArray) in
+//            
+//            self.typeArray = typeArray as! [String]
+//            self.allDataArray = serviceBigArray
+//            self.currentDataArray = []
+//            self.typeTabelView.reloadData()
+//        }
         self.setupUI()
     }
     

@@ -28,7 +28,11 @@ class PersonalInfoVC: UIViewController {
         super.viewWillAppear(animated)
         
         self.navigationController?.isNavigationBarHidden = false
-        self.navigationItem.hidesBackButton = isFromRegister
+//        if isFromRegister {
+//            self.navigationItem.hidesBackButton = true
+//            self.navigationItem.leftBarButtonItem = nil
+//        }
+        
         
         if isFromRegister {
             self.navigationItem.title = "填写个人信息"
@@ -133,9 +137,9 @@ class PersonalInfoVC: UIViewController {
     func loadRegisterPhone() {
         
         UserData.share.load()
-        if (UserData.share.telephone != nil) {
-            self.phoneText?.text = UserData.share.telephone
-        }else{
+        if (UserData.share.mobileNo != nil) {
+//            self.phoneText?.text = UserData.share.telephone
+//        }else{
             self.phoneText?.text = UserData.share.mobileNo
         }
     }

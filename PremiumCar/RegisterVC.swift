@@ -155,10 +155,9 @@ class RegisterVC: UIViewController {
                     self.navigationController?.popViewController(animated: true)
                 }else {
                     TZNetworkTool.shareNetworkTool.login(mobileNo: self.mobileNo!.text!, pwd: self.password!.text!, finished: { (isSuccess) in
-                        
+                        let personalVC = PersonalInfoVC()
+                        self.navigationController?.pushViewController(personalVC, animated: true)
                     })
-                    let personalVC = PersonalInfoVC()
-                    self.navigationController?.pushViewController(personalVC, animated: true)
                 }
             }
 //            SVProgressHUD.dismiss(withDelay: 100)

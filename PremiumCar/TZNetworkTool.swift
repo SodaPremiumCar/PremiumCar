@@ -305,7 +305,7 @@ class TZNetworkTool: NSObject {
                         SVProgressHUD.showInfo(withStatus: message)
                         return
                     }
-                    
+//                    print("zzzzzz", dict)
                     //  字典转成模型
                     if let items = dict["carList"].arrayObject {
                         var carItems = [CarTModel]()
@@ -367,10 +367,11 @@ class TZNetworkTool: NSObject {
     }
 
     //服务项目
-    func serviceList(finished:@escaping (_ typeArray: [AnyObject], _ serviceBigArray: [[ServiceItemModel]]) -> ()) {
+    func serviceList(carTypeId: Int, finished:@escaping (_ typeArray: [AnyObject], _ serviceBigArray: [[ServiceItemModel]]) -> ()) {
         
+        let params: Parameters = ["carTypeId" : carTypeId]
         Alamofire
-            .request(KURL(kUrlServiceList), method: .post, parameters: [:], encoding: JSONEncoding.default)
+            .request(KURL(kUrlServiceList), method: .post, parameters: params, encoding: JSONEncoding.default)
             .responseJSON { (response) in
                 
                 guard response.result.isSuccess else {

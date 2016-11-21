@@ -59,7 +59,8 @@ extension MineViewController: UITableViewDelegate, UITableViewDataSource {
             cell!.textLabel?.font =  UIFont.systemFont(ofSize: 16)
             cell!.accessoryType = .disclosureIndicator
             // 选中背景颜色
-            cell!.selectionStyle = .none
+            cell!.selectedBackgroundView = UIView(frame: (cell?.frame)!)
+            cell!.selectedBackgroundView?.backgroundColor = FUZZY_BACK
             cell!.backgroundColor = COLOR_BLACK
         }
         cell?.textLabel?.text = titles[indexPath.row]
@@ -69,6 +70,7 @@ extension MineViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
         if indexPath.row == 0 {
             

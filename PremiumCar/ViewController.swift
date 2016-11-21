@@ -143,22 +143,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.navigationController?.pushViewController(orderDetailVC, animated: true)
         }
     }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
-        let idStr = String(describing: idArray[indexPath.row])
-        TZNetworkTool.shareNetworkTool.deleteCar(id: idStr) { (isSuccess) in
-            if isSuccess {
-                
-                TZNetworkTool.shareNetworkTool.getCar { (carItems, idArray, orderItems) in
-                    self.carItems = carItems
-                    self.idArray = idArray
-                    self.orderItems = orderItems
-                    self.carListTableView.reloadData()
-                }
-            }
-        }
-    }
+    //首页不出现删除
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        
+//        let idStr = String(describing: idArray[indexPath.row])
+//        TZNetworkTool.shareNetworkTool.deleteCar(id: idStr) { (isSuccess) in
+//            if isSuccess {
+//                
+//                TZNetworkTool.shareNetworkTool.getCar { (carItems, idArray, orderItems) in
+//                    self.carItems = carItems
+//                    self.idArray = idArray
+//                    self.orderItems = orderItems
+//                    self.carListTableView.reloadData()
+//                }
+//            }
+//        }
+//    }
     
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return "删除"
