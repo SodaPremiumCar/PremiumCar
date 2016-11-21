@@ -88,7 +88,7 @@ override func viewDidLoad() {
     //MARK: Handle
     func buttonClicked(_ sender: UIButton) {
         
-        self.navigationController?.popToRootViewController(animated: true)
+        _ = self.navigationController?.popToRootViewController(animated: true)
     }
     
     //MARK: Request

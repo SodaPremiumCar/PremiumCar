@@ -105,7 +105,6 @@ class MyOrderCell: UITableViewCell {
         //送车中，显示完成按钮
         complete.isHidden = (model.state! == "送车中") ? false : true
         
-        print(model.state!)
         if (model.services != nil) {
             var text = ""
             for dic in model.services! {

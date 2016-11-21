@@ -37,13 +37,6 @@ class ServiceViewController: UIViewController {
             self.typeTabelView.reloadData()
         }
         
-//        TZNetworkTool.shareNetworkTool.serviceList { (typeArray, serviceBigArray) in
-//            
-//            self.typeArray = typeArray as! [String]
-//            self.allDataArray = serviceBigArray
-//            self.currentDataArray = []
-//            self.typeTabelView.reloadData()
-//        }
         self.setupUI()
     }
     

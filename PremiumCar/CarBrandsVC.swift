@@ -47,12 +47,6 @@ class CarBrandsVC: UIViewController {
 
     private func setupUI() {
         
-//        // 设置导航栏
-//        self.navigationController?.isNavigationBarHidden = true
-//        self.navigationItem.hidesBackButton = true
-//        self.navigationController?.navigationBar.barTintColor = COLOR_BLACK
-//        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
-//        self.title = "绑定车辆"
         self.view.backgroundColor = COLOR_BLACK
         
         let chooseImg = UIImageView(frame: CGRect(x: (SCREEN_WIDTH - 100) * 0.5, y: 30, width: 100, height: 100))
@@ -125,23 +119,13 @@ class CarBrandsVC: UIViewController {
             
             if isSuccess {
                 if self.isFromRegister {
-                    self.navigationController?.popToRootViewController(animated: true)
+                    _ = self.navigationController?.popToRootViewController(animated: true)
                 }else{
-                    self.navigationController?.popViewController(animated: true)
+                    _ = self.navigationController?.popViewController(animated: true)
                 }
             }
         }
 
-//        TZNetworkTool.shareNetworkTool.addCar(carTypeId: carTypeId!) { (isSuccess) in
-//            
-//            if isSuccess {
-//                if self.isFromRegister {
-//                    self.navigationController?.popToRootViewController(animated: true)
-//                }else{
-//                    self.navigationController?.popViewController(animated: true)
-//                }
-//            }
-//        }
     }
     
     func textFieldDidChange() {

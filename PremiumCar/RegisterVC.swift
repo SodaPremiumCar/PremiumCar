@@ -152,11 +152,15 @@ class RegisterVC: UIViewController {
                 
                 if self.isForgetPassword {
                     // 修改成功退回登录页
-                    self.navigationController?.popViewController(animated: true)
+                    _ = self.navigationController?.popViewController(animated: true)
                 }else {
                     TZNetworkTool.shareNetworkTool.login(mobileNo: self.mobileNo!.text!, pwd: self.password!.text!, finished: { (isSuccess) in
+                        
+                        let vc = self.navigationController?.viewControllers[0]
+                        let viewController = self.navigationController?.popToRootViewController(animated: false)
                         let personalVC = PersonalInfoVC()
-                        self.navigationController?.pushViewController(personalVC, animated: true)
+                        vc?.navigationController?.pushViewController(personalVC, animated: false)
+//                        self.navigationController?.pushViewController(personalVC, animated: false)
                     })
                 }
             }
@@ -170,7 +174,7 @@ class RegisterVC: UIViewController {
     
     func backToLogin() {
         
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     func textFieldDidChange() {

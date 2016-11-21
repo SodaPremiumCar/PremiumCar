@@ -173,7 +173,7 @@ class PersonalInfoVC: UIViewController {
                     let carBrandsVC = CarBrandsVC()
                     self.navigationController?.pushViewController(carBrandsVC, animated: true)
                 }else{
-                    self.navigationController?.popViewController(animated: true)
+                    _ = self.navigationController?.popViewController(animated: true)
                 }
             }
         }

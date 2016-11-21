@@ -23,9 +23,9 @@ class NewsViewController: UIViewController {
         title = "推荐"
         view.backgroundColor = COLOR_BLACK
         
-        webView = UIWebView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64 - 49))
+        webView = UIWebView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64))
         webView?.backgroundColor = COLOR_BLACK
-        let request = URLRequest(url: URL(string: "http://m.autohome.com.cn/news/#pvareaid=104791")!)
+        let request = URLRequest(url: URL(string: "http://www.porsche.com/china?from=baidubrandzone&utm_source=baidu&utm_medium=brandzone&utm_term=title&utm_content=Mobile_Brandzone&utm_campaign=2016_Always_On_Brandzone")!)
         webView?.loadRequest(request as URLRequest)
         view.addSubview(webView!)
     }

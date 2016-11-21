@@ -16,7 +16,6 @@ class CarListCell: UITableViewCell {
     fileprivate var stateBtn: UIButton?
     fileprivate var licenseLabel: UILabel?
     
-    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)

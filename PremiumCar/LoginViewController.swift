@@ -119,7 +119,7 @@ class LoginViewController: UIViewController {
             if isSuccess {
 
                 self.navigationController?.isNavigationBarHidden = false
-                self.navigationController?.popToRootViewController(animated: true)
+                _ = self.navigationController?.popToRootViewController(animated: true)
             }
         }
     }

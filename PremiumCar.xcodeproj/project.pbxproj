@@ -112,8 +112,6 @@
 				A8B7AA1A1D8694CD00C02B95 /* PromptVC.swift */,
 				A8F9859C1DD04941006328A2 /* OrderListVC.swift */,
 				A8A1A0FF1DDEC37300CC662A /* OrderDetailVC.swift */,
-				25813E0A1D94D5BB00291D5B /* CallButlerVC.swift */,
-				25813E0C1D94D5BB00291D5B /* MyCarVC.swift */,
 				258C973A1DD5A26C0070D501 /* SuggestionVC.swift */,
 				258C97461DDC3B360070D501 /* MyCarViewController.swift */,
 				258C973E1DDAE97A0070D501 /* NewsViewController.swift */,

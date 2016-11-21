@@ -53,7 +53,7 @@ class SuggestionVC: UIViewController {
         
         TZNetworkTool.shareNetworkTool.feedBack(content: (textView?.text)!) { (isSuccess) in
             if isSuccess {
-                self.navigationController?.popViewController(animated: true)
+                _ = self.navigationController?.popViewController(animated: true)
             }
         }
     }
