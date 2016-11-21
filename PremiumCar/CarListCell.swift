@@ -57,6 +57,8 @@ class CarListCell: UITableViewCell {
         
         didSet {
             
+            stateBtn?.removeFromSuperview()
+            
             let frame = CGRect(x: SCREEN_WIDTH - 50 - 15, y: 30, width: 50, height: 20)
             stateBtn = getStateButton(frame: frame, title: (stateSource?.state)!, fontSize: 10)
             contentView.addSubview(stateBtn!)
