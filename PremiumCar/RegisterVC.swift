@@ -157,10 +157,9 @@ class RegisterVC: UIViewController {
                     TZNetworkTool.shareNetworkTool.login(mobileNo: self.mobileNo!.text!, pwd: self.password!.text!, finished: { (isSuccess) in
                         
                         let vc = self.navigationController?.viewControllers[0]
-                        let viewController = self.navigationController?.popToRootViewController(animated: false)
+                        _ = self.navigationController?.popToRootViewController(animated: false)
                         let personalVC = PersonalInfoVC()
                         vc?.navigationController?.pushViewController(personalVC, animated: false)
-//                        self.navigationController?.pushViewController(personalVC, animated: false)
                     })
                 }
             }

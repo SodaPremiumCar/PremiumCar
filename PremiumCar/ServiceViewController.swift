@@ -204,13 +204,3 @@ extension ServiceViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
