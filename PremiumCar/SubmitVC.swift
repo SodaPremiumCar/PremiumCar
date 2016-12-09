@@ -380,7 +380,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
                     for model in serviceItems {
                         total += model.price!
                     }
-                    cell?.textLabel?.text = "服务费（10%）"
+                    cell?.textLabel?.text = "服务费（费用总额10%）"
                     cell?.detailTextLabel?.text = "￥\(total * 0.1)"
                 }
             }
