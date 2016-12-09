@@ -24,6 +24,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         AMapServices.shared().apiKey = "4640fecf2f5bbc7825f9fc1d97f3eb14"
         
+        DispatchQueue.main.async {
+            let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(settings)
+        }
+        
         return true
     }
 

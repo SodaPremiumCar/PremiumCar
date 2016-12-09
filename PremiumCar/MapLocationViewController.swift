@@ -52,20 +52,21 @@ class MapLocationViewController: UIViewController {
         mapView.addSubview(imageV)
         
         let backView = UIView(frame: CGRect(x: 0, y: SCREEN_HEIGHT - 64 - 80, width: SCREEN_WIDTH, height: 80))
-        backView.backgroundColor = UIColor.white
+        backView.backgroundColor = COLOR_BLACK
         view.addSubview(backView)
         
         adressLabel = UILabel()
         adressLabel?.frame = CGRect(x: 10, y: 0, width: SCREEN_WIDTH - 20, height: 50)
         adressLabel?.font = UIFont.systemFont(ofSize: 14)
         adressLabel?.numberOfLines = 0
-        adressLabel?.textColor = SEC_ORANGE
+        adressLabel?.adjustsFontSizeToFitWidth = true
+        adressLabel?.textColor = RGBA(220, g: 220, b: 220, a: 1)
         backView.addSubview(adressLabel!)
         
         let confirmBtn = UIButton(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 80))
-        confirmBtn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        confirmBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         confirmBtn.titleEdgeInsets = UIEdgeInsetsMake(50, 0, 0, 0)
-        confirmBtn.setTitleColor(RGBA(171, g: 171, b: 171, a: 1), for: .normal)
+        confirmBtn.setTitleColor(SEC_ORANGE, for: .normal)
         confirmBtn.setTitle("点击确认", for: .normal)
         confirmBtn.addTarget(self, action: #selector(confirm), for: UIControlEvents.touchUpInside)
         backView.addSubview(confirmBtn)

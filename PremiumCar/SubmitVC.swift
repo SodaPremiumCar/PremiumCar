@@ -92,10 +92,10 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         addressTextView.returnKeyType = .done
         
         getLocationBtn = UIButton(type: UIButtonType.custom)
-        getLocationBtn.frame = CGRect(x: SCREEN_WIDTH - 140, y: 70, width: 120, height: 40)
+        getLocationBtn.frame = CGRect(x: SCREEN_WIDTH - 160, y: 70, width: 140, height: 40)
         getLocationBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         getLocationBtn.titleLabel?.textAlignment = .center
-        getLocationBtn.setTitle("获取当前位置", for: .normal)
+        getLocationBtn.setTitle("在地图上选择位置 >", for: .normal)
         getLocationBtn.setTitleColor(SEC_ORANGE, for: .normal)
         getLocationBtn.backgroundColor = UIColor.clear
         getLocationBtn.addTarget(self, action: #selector(buttonClicked(_:)), for: UIControlEvents.touchUpInside)
@@ -162,6 +162,10 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
             for model in serviceItems {
                 total += model.price!
             }
+            
+            //加收10%服务费
+            total *= 1.1
+            
             let text = String(format: "%.2f元\n确认提交", total)
             submitBtn?.setTitle(text, for: UIControlState.normal)
         }else {
@@ -292,7 +296,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         }else if section == 1 {
             return 1
         }else {
-            return serviceItems.count
+            return serviceItems.count + 1
         }
     }
     
@@ -369,10 +373,21 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
             let licenseNum = (carModel.licenseNum != nil) ? carModel.licenseNum! : ""
             cell?.textLabel?.text = carModel.brand! + " " + carModel.model! + "  (" + licenseNum + ")"
         }else {
-            let model = serviceItems[indexPath.row]
-            let price = String(format: "￥%.2f", model.price!)
-            cell?.textLabel?.text = model.type! + " " + model.name!
-            cell?.detailTextLabel?.text = price
+            if serviceItems.count > indexPath.row {
+                let model = serviceItems[indexPath.row]
+                let price = String(format: "￥%.2f", model.price!)
+                cell?.textLabel?.text = model.type! + " " + model.name!
+                cell?.detailTextLabel?.text = price
+            }else {
+                if serviceItems.count > 0 {
+                    var total: Float = 0.0
+                    for model in serviceItems {
+                        total += model.price!
+                    }
+                    cell?.textLabel?.text = "服务费（费用总额10%）"
+                    cell?.detailTextLabel?.text = "￥\(total * 0.1)"
+                }
+            }
         }
         
         return cell!
