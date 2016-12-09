@@ -21,10 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.rootViewController = TZTabBarController()
-//        
-//        let vc = ViewController()
-//        let nav = UINavigationController(rootViewController: vc)
-//        nav.setStyle(color: COLOR_BLACK)
+        
+        AMapServices.shared().apiKey = "4640fecf2f5bbc7825f9fc1d97f3eb14"
         
         return true
     }

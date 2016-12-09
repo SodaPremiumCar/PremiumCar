@@ -11,4 +11,7 @@ pod 'Alamofire', '~> 4.0.1'
 pod 'Kingfisher', '~> 3.1.4'
 pod 'SwiftyJSON', '~> 3.1.1'
 
+pod 'AMap3DMap'
+pod 'AMapSearch'
+
 end
