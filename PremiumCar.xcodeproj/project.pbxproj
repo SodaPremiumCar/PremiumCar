@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A97E7189C907127F4057D0D /* Pods_PremiumCar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C338FA6DCE34C6BDD9DEF5E /* Pods_PremiumCar.framework */; };
 		25120B911DC08F26000F506F /* CarBrandsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25120B901DC08F26000F506F /* CarBrandsVC.swift */; };
 		254C6A671DBDDD5C00C0B80F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254C6A661DBDDD5C00C0B80F /* LoginViewController.swift */; };
 		258C973B1DD5A26C0070D501 /* SuggestionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258C973A1DD5A26C0070D501 /* SuggestionVC.swift */; };
@@ -23,6 +24,7 @@
 		259960431DC737F70001444F /* CarTModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259960421DC737F70001444F /* CarTModel.swift */; };
 		25BFB9731DC3278D0016150E /* TZNetworkTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFB9721DC3278D0016150E /* TZNetworkTool.swift */; };
 		25BFB9751DC33ECF0016150E /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFB9741DC33ECF0016150E /* UserData.swift */; };
+		25C5D9491DFA63540029C908 /* MapLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C5D9481DFA63540029C908 /* MapLocationViewController.swift */; };
 		A838FC431DDAFBF50025C2E5 /* MyOrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838FC421DDAFBF50025C2E5 /* MyOrderCell.swift */; };
 		A838FC481DDB05D90025C2E5 /* MixLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838FC471DDB05D90025C2E5 /* MixLabel.swift */; };
 		A85B6CCD1D7D7DB100E43F59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85B6CCC1D7D7DB100E43F59 /* AppDelegate.swift */; };
@@ -40,11 +42,10 @@
 		A8B7F4181DC72E5100896BD4 /* ServiceItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B7F4171DC72E5100896BD4 /* ServiceItemModel.swift */; };
 		A8F9859D1DD04941006328A2 /* OrderListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F9859C1DD04941006328A2 /* OrderListVC.swift */; };
 		A8F9859F1DD0498E006328A2 /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F9859E1DD0498E006328A2 /* OrderModel.swift */; };
-		E6C6D53C4FE73D796292600A /* Pods_PremiumCar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E8A6288D2F82C45F2CFABD /* Pods_PremiumCar.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		229C4A1143B10A17DFC73781 /* Pods-PremiumCar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PremiumCar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PremiumCar/Pods-PremiumCar.debug.xcconfig"; sourceTree = "<group>"; };
+		1C338FA6DCE34C6BDD9DEF5E /* Pods_PremiumCar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PremiumCar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25120B901DC08F26000F506F /* CarBrandsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarBrandsVC.swift; sourceTree = "<group>"; };
 		254C6A661DBDDD5C00C0B80F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		258C973A1DD5A26C0070D501 /* SuggestionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionVC.swift; sourceTree = "<group>"; };
@@ -64,8 +65,8 @@
 		259960421DC737F70001444F /* CarTModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTModel.swift; sourceTree = "<group>"; };
 		25BFB9721DC3278D0016150E /* TZNetworkTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZNetworkTool.swift; sourceTree = "<group>"; };
 		25BFB9741DC33ECF0016150E /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
-		91E8A6288D2F82C45F2CFABD /* Pods_PremiumCar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PremiumCar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A47E5A7B3061FA25282F601C /* Pods-PremiumCar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PremiumCar.release.xcconfig"; path = "Pods/Target Support Files/Pods-PremiumCar/Pods-PremiumCar.release.xcconfig"; sourceTree = "<group>"; };
+		25C5D9481DFA63540029C908 /* MapLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocationViewController.swift; sourceTree = "<group>"; };
+		69777EA4017E4417A64803C7 /* Pods-PremiumCar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PremiumCar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PremiumCar/Pods-PremiumCar.debug.xcconfig"; sourceTree = "<group>"; };
 		A838FC421DDAFBF50025C2E5 /* MyOrderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyOrderCell.swift; sourceTree = "<group>"; };
 		A838FC471DDB05D90025C2E5 /* MixLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixLabel.swift; sourceTree = "<group>"; };
 		A85B6CC91D7D7DB100E43F59 /* PremiumCar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PremiumCar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,6 +86,7 @@
 		A8B7F4171DC72E5100896BD4 /* ServiceItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceItemModel.swift; sourceTree = "<group>"; };
 		A8F9859C1DD04941006328A2 /* OrderListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderListVC.swift; sourceTree = "<group>"; };
 		A8F9859E1DD0498E006328A2 /* OrderModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
+		FF490FE603820E1C675D96EE /* Pods-PremiumCar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PremiumCar.release.xcconfig"; path = "Pods/Target Support Files/Pods-PremiumCar/Pods-PremiumCar.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6C6D53C4FE73D796292600A /* Pods_PremiumCar.framework in Frameworks */,
+				0A97E7189C907127F4057D0D /* Pods_PremiumCar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +120,7 @@
 				258C97401DDAEBA60070D501 /* MineViewController.swift */,
 				258C97421DDAEF520070D501 /* TZNavigationController.swift */,
 				258C973C1DDAE8880070D501 /* TZTabBarController.swift */,
+				25C5D9481DFA63540029C908 /* MapLocationViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -161,12 +164,21 @@
 			name = Tool;
 			sourceTree = "<group>";
 		};
-		A741F859AF8AF1E76F25151B /* Frameworks */ = {
+		45FE8486B993A67729DCB0B7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				91E8A6288D2F82C45F2CFABD /* Pods_PremiumCar.framework */,
+				1C338FA6DCE34C6BDD9DEF5E /* Pods_PremiumCar.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7147BE028B5CDE08DD115B60 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				69777EA4017E4417A64803C7 /* Pods-PremiumCar.debug.xcconfig */,
+				FF490FE603820E1C675D96EE /* Pods-PremiumCar.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		A85B6CC01D7D7DB100E43F59 = {
@@ -174,8 +186,8 @@
 			children = (
 				A85B6CCB1D7D7DB100E43F59 /* PremiumCar */,
 				A85B6CCA1D7D7DB100E43F59 /* Products */,
-				E6D13FF025FD4937458B38D2 /* Pods */,
-				A741F859AF8AF1E76F25151B /* Frameworks */,
+				7147BE028B5CDE08DD115B60 /* Pods */,
+				45FE8486B993A67729DCB0B7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -201,15 +213,6 @@
 			path = PremiumCar;
 			sourceTree = "<group>";
 		};
-		E6D13FF025FD4937458B38D2 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				229C4A1143B10A17DFC73781 /* Pods-PremiumCar.debug.xcconfig */,
-				A47E5A7B3061FA25282F601C /* Pods-PremiumCar.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -217,13 +220,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A85B6CDB1D7D7DB100E43F59 /* Build configuration list for PBXNativeTarget "PremiumCar" */;
 			buildPhases = (
-				76AB473906E2F1D918C54F64 /* [CP] Check Pods Manifest.lock */,
+				A771B9851916F48B9F8EB509 /* [CP] Check Pods Manifest.lock */,
 				A85B6CC51D7D7DB100E43F59 /* Sources */,
 				A85B6CC61D7D7DB100E43F59 /* Frameworks */,
 				A85B6CC71D7D7DB100E43F59 /* Resources */,
-				AF7CCF94FA20B1708AF23421 /* [CP] Embed Pods Frameworks */,
-				4033089F395EAF85EE1E4E91 /* [CP] Copy Pods Resources */,
-				B7F4C7E2D594BC6F6AF54D86 /* Embed Pods Frameworks */,
+				81B385200B349B939012C2A9 /* [CP] Embed Pods Frameworks */,
+				41169F8E6DDD1E800B94D0E6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -281,7 +283,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4033089F395EAF85EE1E4E91 /* [CP] Copy Pods Resources */ = {
+		41169F8E6DDD1E800B94D0E6 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -296,22 +298,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PremiumCar/Pods-PremiumCar-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		76AB473906E2F1D918C54F64 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		AF7CCF94FA20B1708AF23421 /* [CP] Embed Pods Frameworks */ = {
+		81B385200B349B939012C2A9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -326,19 +313,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PremiumCar/Pods-PremiumCar-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B7F4C7E2D594BC6F6AF54D86 /* Embed Pods Frameworks */ = {
+		A771B9851916F48B9F8EB509 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PremiumCar/Pods-PremiumCar-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -352,6 +339,7 @@
 				25BFB9731DC3278D0016150E /* TZNetworkTool.swift in Sources */,
 				A8B7AA191D867B7400C02B95 /* SubmitVC.swift in Sources */,
 				A85B6CCF1D7D7DB100E43F59 /* ViewController.swift in Sources */,
+				25C5D9491DFA63540029C908 /* MapLocationViewController.swift in Sources */,
 				254C6A671DBDDD5C00C0B80F /* LoginViewController.swift in Sources */,
 				258C973D1DDAE8880070D501 /* TZTabBarController.swift in Sources */,
 				25120B911DC08F26000F506F /* CarBrandsVC.swift in Sources */,
@@ -427,7 +415,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "7a90d411-9a7b-48f6-b3fa-ace74db4973e";
+				PROVISIONING_PROFILE = "fc9c5335-f2a6-4ff5-b059-65be94951b5e";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -468,7 +456,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "7a90d411-9a7b-48f6-b3fa-ace74db4973e";
+				PROVISIONING_PROFILE = "fc9c5335-f2a6-4ff5-b059-65be94951b5e";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
@@ -477,7 +465,7 @@
 		};
 		A85B6CDC1D7D7DB100E43F59 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 229C4A1143B10A17DFC73781 /* Pods-PremiumCar.debug.xcconfig */;
+			baseConfigurationReference = 69777EA4017E4417A64803C7 /* Pods-PremiumCar.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -490,8 +478,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = soda.PremiumCar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7a90d411-9a7b-48f6-b3fa-ace74db4973e";
-				PROVISIONING_PROFILE_SPECIFIER = DevelopmentPremiumCar;
+				PROVISIONING_PROFILE = "fc9c5335-f2a6-4ff5-b059-65be94951b5e";
+				PROVISIONING_PROFILE_SPECIFIER = PremiumCar;
 				SWIFT_OBJC_BRIDGING_HEADER = "PremiumCar/PremiumCar-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -500,7 +488,7 @@
 		};
 		A85B6CDD1D7D7DB100E43F59 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A47E5A7B3061FA25282F601C /* Pods-PremiumCar.release.xcconfig */;
+			baseConfigurationReference = FF490FE603820E1C675D96EE /* Pods-PremiumCar.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -513,8 +501,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = soda.PremiumCar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7a90d411-9a7b-48f6-b3fa-ace74db4973e";
-				PROVISIONING_PROFILE_SPECIFIER = DevelopmentPremiumCar;
+				PROVISIONING_PROFILE = "fc9c5335-f2a6-4ff5-b059-65be94951b5e";
+				PROVISIONING_PROFILE_SPECIFIER = PremiumCar;
 				SWIFT_OBJC_BRIDGING_HEADER = "PremiumCar/PremiumCar-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};

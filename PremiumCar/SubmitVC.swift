@@ -10,7 +10,7 @@ import UIKit
 import SVProgressHUD
 import CoreLocation
 
-class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
+class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, MapLocationDelegate {
     
     var carModel: CarTModel!    //车型model
     var idStr: Int!                     //车的id
@@ -216,7 +216,11 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         if sender == datePickerButton {
             self.hideDatePicker()
         }else if sender == getLocationBtn {
-            startUpdatingLocation()
+//            startUpdatingLocation()
+            
+            let mapLocationVc = MapLocationViewController()
+            mapLocationVc.delegate = self
+            navigationController?.pushViewController(mapLocationVc, animated: true)
         }else {
             
             guard nameTextField.text!.isEmpty == false &&
@@ -468,6 +472,10 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         }else if status == .restricted {
             print("restricted")
         }
+    }
+    
+    func theMapHasbeenSelected(addressStr: String) {
+        addressTextView.text = addressStr
     }
 }
 
