@@ -26,6 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let nav = UINavigationController(rootViewController: vc)
 //        nav.setStyle(color: COLOR_BLACK)
         
+        DispatchQueue.main.async {
+            let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(settings)
+        }
+        
         return true
     }
 
