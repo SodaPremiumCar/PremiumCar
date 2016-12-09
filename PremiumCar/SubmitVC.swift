@@ -92,10 +92,10 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         addressTextView.returnKeyType = .done
         
         getLocationBtn = UIButton(type: UIButtonType.custom)
-        getLocationBtn.frame = CGRect(x: SCREEN_WIDTH - 140, y: 70, width: 120, height: 40)
+        getLocationBtn.frame = CGRect(x: SCREEN_WIDTH - 160, y: 70, width: 140, height: 40)
         getLocationBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         getLocationBtn.titleLabel?.textAlignment = .center
-        getLocationBtn.setTitle("获取当前位置", for: .normal)
+        getLocationBtn.setTitle("在地图上选择位置 >", for: .normal)
         getLocationBtn.setTitleColor(SEC_ORANGE, for: .normal)
         getLocationBtn.backgroundColor = UIColor.clear
         getLocationBtn.addTarget(self, action: #selector(buttonClicked(_:)), for: UIControlEvents.touchUpInside)
