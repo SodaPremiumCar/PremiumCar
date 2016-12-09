@@ -162,6 +162,10 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
             for model in serviceItems {
                 total += model.price!
             }
+            
+            //加收10%服务费
+            total *= 1.1
+            
             let text = String(format: "%.2f元\n确认提交", total)
             submitBtn?.setTitle(text, for: UIControlState.normal)
         }else {
@@ -288,7 +292,7 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
         }else if section == 1 {
             return 1
         }else {
-            return serviceItems.count
+            return serviceItems.count + 1
         }
     }
     
@@ -365,10 +369,21 @@ class SubmitVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITa
             let licenseNum = (carModel.licenseNum != nil) ? carModel.licenseNum! : ""
             cell?.textLabel?.text = carModel.brand! + " " + carModel.model! + "  (" + licenseNum + ")"
         }else {
-            let model = serviceItems[indexPath.row]
-            let price = String(format: "￥%.2f", model.price!)
-            cell?.textLabel?.text = model.type! + " " + model.name!
-            cell?.detailTextLabel?.text = price
+            if serviceItems.count > indexPath.row {
+                let model = serviceItems[indexPath.row]
+                let price = String(format: "￥%.2f", model.price!)
+                cell?.textLabel?.text = model.type! + " " + model.name!
+                cell?.detailTextLabel?.text = price
+            }else {
+                if serviceItems.count > 0 {
+                    var total: Float = 0.0
+                    for model in serviceItems {
+                        total += model.price!
+                    }
+                    cell?.textLabel?.text = "服务费（10%）"
+                    cell?.detailTextLabel?.text = "￥\(total * 0.1)"
+                }
+            }
         }
         
         return cell!
